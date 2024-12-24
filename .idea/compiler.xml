@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="chat-server" />
+        <module name="game-server" />
+        <module name="login-server" />
+        <module name="common" />
+        <module name="proto" />
+        <module name="web-server" />
+        <module name="gate-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="app" target="1.8" />
+      <module name="center" target="1.8" />
+      <module name="cluster" target="1.8" />
+      <module name="demo" target="1.8" />
+      <module name="gm" target="1.8" />
+      <module name="kafka" target="1.8" />
+      <module name="net-game-server" target="1.8" />
+      <module name="proto (1)" target="1.8" />
+      <module name="proto (2)" target="1.8" />
+      <module name="scene" target="1.8" />
+      <module name="spring-boot-starter-parent" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="chat-server" options="" />
+      <module name="cluster" options="" />
+      <module name="demo" options="" />
+      <module name="game-server" options="" />
+      <module name="gate-server" options="" />
+      <module name="gm" options="" />
+      <module name="login-server" options="" />
+      <module name="spring-boot-starter-parent" options="-parameters" />
+      <module name="web-server" options="" />
+    </option>
+  </component>
+</project>

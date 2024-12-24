@@ -1,0 +1,5 @@
+cluster:
+  groupId: 1
+  serverId: "login-1001"
+  host: "127.0.0.1"
+  port: 8002

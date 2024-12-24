@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/gate" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/app/pom.xml" />
+        <option value="$PROJECT_DIR$/app/gate/pom.xml" />
+        <option value="$PROJECT_DIR$/app/game/pom.xml" />
+        <option value="$PROJECT_DIR$/app/chat/pom.xml" />
+        <option value="$PROJECT_DIR$/app/scene/pom.xml" />
+        <option value="$PROJECT_DIR$/gate/pom.xml" />
+        <option value="$PROJECT_DIR$/app/gm/pom.xml" />
+        <option value="$PROJECT_DIR$/cluster/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/node/pom.xml" />
+        <option value="$PROJECT_DIR$/cluster/pom.xml" />
+        <option value="$PROJECT_DIR$/cluster/chat/pom.xml" />
+        <option value="$PROJECT_DIR$/cluster/game/pom.xml" />
+        <option value="$PROJECT_DIR$/cluster/gate/pom.xml" />
+        <option value="$PROJECT_DIR$/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/gm-server/pom.xml" />
+        <option value="$PROJECT_DIR$/web/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/app/kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/app/pom.xml" />
+        <option value="$PROJECT_DIR$/app/scene/pom.xml" />
+        <option value="$PROJECT_DIR$/app/web/pom.xml" />
+        <option value="$PROJECT_DIR$/center/pom.xml" />
+        <option value="$PROJECT_DIR$/chat/pom.xml" />
+        <option value="$PROJECT_DIR$/cluster/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/game/pom.xml" />
+        <option value="$PROJECT_DIR$/gate/pom.xml" />
+        <option value="$PROJECT_DIR$/gm/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

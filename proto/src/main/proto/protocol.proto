@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_package = "com.game.proto";
+option java_outer_classname = "ProtocolProto";
+package protocol;
+
+//协议定义
+//六位协议号 第一位1表示请求 2表示响应 3表示服务器通知 次二位表示模块id 后三位表示模块内协议号
+enum ProtocolCmd {
+  NONE = 0;// 不需要，只是为了标记第一个
+  //================================Gm=======================================
+  ADD_LEVEL_REQ = 110001;// 升级
+  ADD_LEVEL_RESP = 210001;// 升级
+  //=========================================================================
+  HEART_BEAT_REQ = 100000;// 心跳
+  HEART_BEAT_RESP = 200000;// 心跳
+  ENTER_GAME_REQ = 100001;// 进入游戏
+  ENTER_GAME_RESP = 200001;// 进入游戏
+  PLAYER_UPDATE_NOTIFY = 300003;// 玩家属性更新
+  PLAYER_NEXT_DAY_NOTIFY = 300004;// 玩家隔天刷新
+  PLAYER_RECONNECT_REQ = 100015;// 断线重连
+  PLAYER_RECONNECT_RESP = 200015;// 断线重连
+
+}

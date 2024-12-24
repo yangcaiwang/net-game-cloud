@@ -1,0 +1,16 @@
+cluster:
+  groupId: 1
+  weight: 100
+  serverId: "gate-1001"
+  host: "127.0.0.1"
+  port: 8001
+grpc:
+  port: 7000
+netty:
+  host: "127.0.0.1"
+  port: 7001
+jetty:
+  port: 9000
+  httpMinThreads: 1
+  httpMaxThreads: 10
+  idleTimeout: 100

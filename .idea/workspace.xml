@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/app/gate">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Interface" />
+        <option value="AnnotationType" />
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/HttpRequest.java" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="1.8" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2pmtaRHgvrq6DlucbrkHD4WTCEM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Environment/Java/Game/net-game-core&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Environment/Java/Game/net-game-server/app/src/main/java/com/common/module/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="debugInitializationType" value="HOOKS" />
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.common.module.cluster.config" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\gm-server\src\main\resources" />
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\gate-server\src\main\resources" />
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\game-server\src\main\resources\template" />
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\game-server\src\main\resources" />
+      <recent name="C:\Environment\Java\Game\net-game-core\common\src\main\java\com\common\module\network\jetty" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster" />
+      <recent name="C:\Environment\Java\Game\net-game-core\proto\src\main\proto" />
+      <recent name="C:\Environment\Java\Game\net-game-server\cluster" />
+      <recent name="C:\Environment\Java\Game\net-game-server\cluster\game\src\main\resources" />
+      <recent name="C:\Environment\Java\Game\net-game-server" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.gate.node" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.common.module.cluster.component" />
+      <recent name="com.common.module.internal.loader.service" />
+      <recent name="com.common.module.internal.db" />
+      <recent name="com.common.module.network.jetty" />
+      <recent name="com.common.module.network.jetty.handler" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GameApplication">
+    <configuration name="AttributeClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.common.module.internal.netty.test.AttributeClient" />
+      <module name="common" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.common.module.internal.netty.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AttributeServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.common.module.internal.netty.test.AttributeServer" />
+      <module name="common" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.common.module.internal.netty.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NettyClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.common.module.internal.netty.client.NettyClient" />
+      <module name="common" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.common.module.internal.netty.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.game.proto.Test" />
+      <module name="proto" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.game.proto.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="net-game-server" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="net-game-server" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="chat-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.chat.server.ChatApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="game-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.game.server.GameApplication" />
+      <option name="VM_PARAMETERS" value="-Dlog4j.skipJansi=false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GateApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" activateToolWindowBeforeRun="false" temporary="true" nameIsGenerated="true">
+      <option name="INCLUDE_PROVIDED_SCOPE" value="false" />
+      <module name="gate-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.gate.server.GateApplication" />
+      <option name="VM_PARAMETERS" value="-Dlog4j.skipJansi=false" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gate.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="login-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.gm.server.LoginServerApplication" />
+      <option name="VM_PARAMETERS" value="-Dlog4j.skipJansi=false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="web-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.game.gm.WebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.AttributeClient" />
+      <item itemvalue="Application.AttributeServer" />
+      <item itemvalue="Application.NettyClient" />
+      <item itemvalue="Application.Test" />
+      <item itemvalue="Spring Boot.LoginServerApplication" />
+      <item itemvalue="Spring Boot.WebApplication" />
+      <item itemvalue="Spring Boot.ChatApplication" />
+      <item itemvalue="Spring Boot.GameApplication" />
+      <item itemvalue="Spring Boot.GateApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.GateApplication" />
+        <item itemvalue="Application.NettyClient" />
+        <item itemvalue="Application.AttributeClient" />
+        <item itemvalue="Application.AttributeServer" />
+        <item itemvalue="Application.Test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="" />
+      <created>1733383142739</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733383142739</updated>
+      <workItem from="1733383143704" duration="15527000" />
+      <workItem from="1733464416892" duration="408000" />
+      <workItem from="1733502882843" duration="67000" />
+      <workItem from="1733502955466" duration="2371000" />
+      <workItem from="1733506240346" duration="1876000" />
+      <workItem from="1733508123604" duration="6427000" />
+      <workItem from="1733515334887" duration="6000" />
+      <workItem from="1733515353761" duration="6422000" />
+      <workItem from="1733521864839" duration="602000" />
+      <workItem from="1733522473637" duration="49000" />
+      <workItem from="1733522593698" duration="845000" />
+      <workItem from="1733523445357" duration="137000" />
+      <workItem from="1733564717989" duration="1718000" />
+      <workItem from="1733646305952" duration="6451000" />
+      <workItem from="1733652852484" duration="1690000" />
+      <workItem from="1733654550968" duration="145000" />
+      <workItem from="1733654838349" duration="290000" />
+      <workItem from="1733655134632" duration="2329000" />
+      <workItem from="1733657472218" duration="4988000" />
+      <workItem from="1733666090062" duration="203000" />
+      <workItem from="1733666306117" duration="621000" />
+      <workItem from="1733666934730" duration="14834000" />
+      <workItem from="1733681795247" duration="9006000" />
+      <workItem from="1733747803914" duration="4692000" />
+      <workItem from="1733752612940" duration="446000" />
+      <workItem from="1733753064584" duration="24600000" />
+      <workItem from="1733804238042" duration="34443000" />
+      <workItem from="1733851511646" duration="2597000" />
+      <workItem from="1733857488305" duration="4639000" />
+      <workItem from="1733905992432" duration="2391000" />
+      <workItem from="1733908723999" duration="15586000" />
+      <workItem from="1733924822592" duration="5012000" />
+      <workItem from="1733932350726" duration="1689000" />
+      <workItem from="1733934047346" duration="13873000" />
+      <workItem from="1733993817786" duration="10000" />
+      <workItem from="1733994501243" duration="2947000" />
+      <workItem from="1734008997840" duration="610000" />
+      <workItem from="1734023116144" duration="14072000" />
+      <workItem from="1734037344083" duration="138000" />
+      <workItem from="1734037525325" duration="5668000" />
+      <workItem from="1734082938506" duration="3544000" />
+      <workItem from="1734086491388" duration="289000" />
+      <workItem from="1734086799828" duration="1427000" />
+      <workItem from="1734088234110" duration="87000" />
+      <workItem from="1734088441098" duration="148000" />
+      <workItem from="1734088656133" duration="6430000" />
+      <workItem from="1734097508832" duration="2989000" />
+      <workItem from="1734100935661" duration="26592000" />
+      <workItem from="1734158335512" duration="12227000" />
+      <workItem from="1734187381914" duration="6292000" />
+      <workItem from="1734193937312" duration="2564000" />
+      <workItem from="1734197298875" duration="10581000" />
+      <workItem from="1734279030313" duration="1579000" />
+      <workItem from="1734280681317" duration="10166000" />
+      <workItem from="1734292653506" duration="2157000" />
+      <workItem from="1734331814388" duration="3472000" />
+      <workItem from="1734371156437" duration="2000" />
+      <workItem from="1734460372475" duration="2213000" />
+      <workItem from="1734515077904" duration="264000" />
+      <workItem from="1734515347970" duration="2423000" />
+      <workItem from="1734885468597" duration="727000" />
+      <workItem from="1735044736839" duration="9459000" />
+      <workItem from="1735055640289" duration="9836000" />
+      <workItem from="1735065531075" duration="7610000" />
+      <workItem from="1735073152716" duration="1773000" />
+      <workItem from="1735075060133" duration="4163000" />
+      <workItem from="1735079231574" duration="31000" />
+      <workItem from="1735080849137" duration="11000" />
+      <workItem from="1735080869450" duration="36000" />
+      <workItem from="1735080910334" duration="26000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/game/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/cluster/src/main/java/com/nodule/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/game/src/main/java/com/game/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/center/src/main/java/com/center/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/gate/src/main/java/com/game/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/cluster/kafka/src/main/java/com/gate/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/cluster/web/src/main/java/com/web/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/chat/src/main/java/com/chat/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/cluster/src/main/java/com/common/module/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/demo/src/main/java/com/example/demo/DemoApplication.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/common/module/internal/netty/test/AttributeServer.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServerHandler.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServerProtobufHandler.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/BaseConfigUtil.java</url>
+          <line>150</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/common/module/network/grpc/GrpcTopicObserver.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.common.module.cluster.node.entity.ServerEntity" memberName="grpcClientPort" />
+        <PinnedItemInfo parentTag="java.util.LinkedHashMap$Entry" memberName="value" />
+        <PinnedItemInfo parentTag="org.redisson.RedissonTopic" memberName="name" />
+        <PinnedItemInfo parentTag="com.game.proto.CommonProto$msg" memberName="any_" />
+        <PinnedItemInfo parentTag="io.netty.buffer.UnpooledByteBufAllocator$InstrumentedUnpooledUnsafeHeapByteBuf" memberName="array" />
+        <PinnedItemInfo parentTag="com.game.proto.CommonProto$msg" memberName="data_" />
+        <PinnedItemInfo parentTag="java.lang.String" memberName="value" />
+        <PinnedItemInfo parentTag="java.lang.Class" memberName="name" />
+        <PinnedItemInfo parentTag="java.util.LinkedHashMap$Entry" memberName="key" />
+        <PinnedItemInfo parentTag="com.common.module.cluster.event.GrpcTopicMsg" memberName="topic" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="((DefaultChannelHandlerContext)ctx).prev" custom="io.netty.channel.DefaultChannelHandlerContext" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
