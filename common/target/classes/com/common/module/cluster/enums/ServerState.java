@@ -3,6 +3,13 @@ package com.common.module.cluster.enums;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <服务器状态枚举类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public enum ServerState {
 
     UNKNOWN(0, false), //无状态，白名单可设置进入

@@ -3,9 +3,6 @@ package com.common.module.internal.db.annotation;
 
 import java.lang.annotation.*;
 
-/**
- * MySQL持久化字段的自定义持久化和加载方式
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Inherited

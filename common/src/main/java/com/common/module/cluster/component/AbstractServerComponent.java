@@ -4,10 +4,10 @@ import com.common.module.cluster.constant.ClusterConstant;
 import com.common.module.cluster.enums.ServerType;
 import com.common.module.cluster.property.PropertyConfig;
 import com.common.module.internal.base.BaseConfigUtil;
-import com.common.module.internal.cache.redission.RedissonClient;
 import com.common.module.internal.db.entity.IdentityCreator;
 import com.common.module.internal.db.entity.Repositories;
 import com.common.module.internal.loader.Scanner;
+import com.common.module.network.netty.message.MsgManager;
 import com.common.module.util.PrintManager;
 import com.common.module.util.SystemUtils;
 import org.slf4j.Logger;
@@ -16,6 +16,13 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <服务器组件抽象类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public abstract class AbstractServerComponent implements ServerSuperComponent {
 
     public static final Logger log = LoggerFactory.getLogger(AbstractServerComponent.class);
@@ -27,7 +34,7 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
 
     protected abstract void startRegister();
 
-    protected abstract void startDb();
+    protected abstract void startDatabase();
 
     protected abstract void startGrpcServer();
 
@@ -62,11 +69,11 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
             log.info("======================= [{}] 初始化集群配置完毕 =======================", serverType().getName());
 
             // (4)初始化基础配置
-            BaseConfigUtil.load(PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.JSON_PATH));
+            BaseConfigUtil.getInstance().load(PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.JSON_PATH));
             log.info("======================= [{}] 初始化基础配置完毕 =======================", serverType().getName());
 
             // (5)扫描单例
-            Scanner.scan("com.common.module", "com." + serverType().getName().replace("-", "."));
+            Scanner.getInstance().scan("com.common.module", "com." + serverType().getName().replace("-", "."));
             log.info("======================= [{}] 扫描单例完毕 =======================", serverType().getName());
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -78,7 +85,7 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
         long begin = System.currentTimeMillis();
         startRedission();
         startRegister();
-        startDb();
+        startDatabase();
         startGrpcServer();
         startJettyServer();
         startNettyServer();
@@ -90,15 +97,12 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
     @Override
     public void stop() {
         try {
+            int players = MsgManager.kitOutAll();
+            if (players != 0) {
+                log.info("======================= [{}] kit out [{}] player =======================", serverType().getServerId(), players);
+            }
             Repositories.flushAll();
-            log.info("======================= [{}] all player data updated =======================", serverType().getServerId());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-
-        try {
-            RedissonClient.shutdown();
-            log.info("======================= [{}] redission stopped =======================", serverType().getServerId());
+            log.info("======================= [{}] all db data updated =======================", serverType().getServerId());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

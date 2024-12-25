@@ -1,12 +1,19 @@
 package com.common.module.cluster.enums;
 
+/**
+ * <服务器类型枚举类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public enum ServerType {
     ALL_SERVER(0, "all-server", ""),
-    GATE_SERVER(1, "gate-server", ""),
-    LOGIN_SERVER(2, "login-server", ""),
-    GAME_SERVER(3, "game-server", ""),
-    CHAT_SERVER(4, "chat-server", ""),
-    WEB_SERVER(5, "web-server", ""),
+    CHAT_SERVER(1, "chat-server", ""),
+    GAME_SERVER(2, "game-server", ""),
+    GATE_SERVER(3, "gate-server", ""),
+    GM_SERVER(4, "gm-server", ""),
+    LOGIN_SERVER(5, "login-server", ""),
     ;
 
     private final int value;

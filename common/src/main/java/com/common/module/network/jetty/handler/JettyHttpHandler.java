@@ -21,6 +21,14 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <Jetty处理器实现类>
+ * <p>
+ * ps: 监听http请求
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class JettyHttpHandler extends AbstractHandler {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 

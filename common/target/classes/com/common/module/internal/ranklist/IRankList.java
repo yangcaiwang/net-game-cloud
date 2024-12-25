@@ -4,6 +4,13 @@ package com.common.module.internal.ranklist;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * <排行榜接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 interface IRankList<E extends AbstractRankMember<E>> {
 
 	/**

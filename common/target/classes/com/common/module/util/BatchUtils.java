@@ -11,6 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <批量操作工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class BatchUtils {
 
 	private static final Logger log = LoggerFactory.getLogger(BatchUtils.class);

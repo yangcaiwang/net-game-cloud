@@ -9,11 +9,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class IoHandlers {
-	private static final Logger log = LoggerFactory.getLogger(IoHandlers.class);
-	private static final IoHandlers handlersMgr = new IoHandlers();
+/**
+ * <方法处理器的管理器实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
+public class MethodHandlerManager {
+	private static final Logger log = LoggerFactory.getLogger(MethodHandlerManager.class);
+	private static final MethodHandlerManager handlersMgr = new MethodHandlerManager();
 
-	public static IoHandlers getInstance() {
+	public static MethodHandlerManager getInstance() {
 		return handlersMgr;
 	}
 

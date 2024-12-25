@@ -26,13 +26,27 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * <类扫描器实现类>
+ * <p>
+ * ps: 扫描指定包下所有继承AbstractService的业务接口
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class Scanner {
 
     private static final Logger log = LoggerFactory.getLogger(Scanner.class);
 
     public static Set<Class<?>> classes = Sets.newHashSet();
 
-    public static <T> void scan(String... packPaths) {
+    private static Scanner scanner = new Scanner();
+
+    public static Scanner getInstance() {
+        return scanner;
+    }
+
+    public <T> void scan(String... packPaths) {
         for (String path : packPaths) {
             scan(classes, path, null, clz -> {
                 try {
@@ -78,11 +92,11 @@ public class Scanner {
      * @param rootPackage 开始扫描的包目录
      * @param classFilter class过滤器
      */
-    public static void scan(Set<Class<?>> classes, String rootPackage, ClassFilter classFilter) {
+    public void scan(Set<Class<?>> classes, String rootPackage, ClassFilter classFilter) {
         scan(classes, rootPackage, null, classFilter);
     }
 
-    public static void scan(Set<Class<?>> classes, String rootPackage, ProjectFilter projectFilter, ClassFilter classFilter) {
+    public void scan(Set<Class<?>> classes, String rootPackage, ProjectFilter projectFilter, ClassFilter classFilter) {
         scan(classes, rootPackage, projectFilter, ClassLoader.getSystemClassLoader(), classFilter);
     }
 
@@ -94,7 +108,7 @@ public class Scanner {
      * @param projectFilter 项目过滤器
      * @param classFilter   class过滤器
      */
-    public static void scan(Set<Class<?>> classes, String rootPackage, ProjectFilter projectFilter, ClassLoader loader, ClassFilter classFilter) {
+    public void scan(Set<Class<?>> classes, String rootPackage, ProjectFilter projectFilter, ClassLoader loader, ClassFilter classFilter) {
         if (rootPackage == null)
             rootPackage = "";
         rootPackage = rootPackage.replace('/', '.');
@@ -128,7 +142,7 @@ public class Scanner {
         }
     }
 
-    private static void doFile(String packageDir, Set<Class<?>> classes, File file, ClassFilter classFilter) {
+    private void doFile(String packageDir, Set<Class<?>> classes, File file, ClassFilter classFilter) {
         if (file.isFile() && file.getName().endsWith(".class")) {
             doClassFile(packageDir, classes, file, classFilter);
         } else if (file.isDirectory()) {
@@ -146,7 +160,7 @@ public class Scanner {
         }
     }
 
-    private static void doClassFile(String packageDir, Set<Class<?>> classes, File file, ClassFilter classFilter) {
+    private void doClassFile(String packageDir, Set<Class<?>> classes, File file, ClassFilter classFilter) {
         Class<?> clz = null;
         try {
             String classSimpleName = file.getName().substring(0, file.getName().length() - 6);
@@ -168,7 +182,7 @@ public class Scanner {
         }
     }
 
-    private static void doJar(String rootPackage, Set<Class<?>> classes, JarFile jarFile, ClassFilter classFilter) {
+    private void doJar(String rootPackage, Set<Class<?>> classes, JarFile jarFile, ClassFilter classFilter) {
         Enumeration<JarEntry> enumeration = jarFile.entries();
         while (enumeration.hasMoreElements()) {
             JarEntry entry = enumeration.nextElement();

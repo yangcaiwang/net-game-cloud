@@ -30,7 +30,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * DAO操作
+ * <DAO操作实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 final public class DaoImpl implements IDao {
 
@@ -387,7 +391,7 @@ final public class DaoImpl implements IDao {
     @Override
     public <T extends DBEntity> Boolean createTableIfNotExists(Class<T> entityType, String aliasName, String tableName) {
         try {
-            Integer result = executeUpdate(aliasName, buildSQL(entityType, SQLType.CREATETABLE, tableName));
+            Integer result = executeUpdate(aliasName, buildSQL(entityType, SQLType.CREATE_TABLE, tableName));
             return result >= 0;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -569,7 +573,7 @@ final public class DaoImpl implements IDao {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
-            sql = buildSQL(entityType, SQLType.INSERTONDUPLICATEKEYUPDATE, tableName);
+            sql = buildSQL(entityType, SQLType.INSERT_EXIST_KEY_UPDATE, tableName);
             conn = open(aliasName);
             if (useInnodb())
                 conn.setAutoCommit(false);
@@ -643,7 +647,7 @@ final public class DaoImpl implements IDao {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
-            sql = buildSQL(entityType, SQLType.INSERTIGNORE, tableName);
+            sql = buildSQL(entityType, SQLType.INSERT_IGNORE, tableName);
             conn = open(aliasName);
             if (useInnodb())
                 conn.setAutoCommit(false);
@@ -759,7 +763,7 @@ final public class DaoImpl implements IDao {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
-            sql = buildSQL(entityType, SQLType.DELETEBYKEY, tab);
+            sql = buildSQL(entityType, SQLType.DELETE_BY_KEY, tab);
             conn = open(aliasName);
             if (useInnodb())
                 conn.setAutoCommit(false);
@@ -900,7 +904,7 @@ final public class DaoImpl implements IDao {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
-            sql = buildSQL(entityType, SQLType.DELETEBYKEY, tableName);
+            sql = buildSQL(entityType, SQLType.DELETE_BY_KEY, tableName);
             conn = open(aliasName);
             if (useInnodb())
                 conn.setAutoCommit(false);
@@ -962,7 +966,7 @@ final public class DaoImpl implements IDao {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
-            sql = buildSQL(entityType, SQLType.UPDATEBYKEY, tableName);
+            sql = buildSQL(entityType, SQLType.UPDATE_BY_KEY, tableName);
             conn = open(aliasName);
             if (useInnodb())
                 conn.setAutoCommit(false);
@@ -1069,7 +1073,7 @@ final public class DaoImpl implements IDao {
         String sql = null;
         List<T> result = Lists.newArrayList();
         try {
-            sql = buildSQL(entityType, SQLType.SELECTALL, tableName);
+            sql = buildSQL(entityType, SQLType.SELECT_ALL, tableName);
             conn = open(aliasName);
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -1132,7 +1136,7 @@ final public class DaoImpl implements IDao {
         ResultSet rs = null;
         String sql = null;
         try {
-            sql = buildSQL(entityType, SQLType.SELECTBYKEY, tableName);
+            sql = buildSQL(entityType, SQLType.SELECT_BY_KEY, tableName);
             conn = open(aliasName);
             pst = conn.prepareStatement(sql);
             com.common.module.internal.db.dao.Wrapper.getInstance().wrap(pst, pks);
@@ -1225,7 +1229,7 @@ final public class DaoImpl implements IDao {
         String sql = null;
         Map<String, T> result = Maps.newHashMap();
         try {
-            sql = String.format(buildSQL(entityType, SQLType.SELECTIN, tableName), SELECT.BUILDKEYSIN(entityType, keys));
+            sql = String.format(buildSQL(entityType, SQLType.SELECT_IN, tableName), SELECT.BUILDKEYSIN(entityType, keys));
             conn = open(aliasName);
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -1270,7 +1274,7 @@ final public class DaoImpl implements IDao {
         String sql = null;
         List<T> result = Lists.newArrayList();
         try {
-            sql = String.format(buildSQL(entityType, SQLType.SELECTBYCONDITION, tableName), condition);
+            sql = String.format(buildSQL(entityType, SQLType.SELECT_BY_CONDITION, tableName), condition);
             conn = open(aliasName);
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -1288,12 +1292,12 @@ final public class DaoImpl implements IDao {
     }
 
     @Override
-    public <T extends DBEntity> void query(Class<T> entityType, String sql, Querier querier) {
-        query(aliasName(entityType), sql, querier);
+    public <T extends DBEntity> void query(Class<T> entityType, String sql, Query query) {
+        query(aliasName(entityType), sql, query);
     }
 
     @Override
-    public void query(String aliasName, String sql, Querier querier) {
+    public void query(String aliasName, String sql, Query query) {
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -1301,9 +1305,9 @@ final public class DaoImpl implements IDao {
             conn = open(aliasName);
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            if (querier != null) {
+            if (query != null) {
                 while (rs != null && rs.next()) {
-                    querier.accept(rs);
+                    query.accept(rs);
                 }
             }
         } catch (Exception e) {

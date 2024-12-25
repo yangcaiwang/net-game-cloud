@@ -15,6 +15,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * <字符串工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class StringUtils {
 
 	public static final String CHARSET_NAME = "UTF-8";
@@ -241,11 +248,6 @@ public class StringUtils {
 
 	/**
 	 * str中是否不包含type类型的字符
-	 * 
-	 * @param str
-	 * @param type
-	 * @see {@link Type}
-	 * @return
 	 */
 	public static boolean stringNotContainIt(String str, Type type) {
 
@@ -269,11 +271,6 @@ public class StringUtils {
 
 	/**
 	 * str中是否包含type类型的字符
-	 * 
-	 * @param str
-	 * @param type
-	 * @see {@link Type}
-	 * @return
 	 */
 	public static boolean stringContainIt(String str, Type type) {
 
@@ -481,19 +478,4 @@ public class StringUtils {
 		}
 		return ss;
 	}
-
-	public static void main(String[] args) {
-//		System.err.println(toString(new AbstractService() {
-//		}));
-//		byte[] bs = new byte[] { 1, 2, 3, 4 };
-//		// String s = "abcd";
-//		String s = Arrays.toString(bs);
-//		String u = s2u(s);
-//		System.err.println(u);
-//		System.err.println(u2s(u));
-//
-//		System.err.println(bs2u(bs));
-
-	}
-
 }

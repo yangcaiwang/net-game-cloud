@@ -4,6 +4,13 @@ package com.common.module.util;
 import com.google.protobuf.Message;
 import com.google.protobuf.util.JsonFormat;
 
+/**
+ * <协议转换工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ProtoJsonUtils {
 	public static String toJson(Message message) {
 		String json;

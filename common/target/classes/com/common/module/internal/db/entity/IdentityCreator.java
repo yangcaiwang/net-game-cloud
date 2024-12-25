@@ -5,9 +5,12 @@ import com.common.module.cluster.enums.ServerType;
 import com.common.module.util.SnowflakeIdWorker;
 
 /**
- * 分布式id生成器 :雪花算法实现
+ * <分布式id生成器工具类>
+ * <p>
+ * ps: 雪花算法实现
  *
- * @author yangcaiwang
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class IdentityCreator {
 

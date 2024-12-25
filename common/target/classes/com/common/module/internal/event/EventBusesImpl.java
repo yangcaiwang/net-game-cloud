@@ -18,8 +18,14 @@ import java.util.Map.Entry;
 import java.util.concurrent.Executor;
 
 /**
+ * <公共事件实现类>
+ * <p>
+ * ps:
  * 事件管理,根据guava事件机制重写的,支持同步和异步两种事件发布,并且异步发布事件可以保证相同事件的线性执行,
  * 事件消费者不可以是父类的方法,避免在父/子类重复监听相同事件,一个监听者不可以多次监听同一个事件,避免执行重复逻辑出现不可知异常
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class EventBusesImpl {
 

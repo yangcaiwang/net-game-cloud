@@ -16,6 +16,13 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+/**
+ * <业务接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public interface IService {
 
 	/**
@@ -148,7 +155,7 @@ public interface IService {
 	/**
 	 * 移除延迟任务
 	 * 
-	 * @param id
+	 * @param id id
 	 * @return ServerTimerTask
 	 */
 	default ServerTimerTask removeDelayTask(String id) {

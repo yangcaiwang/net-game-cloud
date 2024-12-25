@@ -3,6 +3,13 @@ package com.common.module.cluster.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <网络中间件开启枚举类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public enum Begin {
     GRPC_C("grpc"),
     GRPC_S("grpc"),

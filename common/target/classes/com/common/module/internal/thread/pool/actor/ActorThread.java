@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * actor线程
+ * <actor线程任务实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 final class ActorThread implements Runnable, ICoreTask {
 

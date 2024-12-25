@@ -1,6 +1,6 @@
 package com.common.module.network.netty.listener;
 
-import com.common.module.network.netty.common.IClient;
+import com.common.module.internal.thread.task.linked.AbstractLinkedTask;
 import com.game.proto.CommonProto;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,20 +8,39 @@ import io.netty.channel.ChannelHandlerContext;
 import java.util.concurrent.Executor;
 
 /**
- * netty 消息异步监听器
+ * <netty消息异步监听器接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
-public interface MessageListener {
+public interface MessageListener extends MessageSuperListener {
+
+    @Override
+    default void handle(ChannelHandlerContext ctx, Executor executor, CommonProto.msg req) throws Exception {
+        MessageListener listener = this;
+
+        executor.execute(new AbstractLinkedTask() {
+            @Override
+            protected void exec() throws Exception {
+                listener.exec(ctx.channel(), req);
+            }
+
+            @Override
+            public Object getIdentity() {
+                Object attr = req.getPlayerId();
+                if ((long) attr <= 0L) {
+                    attr = ctx.channel().id().asLongText();
+                }
+                return attr;
+            }
+        });
+    }
 
     /**
-     * 处理消息
-     *
-     * @param ctx      网络链接句柄
-     * @param executor 线程池
-     * @param req      小写内容
+     * 异步链式处理websocket请求
      */
-    void handle(ChannelHandlerContext ctx, Executor executor, CommonProto.msg req) throws Exception;
+    void exec(Channel channel, CommonProto.msg req) throws Exception;
 
-    default void onConnectSuc(Channel channel, CommonProto.msg msg) throws Exception {}
-
-    default void onChannelClose(Channel channel, IClient.OfflineCause offlineCause){}
+    CommonProto.msg process(Channel channel, CommonProto.msg req) throws Exception;
 }

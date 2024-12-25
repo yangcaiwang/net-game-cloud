@@ -18,7 +18,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 绑定线程的任务池（模拟actor模型） 线程间任务队列不可见，每个线程有自己的任务队列，可根据需求实现单线程模型的业务场景
+ * <actor线程池实现类>
+ * <p>
+ * ps: 绑定线程的任务池（模拟actor模型） 线程间任务队列不可见，每个线程有自己的任务队列，可根据需求实现单线程模型的业务场景
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 final public class ActorThreadPoolExecutor implements Executor, ICoreTask {
     private static final Logger log = LoggerFactory.getLogger(ActorThreadPoolExecutor.class);
@@ -141,15 +146,15 @@ final public class ActorThreadPoolExecutor implements Executor, ICoreTask {
     }
 
     boolean isStopped() {
-        for (int i = 0; i < actor_thread_array.length; i++) {
-            if (actor_thread_array[i] != null && !actor_thread_array[i].isStopped()) {
+        for (ActorThread actorThread : actor_thread_array) {
+            if (actorThread != null && !actorThread.isStopped()) {
                 return false;
             }
         }
         return true;
     }
 
-   public void shutdown() {
+    public void shutdown() {
         log.warn("shutdown 线程池 [{}],各子线程待执行任务[{}]", threadName, getNumberOfPendingExecutions());
         for (ActorThread taskThread : actor_thread_array) {
             if (taskThread != null)
@@ -158,7 +163,7 @@ final public class ActorThreadPoolExecutor implements Executor, ICoreTask {
         log.info("停线程完毕执行完毕！！！！");
     }
 
-    public void shutdownfully() {
+    public void shutdownFully() {
         shutdown();
         while (!isStopped()) {
             SystemUtils.sleep(1, TimeUnit.SECONDS);

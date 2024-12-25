@@ -7,6 +7,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
+/**
+ * <排行榜成员抽象类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public abstract class AbstractRankMember<E extends AbstractRankMember<E>> implements IRankMember<E>, Serializable {
 
     transient protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -66,9 +73,6 @@ public abstract class AbstractRankMember<E extends AbstractRankMember<E>> implem
 
     /**
      * 比较成绩确定顺序
-     *
-     * @param e
-     * @return
      */
     protected abstract int compare2(E e);
 

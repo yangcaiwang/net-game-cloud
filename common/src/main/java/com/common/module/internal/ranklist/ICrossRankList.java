@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-
+/**
+ * <跨服排行榜接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public interface ICrossRankList<E extends AbstractRankMember<E>> {
     /**
      * 排行榜默认容量

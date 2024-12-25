@@ -10,6 +10,13 @@ import java.lang.reflect.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * <类工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ClassUtils {
 
 	public static void main(String[] args) {

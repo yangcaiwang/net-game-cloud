@@ -20,10 +20,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * <热更脚本工具类>
+ * <p>
+ * ps:
  * 脚本执行流程控制,低版本groovy不支持拉姆达表达式,需要在热更用groovy代替java类执行时,
  * 需要把拉姆达表达式替换成闭包方式或者原生java代码
  *
- * @author Administrator
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class Scripts {
 
@@ -163,11 +167,11 @@ public class Scripts {
             }
             Class<T> clz = groovyClassLoader.parseClass(file);
 
-			Constructor<T> constructor = (Constructor<T>) clz.getDeclaredConstructors()[0];
-			constructor.setAccessible(true);
-			T script = (T) constructor.newInstance();
+            Constructor<T> constructor = (Constructor<T>) clz.getDeclaredConstructors()[0];
+            constructor.setAccessible(true);
+            T script = (T) constructor.newInstance();
             EventBusesImpl.getInstance().syncPublish(HotScriptEvent.valueOf(script));
-			return script;
+            return script;
         } catch (Exception e) {
             log.error(String.format("创建脚本失败,file=[%s],error=[%s]", file, e.getMessage()), e);
             return null;

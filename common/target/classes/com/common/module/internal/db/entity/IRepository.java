@@ -3,7 +3,7 @@ package com.common.module.internal.db.entity;
 
 import com.common.module.internal.db.Mysql;
 import com.common.module.internal.db.dao.DaoImpl;
-import com.common.module.internal.db.dao.Querier;
+import com.common.module.internal.db.dao.Query;
 import com.common.module.util.ArraysUtils;
 import com.common.module.util.CollectionUtils;
 import com.google.common.collect.Lists;
@@ -22,9 +22,12 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * 数据仓库超类
+ * <数据仓库超类>
+ * <p>
+ * ps: 雪花算法实现
  *
- * @param <T>
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public interface IRepository<T extends DBEntity> {
 
@@ -35,7 +38,6 @@ public interface IRepository<T extends DBEntity> {
      *                </p>
      *                参考 @see {@link DBEntityUtils} 的getValue(entity,field)
      * @param joiner  连接符, and 或者 or
-     * @return
      */
     default String options(Map<String, Object> options, String joiner) {
 
@@ -60,15 +62,11 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 获取实体类型
-     *
-     * @return
      */
     Class<T> entityType();
 
     /**
      * 数据表
-     *
-     * @return
      */
     Set<String> tables();
 
@@ -90,10 +88,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 构造一个实体
-     *
-     * @param predicate 过滤器
-     * @param pks       主键
-     * @return
      */
     default T newEntityInstance(Predicate<T> predicate, Serializable... pks) {
         return DBEntityUtils.newEntityInstance(predicate, entityType(), pks);
@@ -101,8 +95,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 从db.table中查询一部分数据 select *from table limit begin,end
-     *
-     * @return
      */
     default List<T> limitList(long begin, long end) {
         Class<T> entityType = entityType();
@@ -115,8 +107,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 从db.table中查询一部分数据 select *from table limit num
-     *
-     * @return
      */
     default List<T> limitList(int limit) {
         return limitList(0, limit);
@@ -124,9 +114,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 根据自定义sql语句查询
-     *
-     * @param sql
-     * @return
      */
     default List<Map<String, Object>> query(String sql) {
 
@@ -135,20 +122,14 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 根据自定义sql语句查询
-     *
-     * @param sql
-     * @param querier 获取ResultSet数据集的包装器
      */
-    default void query(String sql, Querier querier) {
+    default void query(String sql, Query query) {
 
-        DaoImpl.getInstance().query(entityType(), sql, querier);
+        DaoImpl.getInstance().query(entityType(), sql, query);
     }
 
     /**
      * 根据自定义条件语句查询
-     *
-     * @param condition
-     * @return
      */
     default List<T> queryWithCondition(String condition) {
 
@@ -230,9 +211,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 直接通过主键的值获取实体,如果使用了缓存,会优先从缓存获取,缓存没有就db获取,db没有返回null,db有加入缓存并返回
-     *
-     * @param pks
-     * @return
      */
     default T get(Serializable... pks) {
         return DaoImpl.getInstance().query(entityType(), pks);
@@ -241,9 +219,6 @@ public interface IRepository<T extends DBEntity> {
     /**
      * 直接通过一批主键(联合主键数字,每个字段都必须是可序列化的)的值获取一批实体
      * 如果使用了缓存,会优先从缓存获取,缓存没有就db获取,db没有返回null,db有加入缓存并返回
-     *
-     * @param pksArray 多个实体的主键的数组
-     * @return
      */
     default Map<String, T> getAll(Serializable[]... pksArray) {
         List<Serializable[]> pksList = Lists.newArrayList(pksArray);
@@ -253,9 +228,6 @@ public interface IRepository<T extends DBEntity> {
     /**
      * 直接通过一批主键(联合主键数字,每个字段都必须是可序列化的)的值获取一批实体
      * 如果使用了缓存,会优先从缓存获取,缓存没有就db获取,db没有返回null,db有加入缓存并返回
-     *
-     * @param pksList 多个实体的主键的集合
-     * @return
      */
     default Map<String, T> getAll(List<Serializable[]> pksList) {
         return DaoImpl.getInstance().queryAll(entityType(), pksList);
@@ -264,9 +236,6 @@ public interface IRepository<T extends DBEntity> {
     /**
      * 直接通过一批主键(必须是唯一整数型(byte,short,int,long),不包含浮点和Decmal),都统一转成long,获取一批实体
      * 如果使用了缓存,会优先从缓存获取,缓存没有就db获取,db没有返回null,db有加入缓存并返回
-     *
-     * @param keys 多个实体的主键的集合
-     * @return
      */
     default Map<String, T> getAll(Collection<Long> keys) {
         return DaoImpl.getInstance().queryAll(entityType(), keys);
@@ -275,9 +244,6 @@ public interface IRepository<T extends DBEntity> {
     /**
      * 直接通过一批主键(联合主键拼接后组成的字符串)获取一批实体
      * 如果使用了缓存,会优先从缓存获取,缓存没有就db获取,db没有返回null,db有加入缓存并返回
-     *
-     * @param keys 多个实体的主键拼接的字符串集合
-     * @return
      */
     default Map<String, T> getAll(Iterable<String> keys) {
         List<Serializable[]> pksList = Lists.newArrayList();
@@ -297,9 +263,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * list 转 map
-     *
-     * @param list
-     * @return
      */
     default Map<String, T> toMap(List<T> list) {
         return list.stream().collect(Collectors.toMap(T::getKey, v -> v));
@@ -307,8 +270,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 直接从db加载所有数据
-     *
-     * @return
      */
     default List<T> listAll() {
         long dataCount = dataCount();
@@ -321,9 +282,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 直接从db加载数据,这个使用的是 and 查询
-     *
-     * @param options 传入的条件值键值对,field:value
-     * @return
      */
     default List<T> list(Map<String, Object> options) {
 
@@ -332,9 +290,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 直接从db加载数据,,这个使用的是 or 模糊查询
-     *
-     * @param options 传入的条件值键值对,field:value
-     * @return
      */
     default List<T> listBlurry(Map<String, Object> options) {
 
@@ -343,9 +298,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 根据条件直接从db查询数据,
-     *
-     * @param condition 在sql语句where 后面的内容
-     * @return
      */
     default List<T> list(String condition) {
 
@@ -354,10 +306,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 根据条件直接从db查询数据,
-     *
-     * @param field 字段名
-     * @param value 值
-     * @return
      */
     default List<T> list(String field, Object value) {
 
@@ -368,10 +316,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 根据条件直接从db查询数据,确保该字段符合条件的只有一条数据,通常只有这个字段名表示主键或者唯一索引才可以这么用
-     *
-     * @param field 字段名
-     * @param value 值
-     * @return
      */
     default T get(String field, Object value) {
 
@@ -381,8 +325,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * mysql.table数据条数
-     *
-     * @return
      */
     default long dataCount() {
 
@@ -439,8 +381,6 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 创建新对象主键(仅仅对单表并且唯一long(18)主键有效)
-     *
-     * @return
      */
     long makePk();
 
@@ -599,14 +539,11 @@ public interface IRepository<T extends DBEntity> {
 
     /**
      * 是否需要加入仓库组
-     *
-     * @return 默认需要，不需要的自行关闭
      */
     default boolean needCheckJoinGroup() {
         return true;
     }
 
     default void serverClose() {
-
     }
 }

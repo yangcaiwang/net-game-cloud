@@ -12,7 +12,12 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 
 /**
- * 数据库存储的字段模版信息
+ * <db实体字段类>
+ * <p>
+ * ps: 数据库存储的字段模版信息
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class DbField implements Serializable {
 

@@ -3,6 +3,13 @@ package com.common.module.internal.ranklist;
 
 import com.common.module.internal.event.AbstractEventObserver;
 
+/**
+ * <排行榜观察者实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 class RankListObserver extends AbstractEventObserver {
 
 //	@EventSubscriber

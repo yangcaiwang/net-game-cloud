@@ -5,9 +5,16 @@ import com.common.module.internal.event.AbstractEventObserver;
 
 import java.util.Iterator;
 
+/**
+ * <服务器定时播报观察者实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 class ServerTimerObserver extends AbstractEventObserver {
 
-	private void recv(ServerTimer.ServerTimePassEvent event) {
+	private void rec(ServerTimer.ServerTimePassEvent event) {
 		if (event.passType == ServerTimer.PassType.SECOND) {
 			Iterator<ServerTimerTask> iterator = ServerTimerTaskQueue.getInstance().taskMap.values().iterator();
 			while (iterator.hasNext()) {

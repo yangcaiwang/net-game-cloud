@@ -7,6 +7,14 @@ import com.google.common.collect.Sets;
 
 import java.util.*;
 import java.util.Map.Entry;
+
+/**
+ * <集合操作工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class CollectionUtils {
 
 	/**

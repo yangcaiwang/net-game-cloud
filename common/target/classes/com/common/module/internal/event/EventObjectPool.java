@@ -7,6 +7,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * <事件对象池实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class EventObjectPool {
 
     private static Logger logger = LoggerFactory.getLogger(EventObjectPool.class);

@@ -4,8 +4,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 负载均衡策略
- * 权重最小连接数
+ * <集群中基础服务类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 class BaseServer {
     private String name;

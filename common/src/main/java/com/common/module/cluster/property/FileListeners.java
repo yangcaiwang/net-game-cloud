@@ -4,6 +4,7 @@ package com.common.module.cluster.property;
 import com.common.module.internal.thread.pool.scheduled.ScheduledExecutorServiceScheduler;
 import com.common.module.internal.thread.task.scheduled.AbstractScheduledTask;
 import com.google.common.collect.Maps;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -13,10 +14,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * <文件监听类>
+ * <p>
+ * ps: 用于热更配置
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class FileListeners {
 
-	static private final org.slf4j.Logger log = LoggerFactory.getLogger(FileListeners.class);
+	static private final Logger log = LoggerFactory.getLogger(FileListeners.class);
 
 	private static FileListeners instance;
 

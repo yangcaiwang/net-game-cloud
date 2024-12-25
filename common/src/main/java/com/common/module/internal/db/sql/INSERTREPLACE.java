@@ -7,9 +7,6 @@ import com.common.module.internal.db.entity.DBEntityUtils;
 import java.lang.reflect.Field;
 import java.util.LinkedHashSet;
 
-/**
- * REPLACE的运行与INSERT很相像,但是如果旧记录与新记录有相同的值,则在新记录被插入之前,旧记录被删除
- */
 public final class INSERTREPLACE {
 
 	public static <T extends DBEntity> String BUILDSQL(Class<T> entityType, String table) {

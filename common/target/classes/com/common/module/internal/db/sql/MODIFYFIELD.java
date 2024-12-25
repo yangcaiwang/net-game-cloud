@@ -11,9 +11,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 更改字段的设定属性
- */
 public class MODIFYFIELD {
 
 	public static <T extends DBEntity> List<String> BUILDSQL(String table, Field... fields) {

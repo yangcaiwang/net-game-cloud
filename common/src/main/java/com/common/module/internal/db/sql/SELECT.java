@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 
 public final class SELECT {
-
 	public static <T extends DBEntity> String BUILDSQL(Class<T> entityType, String table) {
 
 		return BUILDSQL(table);
@@ -28,18 +27,6 @@ public final class SELECT {
 	}
 
 	public static <T extends DBEntity> String BUILDSQLBYKEY(String table, LinkedHashSet<Field> fields, LinkedHashSet<Field> keys) {
-
-		// StringBuilder builder = new StringBuilder();
-		// builder.append("select ");// 不使用select *from
-		// // 全表检索,虽然字段多了,效率也不理想,但是理论上不使用全表检索始终还是要好点,就这样吧
-		// int i = 0;
-		// for (Field field : fields) {
-		// builder.append("`").append(DBEntityUtils.columnName(field)).append("`");
-		// if (i < fields.size() - 1) {
-		// builder.append(",");
-		// }
-		// i++;
-		// }
 		StringBuilder builder = new StringBuilder();
 		builder.append(BUILDSELECTSQL(fields));
 		builder.append("from `").append(table).append("`  where ");
@@ -94,32 +81,11 @@ public final class SELECT {
 
 		if (fieldKeySet.size() != 1)
 			throw new RuntimeException("无法查询:" + table + "," + fieldKeySet + "," + keys);
-		// StringBuilder builder = new StringBuilder();
-		// builder.append("select ");
-		// int i = 0;
-		// for (Field field : fields) {
-		// builder.append("`").append(DBEntityUtils.columnName(field)).append("`");
-		// if (i < fields.size() - 1) {
-		// builder.append(",");
-		// }
-		// i++;
-		// }
+
 		StringBuilder builder = new StringBuilder();
 		builder.append(BUILDSELECTSQL(fields));
 		builder.append("from `").append(table).append("`  where `");
 		builder.append(BUILDKEYSIN(fieldKeySet, keys));
-		// Field field = CollectionUtils.peekOnly(fieldKeySet);
-		// String column = DBEntityUtils.columnName(field);
-		// builder.append(column).append("` ").append(" in (");
-		// String table = 0;
-		// for (Long k : keys) {
-		// builder.append(k);
-		// if (index < keys.size() - 1)
-		// builder.append(",");
-		// else
-		// builder.append(")");
-		// index++;
-		// }
 		return builder.toString();
 	}
 
@@ -157,39 +123,10 @@ public final class SELECT {
 	}
 
 	public static <T extends DBEntity> String BUILDSQLBYKEYS(String table, LinkedHashSet<Field> fields, LinkedHashSet<Field> keys, Serializable[]... pksArray) {
-
-		// StringBuilder builder = new StringBuilder();
-		// builder.append("select ");
-		// int i = 0;
-		// for (Field field : fields) {
-		// builder.append("`").append(DBEntityUtils.columnName(field)).append("`");
-		// if (i < fields.size() - 1) {
-		// builder.append(",");
-		// }
-		// i++;
-		// }
 		StringBuilder builder = new StringBuilder();
 		builder.append(BUILDSELECTSQL(fields));
 		builder.append("from `").append(table).append("` where ");
 		builder.append(BUILDKEYSOR(keys, pksArray));
-		// for (int j = 0; j < pksArray.length; j++) {
-		// Serializable[] pk = pksArray[j];
-		// builder.append("(");
-		// int i = 0;
-		// for (Field field : keys) {
-		// builder.append("`").append(DBEntityUtils.columnName(field)).append("`='"
-		// + pk[i] + "'");
-		// if (i < keys.size() - 1) {
-		// builder.append(" and ");
-		// }
-		// i++;
-		// }
-		// if (j < pksArray.length - 1) {
-		// builder.append(") or ");
-		// } else {
-		// builder.append(")");
-		// }
-		// }
 		return builder.toString();
 	}
 
@@ -199,17 +136,6 @@ public final class SELECT {
 	}
 
 	public static <T extends DBEntity> String BUILDSQLBYCONDITION(String table, LinkedHashSet<Field> fields, String condition) {
-
-		// StringBuilder builder = new StringBuilder();
-		// builder.append("select ");
-		// int i = 0;
-		// for (Field field : fields) {
-		// builder.append("`").append(DBEntityUtils.columnName(field)).append("`");
-		// if (i < fields.size() - 1) {
-		// builder.append(",");
-		// }
-		// i++;
-		// }
 		StringBuilder builder = new StringBuilder();
 		builder.append(BUILDSELECTSQL(fields));
 		builder.append("from `").append(table).append("`  where ").append(condition);

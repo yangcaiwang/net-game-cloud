@@ -1,8 +1,8 @@
 package com.common.module.internal.cache.redission;
 
+import com.common.module.internal.cache.redission.event.TopicEvent;
+import com.common.module.internal.cache.redission.event.TopicMessage;
 import com.common.module.internal.event.EventBusesImpl;
-import com.common.module.internal.cache.redission.topic.TopicEvent;
-import com.common.module.internal.cache.redission.topic.TopicMessage;
 import org.redisson.Redisson;
 import org.redisson.api.RTopic;
 import org.redisson.config.Config;
@@ -13,51 +13,43 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * redisson客户端操作者
- * </p>
- * cd F:\work-life
- * </p>
- * 安装命令：redis-server.exe --service-install redis.windows.conf --loglevel verbose
- * </p>
+ * <redission客户端工具类>
  * <p>
- * 启动服务命令：redis-server.exe --service-start
- * </p>
- * <p>
- * 关闭服务命令：redis-server.exe --service-stop
- * </p>
  *
- * @author yangcaiwang
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class RedissonClient {
+    private static Logger logger = LoggerFactory.getLogger(RedissonClient.class);
 
     /**
      * redisson配置
      */
-    private static Config yml;
+    private Config yml;
 
     /**
      * 真正可以执行分布式redis(redisson)操作的客户端会话句柄
      */
-    private static org.redisson.api.RedissonClient redisson;
+    private org.redisson.api.RedissonClient redisson;
 
-    private static Logger logger = LoggerFactory.getLogger(RedissonClient.class);
+    private static RedissonClient redissonClient = new RedissonClient();
 
-    public static Config createConfig(String pathname) throws IOException {
+    public static RedissonClient getInstance() {
+        return redissonClient;
+    }
+
+    public void start(String pathname) throws IOException {
+        if (redisson == null) {
+            Config config = createConfig(pathname);
+            redisson = Redisson.create(config);
+            Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+        }
+    }
+
+    public Config createConfig(String pathname) throws IOException {
         if (yml != null)
             return yml;
         return yml = Config.fromYAML(new File(pathname));
-    }
-
-    public static org.redisson.api.RedissonClient start(Config config) {
-        if (redisson == null)
-            redisson = Redisson.create(config);
-        return redisson;
-    }
-
-    public static void start(String pathname) throws IOException {
-        if (redisson == null) {
-            redisson = start(createConfig(pathname));
-        }
     }
 
     /**
@@ -65,9 +57,9 @@ public class RedissonClient {
      *
      * @param message 消息
      */
-    public static <T extends TopicMessage> void publishTopic(T message) {
+    public <T extends TopicMessage> void publishTopic(T message) {
         try {
-            RTopic topic = redisson().getTopic(message.getTopic());
+            RTopic topic = redisson.getTopic(message.getTopic());
             topic.publishAsync(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,10 +71,10 @@ public class RedissonClient {
      *
      * @param topicNames 话题
      */
-    public static void subscribeTopic(String... topicNames) {
+    public void subscribeTopic(String... topicNames) {
         try {
             for (String topicName : topicNames) {
-                RTopic topic = redisson().getTopic(topicName);
+                RTopic topic = redisson.getTopic(topicName);
                 topic.addListener(TopicMessage.class, (channel, message) -> {
 //                    // 处理接收到的消息
                     EventBusesImpl.getInstance().asyncPublish(channel, new TopicEvent(message));
@@ -94,14 +86,17 @@ public class RedissonClient {
         }
     }
 
-    /**
-     * 获取连接redis的redisson句柄
-     */
-    public static org.redisson.api.RedissonClient redisson() {
-        return redisson;
+    private void stop() {
+        try {
+            if (redisson != null) {
+                redisson.shutdown();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 
-    public static void shutdown() {
-        redisson.shutdown();
+    public org.redisson.api.RedissonClient getRedisson() {
+        return redisson;
     }
 }

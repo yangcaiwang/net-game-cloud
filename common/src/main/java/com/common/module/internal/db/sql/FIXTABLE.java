@@ -22,7 +22,6 @@ public class FIXTABLE {
 	 *            数据表
 	 * @param addMap
 	 *            当前字段:前一个字段
-	 * @return
 	 */
 	public static <T extends DBEntity> String BUILDADDFIELDSQL(String table, LinkedHashMap<Field, Field> addMap) {
 

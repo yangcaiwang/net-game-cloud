@@ -28,7 +28,12 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * 咖啡因缓存延时入库数据仓库</br>
+ * <延时入库仓库抽象类>
+ * <p>
+ * ps: 咖啡因缓存延时入库数据仓库
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepository<E> {
 
@@ -249,16 +254,6 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
                         delEntityCache.remove(v);
                     });
                 }
-
-//                if (reuse) {
-//                    ReuseRepository reuseRepository = getRepository(ReuseEntity.class);
-//                    Iterator<? extends String> iterator = deleteKeys.iterator();
-//                    while (iterator.hasNext()) {
-//                        String id = iterator.next();
-//                        Long lid = TypeUtils.castToLong(id);
-//                        reuseRepository.addReuseId(simpleTableName, lid);
-//                    }
-//                }
             }
         } else {
             if (options == MySQLable.Options.INSERT || options == MySQLable.Options.UPDATE) {
@@ -314,12 +309,12 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
         return true;
     }
 
-    boolean addToDelayCache(E obj) {
-        return delayCache.add(obj);
+    void addToDelayCache(E obj) {
+        delayCache.add(obj);
     }
 
-    boolean addToDelayCache(Collection<E> c) {
-        return delayCache.addAll(c);
+    void addToDelayCache(Collection<E> c) {
+        delayCache.addAll(c);
     }
 
     @Override
@@ -542,9 +537,6 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
             throw new RuntimeException(String.format("%s:%s", entityType, StringUtils.toString(pks)));
         if (!obj.valid())
             throw new RuntimeException(String.format("%s:%s is not valid!", entityType, StringUtils.toString(pks)));
-//		if (clearAll) {
-//			clearAll = false;
-//		}
         return obj;
     }
 
@@ -608,11 +600,7 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
 
         // TODO 如果不调用insert方法 需要手动调用下afterCreated
         obj.insert();
-//		DaoImpl.getInstance().insert(entityType, obj);// 新增实体立刻入库
         localCache.put(obj.getKey(), obj);
-//		if (clearAll) {
-//			clearAll = false;
-//		}
         return obj;
     }
 
@@ -626,9 +614,7 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
             Serializable[] pks = parsed2Pks(mergedKey);
             E obj = newEntityInstance(predicate, pks);
             obj.insert();
-//			result.put(obj.getKey(), obj);
         });
-//		DaoImpl.getInstance().insert(result.values(), entityType);
         localCache.putAll(result);
         return result;
     }
@@ -636,10 +622,6 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
     /**
      * 这里之所以要锁住方法体,是为了避免在并发情况下,多处同时传入相同的keys来获取数据,确保第一次锁就完成创建并添加到缓存,
      * 第二个拿到锁的线程进来可以直接从缓存返回数据不会重复创建
-     *
-     * @param keys
-     * @param predicate
-     * @return
      */
     synchronized Map<String, E> _makeSureAll(Iterable<String> keys, Predicate<E> predicate) {
         Validate.notNull(localCache);
@@ -675,9 +657,6 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
             Map<String, E> createAll = _createAll(sourceKeys, predicate);
             result.putAll(createAll);
         }
-//	if (clearAll) {
-//		clearAll = false;
-//	}
         result.values().removeIf(t -> !t.valid() || (predicate != null && !predicate.test(t)));
         return result;
     }
@@ -711,11 +690,6 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
         });
         return new ArrayList<>(map.values());
     }
-
-//	protected List<E> allCurrentList() {
-//		List<E> cacheList = new ArrayList<>(asMap().values());
-//		return localCache == null ? Collections.emptyMap() : localCache.asMap();
-//	}
 
     protected CacheStats stats() {
         return localCache == null ? null : localCache.stats();
@@ -753,8 +727,6 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
 
     /**
      * 对象被新创建之后,只有缓存和db都没有的时候创建才会调用,new出来的并不会
-     *
-     * @param obj
      */
     protected void afterCreated(E obj) {
         if (PropertyConfig.isDebug()) {
@@ -764,15 +736,12 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
 
     /**
      * 对象被删除前的动作在这里做
-     *
-     * @param obj
      */
     protected void beforeDelete(E obj) {
         if (PropertyConfig.isDebug()) {
             log.info("delete entity and  remove from  cache :" + entityType + "[" + obj.getKey() + "]");
         }
     }
-
 
     public void commitSave(E entity) {
         if (entity.options() == MySQLable.Options.INSERT) {
@@ -814,5 +783,4 @@ abstract public class DelayCachedRepository<E extends DBEntity> extends JdbcRepo
     }
 
     /////////////////////////////////////////////////////// 需要子类重写的方法/////////////////////////////////////////////////////////////////////
-
 }

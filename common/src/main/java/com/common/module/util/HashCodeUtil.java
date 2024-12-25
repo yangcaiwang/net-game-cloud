@@ -1,6 +1,15 @@
 
 package com.common.module.util;
 
+
+/**
+ * <hashcode工具类>
+ * <p>
+ * ps: 包含MD5,BASE64,SHA,CRC32
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 final public class HashCodeUtil {
 
 	/**

@@ -7,12 +7,16 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <netty客户端处理器实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 @ChannelHandler.Sharable
 public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
     private static final Logger log = LoggerFactory.getLogger(NettyClientHandler.class);
-
-    public NettyClientHandler() {
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) throws Exception {

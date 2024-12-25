@@ -5,36 +5,29 @@ import com.common.module.internal.db.constant.RollType;
 
 import java.lang.annotation.*;
 
-/**
- * MySQL数据表,引擎方式由DB决定,这里不做设置
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
 public @interface Table {
 
-    /** 表名，如果不写，默认使用当前t_class.getSimpleName()，必须小写 */
+    /**
+     * 表名，如果不写，默认使用当前t_class.getSimpleName()，必须小写
+     */
     String name() default "";
 
     /**
      * 是否继承父类的字段
-     * 
-     * @return
      */
     boolean mappedSuperclass() default true;
 
     /**
      * 排除一些指定的字段不要,这里的名称是指在mysql-table-column的名称
-     * 
-     * @return
      */
     String[] filterColumns() default {};
 
     /**
      * 是否允许删除条目，默认为true，如果某些数据比如player实体不允许删除，修改注解为false
-     * 
-     * @return
      */
     boolean deleteable() default true;
 
@@ -48,8 +41,6 @@ public @interface Table {
 
     /**
      * 重用,这里指的是主键重用,并且必须是数字型唯一主键,联合主键/（滚表/分表）策略不允许重用
-     * 
-     * @return
      */
     boolean reuse() default false;
 
@@ -63,29 +54,26 @@ public @interface Table {
      * 不使用数据库自带自增规则,自定义ID生成器创建id起始值的偏移量,</br>
      * 避免出现,不同类型数据id相同导致某些模块出问题</br>
      * 比如,战斗成员(玩家id)和助战成员(助战id)所属的类型不同,但是id相同在战斗中通过唯一id标识无法取到想要的对象</br>
-     * @return</br>
      */
     int offset() default 0;
 
-    /** 简单描述 */
+    /**
+     * 简单描述
+     */
     String comment();
 
     /**
      * 预留可删除字段的接口，避免无法删除的字段，导致合服困难
-     * @return
      */
     boolean delField() default false;
+
     /**
      * 预留可修改字段的接口，避免无法修改的字段，导致合服困难
-     * @return
      */
     boolean modField() default false;
 
     /**
      * 缓存设置
-     * 
-     * @return
      */
     Cached cached() default @Cached();
-
 }

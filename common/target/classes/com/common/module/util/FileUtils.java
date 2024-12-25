@@ -13,6 +13,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+
+/**
+ * <文件读取工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class FileUtils {
 
 	/**

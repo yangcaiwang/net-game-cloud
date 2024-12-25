@@ -11,6 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * <netty编码器实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class NettyPacketEncoder extends MessageToByteEncoder<Object> {
     transient protected final Logger logger = LoggerFactory.getLogger(getClass());
 

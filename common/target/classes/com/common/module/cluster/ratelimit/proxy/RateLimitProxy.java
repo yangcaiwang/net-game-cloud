@@ -8,6 +8,14 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <集群限流代理类>
+ * <p>
+ * ps: 注解 + 反射实现 好处是与业务分离
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class RateLimitProxy<T> implements InvocationHandler {
     private final T target;
     private final Map<Method, RateLimiterService> rateLimiterMap = new HashMap<>();

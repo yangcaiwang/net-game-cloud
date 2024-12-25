@@ -6,9 +6,11 @@ import com.common.module.network.netty.message.MsgManager;
 import java.util.Scanner;
 
 /**
- * 控制台输入测试工具
- * 
- * @author lijishun
+ * <控制台输入工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class ConsoleUtil {
 

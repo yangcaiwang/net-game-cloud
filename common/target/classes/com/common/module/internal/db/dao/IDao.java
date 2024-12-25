@@ -15,7 +15,11 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * dao操作接口
+ * <DAO操作接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public interface IDao {
 
@@ -364,10 +368,10 @@ public interface IDao {
 	 *            class实体类型
 	 * @param sql
 	 *            自定义的sql语句
-	 * @param querier
+	 * @param query
 	 *            执行的接口
 	 */
-	<T extends DBEntity> void query(Class<T> entityType, String sql, Querier querier);
+	<T extends DBEntity> void query(Class<T> entityType, String sql, Query query);
 
 	/**
 	 * 自定义查询数据
@@ -378,10 +382,10 @@ public interface IDao {
 	 * 
 	 * @param sql
 	 *            自定义的sql语句
-	 * @param querier
+	 * @param query
 	 *            执行的接口
 	 */
-	void query(String aliasName, String sql, Querier querier);
+	void query(String aliasName, String sql, Query query);
 
 	/**
 	 * 批量执行sql语句，使用Statement，适用一次性执行</br>

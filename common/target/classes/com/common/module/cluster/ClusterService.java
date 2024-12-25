@@ -2,6 +2,13 @@ package com.common.module.cluster;
 
 import com.common.module.cluster.entity.ServerEntity;
 
+/**
+ * <集群操作分布式缓存接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public interface ClusterService {
 
     /**

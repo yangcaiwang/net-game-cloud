@@ -6,7 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 抽象事件
+ * <事件抽象类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public abstract class AbstractEvent implements IEvent {
 

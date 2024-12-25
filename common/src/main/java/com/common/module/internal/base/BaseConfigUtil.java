@@ -25,6 +25,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
+/**
+ * <基础配置数据工具类>
+ * <p>
+ * ps: 解析json文件转化配置类 放入缓存 {@link BaseConfigCache}
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class BaseConfigUtil {
 
     private static String load_path;
@@ -32,8 +40,15 @@ public class BaseConfigUtil {
     protected final static Logger logger = LoggerFactory.getLogger(BaseConfigUtil.class);
     private static Map<String, Field> resConfigFields = new HashMap<>();
 
-    private static final String FILE_SUFFIX = ".json";
-    public static void load(String rootPath) {
+    private static BaseConfigUtil baseConfigUtil = new BaseConfigUtil();
+
+    public static BaseConfigUtil getInstance() {
+        return baseConfigUtil;
+    }
+
+    private final String FILE_SUFFIX = ".json";
+
+    public void load(String rootPath) {
         load_path = rootPath;
         if (isLoaded) {
             return;
@@ -50,9 +65,9 @@ public class BaseConfigUtil {
         isLoaded = true;
     }
 
-    private static void initFields() {
+    private void initFields() {
         Set<Class<?>> set = new HashSet<>();
-        Scanner.scan(set, BaseConfigCache.class.getPackage().getName(), v -> v.isAnnotationPresent(BaseConfig.class));
+        Scanner.getInstance().scan(set, BaseConfigCache.class.getPackage().getName(), v -> v.isAnnotationPresent(BaseConfig.class));
 
         for (Class<?> aClass : set) {
             Field[] declaredFields = aClass.getDeclaredFields();
@@ -71,7 +86,8 @@ public class BaseConfigUtil {
             }
         }
     }
-    private static void reload(String fileName) {
+
+    private void reload(String fileName) {
         if (!resConfigFields.containsKey(fileName)) {
             return;
         }
@@ -95,7 +111,7 @@ public class BaseConfigUtil {
         }
     }
 
-    private static void load(Class<?> clz, String fileName, File file) {
+    private void load(Class<?> clz, String fileName, File file) {
         JsonFactory f = new MappingJsonFactory();
         JsonParser parser = null;
         try {
@@ -146,7 +162,8 @@ public class BaseConfigUtil {
             }
         }
     }
-    private static void startUpFileListener(String path) {
+
+    private void startUpFileListener(String path) {
         FileListeners.getInstance().addListener(new File(path), f -> f.getName().endsWith(FILE_SUFFIX), (file) -> {
             reload(file.getName());
             EventBusesImpl.getInstance().asyncPublish(TemplateFileChangedEvent.valueOf(file));

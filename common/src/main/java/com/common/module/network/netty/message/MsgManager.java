@@ -13,6 +13,7 @@ import com.google.protobuf.Message;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,12 +23,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * 消息管理器
+ * <netty消息管理器实现类>
+ * <p>
  *
- * @author yangcaiwang
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class MsgManager {
     private static final Logger log = LoggerFactory.getLogger(MsgManager.class);
@@ -277,10 +281,15 @@ public class MsgManager {
     /**
      * 把所有玩家踢下线
      */
-    public static void kitOutAll() {
-        for (Channel channel : channelMap.values()) {
-            kitOut(channel, IClient.OfflineCause.STOP_SERVER);
+    public static int kitOutAll() {
+        AtomicInteger players = new AtomicInteger();
+        if (MapUtils.isNotEmpty(channelMap)) {
+            for (Channel channel : channelMap.values()) {
+                kitOut(channel, IClient.OfflineCause.STOP_SERVER);
+                players.decrementAndGet();
+            }
         }
+        return players.get();
     }
 
     /**

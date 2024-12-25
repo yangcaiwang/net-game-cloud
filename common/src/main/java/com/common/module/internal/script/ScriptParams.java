@@ -3,9 +3,6 @@ package com.common.module.internal.script;
 
 import java.lang.annotation.*;
 
-/**
- * 脚本的参数注解
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited

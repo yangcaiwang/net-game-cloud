@@ -16,9 +16,6 @@ public final class INSERT {
 
 	/**
 	 * 去掉字段,直接传值,提高效率,如果合服导数据结构不一致就蛋疼了
-	 * 
-	 * @param entityType
-	 * @return
 	 */
 	private static <T extends DBEntity> String BUILDVALUESSQL(Class<T> entityType, String table) {
 
@@ -36,7 +33,6 @@ public final class INSERT {
 			i++;
 		}
 		builder.append(" values(");
-//		builder.append("insert into `").append(table).append("` values(");
 		for (int j = 0; j < fields.size(); j++) {
 			if (j < fields.size() - 1) {
 				builder.append("?,");

@@ -3,10 +3,6 @@ package com.common.module.internal.db.annotation;
 
 import java.lang.annotation.*;
 
-/**
- * jvm缓存配置,持久层是MySQL
- *
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Inherited

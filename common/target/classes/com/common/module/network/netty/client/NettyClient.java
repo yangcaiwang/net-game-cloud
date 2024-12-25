@@ -13,12 +13,24 @@ import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <netty客户端启动类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class NettyClient {
-
     private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
-    private static Channel channel = null;
+    private EventLoopGroup workerGroup = null;
+    private ChannelFuture channelFuture = null;
+    private static NettyClient nettyClient = new NettyClient();
 
-    public static void doConnect(String host, int port) throws Exception {
+    private static NettyClient getInstance() {
+        return nettyClient;
+    }
+
+    public void start(String host, int port) throws Exception {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap(); // (1)
@@ -35,22 +47,34 @@ public class NettyClient {
                     ch.pipeline().addLast("handler", new NettyClientHandler());
                 }
             });
-            ChannelFuture f = b.connect(host, port).sync();
-            channel = f.channel();
+            channelFuture = b.connect(host, port).sync();
+            Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
             log.info("======================= [] websocket client started ip:{} port:{} =======================", host, port);
             // 首包
-            NettyClient.sent(MsgManager.buildMsg(0, 1, "game-1001", CommonProto.msg.newBuilder().build()));
+            sent(MsgManager.buildMsg(0, 1, "game-1001", CommonProto.msg.newBuilder().build()));
 
             // TODO 后端模仿客户端自测接口
 //            NettyClient.sent(MsgManager.buildMsg(1, CommonProto.msg.newBuilder().setAny(MsgManager.messageToAny(CommonProto.MiniItem.newBuilder().build())).build()));
-
-            f.channel().closeFuture().sync();
-        } finally {
-            workerGroup.shutdownGracefully();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
     }
 
-    public static void sent(CommonProto.msg msg) {
-        channel.writeAndFlush(msg);
+    private void stop() {
+        try {
+            if (workerGroup != null) {
+                workerGroup.shutdownGracefully();
+            }
+
+            if (channelFuture != null) {
+                channelFuture.channel().close();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    public void sent(CommonProto.msg msg) {
+        channelFuture.channel().writeAndFlush(msg);
     }
 }

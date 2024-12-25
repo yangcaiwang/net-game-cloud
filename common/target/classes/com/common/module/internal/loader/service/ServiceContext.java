@@ -10,6 +10,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+/**
+ * <业务接口上下文类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ServiceContext {
 
     private static final Logger log = LoggerFactory.getLogger(ServiceContext.class);

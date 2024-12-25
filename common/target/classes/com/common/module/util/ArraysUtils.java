@@ -8,6 +8,13 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * <数组工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ArraysUtils {
 
 	public static <E> boolean contains(E[] arr, E target) {

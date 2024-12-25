@@ -7,7 +7,15 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.util.concurrent.Executor;
 
-public interface RouteMessageListener extends MessageListener {
+/**
+ * <netty路由消息异步监听器接口>
+ * <p>
+ * ps: 网关路由游戏服
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
+public interface RouteMessageListener extends MessageSuperListener {
 
     @Override
     default void handle(ChannelHandlerContext ctx, Executor executor, CommonProto.msg req) throws Exception {
@@ -38,6 +46,14 @@ public interface RouteMessageListener extends MessageListener {
      */
     void exec(Channel channel, CommonProto.msg req) throws Exception;
 
+    /**
+     * 网关路由游戏服
+     *
+     * @param channel  玩家通道
+     * @param req      消息对象
+     * @param serverId 服务器id
+     * @return CommonProto.msg {@link CommonProto.msg}
+     */
     CommonProto.msg route(Channel channel, CommonProto.msg req, String serverId);
 
 }

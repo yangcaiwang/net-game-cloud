@@ -1,7 +1,7 @@
 
 package com.common.module.internal.proxy.jdk;
 
-import com.common.module.internal.proxy.MethodInkover;
+import com.common.module.internal.proxy.MethodInvoker;
 import com.common.module.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,14 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
-public abstract class AbstractJdkMethodFilter implements MethodInkover, InvocationHandler {
+/**
+ * <Jdk代理过滤器抽象类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
+public abstract class AbstractJdkMethodFilter implements MethodInvoker, InvocationHandler {
 
 	transient protected final Logger log = LoggerFactory.getLogger(getClass());
 

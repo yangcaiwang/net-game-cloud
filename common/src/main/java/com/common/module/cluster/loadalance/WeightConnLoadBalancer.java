@@ -3,6 +3,14 @@ package com.common.module.cluster.loadalance;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <集群中服务器负载均衡实现类>
+ * <p>
+ * ps: 权重最小连接数
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class WeightConnLoadBalancer {
     private List<BaseServer> baseServers;
 

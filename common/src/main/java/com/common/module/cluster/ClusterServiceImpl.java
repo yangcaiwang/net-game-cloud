@@ -16,12 +16,20 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <集群操作分布式缓存实现类>
+ * <p>
+ * ps: 使用redission分布式读写锁
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ClusterServiceImpl extends AbstractService implements ClusterService {
     public static final Logger log = LoggerFactory.getLogger(ClusterServiceImpl.class);
 
     @Override
     public boolean saveServerEntity(ServerEntity serverEntity) {
-        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.redisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         RReadWriteLock readWriteLock = groupMap.getReadWriteLock(1);
         RLock rLock = readWriteLock.writeLock();
         rLock.lock();
@@ -42,7 +50,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
 
     @Override
     public ServerEntity getServerEntity(String serverId) {
-        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.redisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         if (MapUtils.isNotEmpty(groupMap)) {
             for (Map<String, ServerEntity> serverEntityMap : groupMap.values()) {
                 ServerEntity serverEntity = serverEntityMap.get(serverId);
@@ -59,7 +67,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
 
     @Override
     public ServerEntity getGateServerEntity(int groupId) {
-        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.redisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         if (MapUtils.isEmpty(groupMap)) {
             return null;
         }
@@ -78,7 +86,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
 
     @Override
     public void startGateGrpcClient(ServerEntity gateServerEntity) {
-        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.redisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         if (MapUtils.isEmpty(groupMap)) {
             return;
         }

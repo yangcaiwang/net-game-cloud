@@ -10,7 +10,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * 所有的配置文件解析到这个类
+ * <基础配置数据通用缓存类>
+ * <p>
+ * ps: 所有解析的配置类都放入这里面 手动生成get set方法
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 @BaseConfig
 public class BaseConfigCache {

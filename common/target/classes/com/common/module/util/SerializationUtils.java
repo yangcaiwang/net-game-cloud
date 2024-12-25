@@ -14,6 +14,9 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 
 /**
+ * <序列化工具类>
+ * <p>
+ * ps:
  * 对象序列化工具,必须是实现Serializable接口的对象,不需要序列化的字段加修饰符transient</br>
  * 如果用json序列化,对象必须要有无参构造器,所有字段必须要有getter,setter方法,也就是标准的bean!!!,
  * 如果有不需要序列化的字段和方法需要加上@JSONField(serialize=false) </br>
@@ -23,6 +26,9 @@ import java.lang.reflect.Type;
  * 经测试,序列化1000个对象hessian2序列化耗时41毫秒,反序列化9ms</br>
  * 经测试,序列化1000个对象FST序列化耗时136毫秒,反序列化4ms</br>
  * hessian2性能较均衡,FST反序列化性能更高</br>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class SerializationUtils {
 

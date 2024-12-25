@@ -6,10 +6,18 @@ import com.google.protobuf.Message;
 
 import java.lang.reflect.Method;
 
+/**
+ * <netty二进制处理器实现类>
+ * <p>
+ * ps: 封装后传递到具体业务层
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 abstract public class AbstractBinaryHandler extends AbstractService {
 
     public AbstractBinaryHandler() {
-        IoHandlers.getInstance().addHandlerMethodClass(getClass().getSimpleName(), this);
+        MethodHandlerManager.getInstance().addHandlerMethodClass(getClass().getSimpleName(), this);
         Method[] declaredMethods = getClass().getDeclaredMethods();
         for (Method method : declaredMethods) {
             if (method.isAnnotationPresent(Deprecated.class)) {
@@ -29,7 +37,7 @@ abstract public class AbstractBinaryHandler extends AbstractService {
                         break;
                     }
                 }
-                IoHandlers.getInstance().addMethodHandler(methodHandler);
+                MethodHandlerManager.getInstance().addMethodHandler(methodHandler);
             }
         }
     }

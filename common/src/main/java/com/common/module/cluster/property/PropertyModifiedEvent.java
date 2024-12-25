@@ -9,6 +9,13 @@ import com.google.common.collect.Maps;
 import java.io.File;
 import java.util.Map;
 
+/**
+ * <属性修改事件类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class PropertyModifiedEvent extends AbstractEvent {
 
 	final public File file; // 变化的文件

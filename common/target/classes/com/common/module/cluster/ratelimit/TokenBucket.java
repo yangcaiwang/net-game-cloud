@@ -4,8 +4,12 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 令牌桶算法限流
- * 它能够以固定的速率向令牌桶中添加令牌，并且每个请求需要消耗一个令牌。如果桶中没有令牌，则请求会被拒绝或可以选择延迟处理
+ * <令牌桶算法限流策略>
+ * <p>
+ * ps: 能够以固定的速率向令牌桶中添加令牌，并且每个请求需要消耗一个令牌。如果桶中没有令牌，则请求会被拒绝或可以选择延迟处理
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class TokenBucket {
     private final long maxTokens; // 桶的最大容量

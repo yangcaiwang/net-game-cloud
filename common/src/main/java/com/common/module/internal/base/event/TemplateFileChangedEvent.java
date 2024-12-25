@@ -3,6 +3,14 @@ import com.common.module.internal.event.AbstractEvent;
 
 import java.io.File;
 
+/**
+ * <基础配置数据改变事件类>
+ * <p>
+ * ps: 用于热更配置
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class TemplateFileChangedEvent extends AbstractEvent {
 
     public static TemplateFileChangedEvent valueOf(File file) {

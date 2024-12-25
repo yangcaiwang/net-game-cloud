@@ -15,7 +15,13 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
-
+/**
+ * <跨服排行榜实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class CrossRankLists implements ICrossRankLists {
     private static final Logger log = LoggerFactory.getLogger(RankLists.class);
 

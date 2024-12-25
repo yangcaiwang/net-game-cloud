@@ -13,7 +13,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * 按概率随机
+ * <概率随机工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class ProbabilityUtils {
 
@@ -39,8 +43,6 @@ public class ProbabilityUtils {
 
     /**
      * 并发安全普通随机数对象
-     *
-     * @return
      */
     public static Random random() {
 
@@ -49,8 +51,6 @@ public class ProbabilityUtils {
 
     /**
      * 加密随机数对象
-     *
-     * @return
      */
     public static SecureRandom secureRandom() {
 
@@ -59,10 +59,6 @@ public class ProbabilityUtils {
 
     /**
      * 随机从min~max
-     *
-     * @param min
-     * @param max
-     * @return
      */
     public static int random(int min, int max) {
 
@@ -86,10 +82,6 @@ public class ProbabilityUtils {
 
     /**
      * 随机 startInclusive ~ endInclusive
-     *
-     * @param startInclusive
-     * @param endInclusive
-     * @return
      */
     public static double nextDouble(double startInclusive, double endInclusive) {
 
@@ -103,10 +95,6 @@ public class ProbabilityUtils {
 
     /**
      * 随机 startInclusive ~ endInclusive
-     *
-     * @param startInclusive
-     * @param endInclusive
-     * @return
      */
     public static float nextFloat(float startInclusive, float endInclusive) {
 
@@ -120,10 +108,6 @@ public class ProbabilityUtils {
 
     /**
      * 随机 startInclusive ~ endExclusive-1
-     *
-     * @param startInclusive
-     * @param endExclusive
-     * @return
      */
     public static int nextInt(int startInclusive, int endExclusive) {
 
@@ -137,10 +121,6 @@ public class ProbabilityUtils {
 
     /**
      * 随机 startInclusive ~ endExclusive-1
-     *
-     * @param startInclusive
-     * @param endExclusive
-     * @return
      */
     public static long nextLong(long startInclusive, long endExclusive) {
 
@@ -149,9 +129,6 @@ public class ProbabilityUtils {
 
     /**
      * 随机0~(n-1)
-     *
-     * @param n
-     * @return
      */
     public static int random(int n) {
 
@@ -163,9 +140,6 @@ public class ProbabilityUtils {
 
     /**
      * 按概率从列表中选择一个元素
-     *
-     * @param iterable 源数据
-     * @return
      */
     public static <T extends Probable> T chooseByProb(Iterable<T> iterable) {
         List<T> list = Lists.newArrayList(iterable);
@@ -176,12 +150,6 @@ public class ProbabilityUtils {
 
     /**
      * 通过反射获取权重方法，找到一个权重值 (权重方法必须是int型)
-     *
-     * @param list      需要随机的列表
-     * @param getMethod 权重get方法名
-     * @param <T>
-     * @return
-     * @throws Exception
      */
     public static <T> T chooseByProb(List<T> list, String getMethod) {
         int sum = 0;
@@ -214,10 +182,6 @@ public class ProbabilityUtils {
 
     /**
      * 按概率从列表中选择一个元素
-     *
-     * @param total 最大值
-     * @param iterable  源数据
-     * @return
      */
     public static <T extends Probable> T chooseByProb(int total, Iterable<T> iterable) {
         int r = random(1, total);
@@ -234,10 +198,6 @@ public class ProbabilityUtils {
 
     /**
      * 纯随机，从列表中随机num个元素,不重复
-     *
-     * @param iterable
-     * @param num
-     * @return
      */
     public static <T> List<T> chooseByNum(Iterable<T> iterable, int num) {
         List<T> result = new ArrayList<>(num);
@@ -255,6 +215,7 @@ public class ProbabilityUtils {
     public static <T extends Probable> List<T> chooseByNumAndWeight(Iterable<T> iterable, int num) {
         return chooseByNumAndWeight(iterable, num, true);
     }
+
     /**
      * 从列表中按权重随机 num 个元素,不重复
      */
@@ -275,10 +236,6 @@ public class ProbabilityUtils {
 
     /**
      * 纯随机，从列表中随机count次，可重复
-     *
-     * @param iterable
-     * @param count
-     * @return
      */
     public static <T> List<T> chooseByCount(Iterable<T> iterable, int count) {
         List<T> result = new ArrayList<>(count);
@@ -304,9 +261,6 @@ public class ProbabilityUtils {
 
     /**
      * 按概率从列表中选择一个元素(数组最后一个元素为权重)
-     *
-     * @param array 源数据
-     * @return
      */
     public static int[] chooseArrayByWeight(int[][] array) {
         List<int[]> collect = Arrays.stream(array).collect(Collectors.toList());
@@ -361,9 +315,6 @@ public class ProbabilityUtils {
 
     /**
      * 从List中根据权重取元素（第一个值为权重
-     *
-     * @param arr
-     * @return
      */
     public static int[] randomList(List<int[]> arr) {
         if (ArraysUtils.isEmpty(arr)) {
@@ -404,9 +355,6 @@ public class ProbabilityUtils {
 
     /**
      * 从数组中根据权重取元素（第一个值为权重
-     *
-     * @param arr
-     * @return
      */
     public static int[] randomArr(int[][] arr) {
         return randomList(Arrays.stream(arr).collect(Collectors.toList()));
@@ -414,9 +362,6 @@ public class ProbabilityUtils {
 
     /**
      * 从数组中根据权重取元素 值为权重
-     *
-     * @param arr
-     * @return
      */
     public static int randomFromArr(int[] arr) {
         if (arr.length == 0) {
@@ -449,7 +394,6 @@ public class ProbabilityUtils {
      * @param max     最大值
      * @param needNum 所需数量
      * @param repeat  是否重复 true 可重复, false不可重复
-     * @return
      */
     public static List<Integer> randomFromSection(int min, int max, int needNum, boolean repeat) {
         Set<Integer> pool = new HashSet<>();
@@ -469,7 +413,6 @@ public class ProbabilityUtils {
      * @param resources 源集合
      * @param a         A组
      * @param b         B组
-     * @param <T>
      */
     public static <T> void groupingList(List<T> resources, List<T> a, List<T> b) {
         int maxSize = resources.size();

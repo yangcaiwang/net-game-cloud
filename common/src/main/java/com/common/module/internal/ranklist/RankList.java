@@ -12,9 +12,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Predicate;
 
 /**
- * 维护现有的名次 上下浮动排序
+ * <排行榜具体实现类>
+ * <p>
+ * ps: 维护现有的名次 上下浮动排序
  *
- * @param <E>
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class RankList<E extends AbstractRankMember<E>> implements IRankList<E> {
 

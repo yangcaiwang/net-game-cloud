@@ -9,8 +9,8 @@ import com.common.module.cluster.enums.Begin;
 import com.common.module.cluster.enums.ServerType;
 import com.common.module.cluster.property.PropertyConfig;
 import com.common.module.internal.cache.redission.RedissonClient;
-import com.common.module.internal.cache.redission.topic.ConstTopic;
-import com.common.module.internal.cache.redission.topic.TopicMessage;
+import com.common.module.internal.cache.redission.constant.ConstTopic;
+import com.common.module.internal.cache.redission.event.TopicMessage;
 import com.common.module.internal.db.Mysql;
 import com.common.module.internal.loader.service.ServiceContext;
 import com.common.module.network.grpc.GrpcManager;
@@ -23,6 +23,13 @@ import com.common.module.util.SerializationUtils;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * <服务器组件实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ServerComponent extends AbstractServerComponent {
 
     public static <T extends AbstractServerComponent> T valueOf(ServerType serverType) {
@@ -61,17 +68,16 @@ public class ServerComponent extends AbstractServerComponent {
     protected void startRedission() {
         try {
             String pathname = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.REDISSION_PATH);
-            RedissonClient.start(pathname);
+            RedissonClient.getInstance().start(pathname);
             log.info("======================= [{}] redission client started =======================", this.serverType().getServerId());
 
             if (!Begin.getInstance(Begin.GRPC_C).isBegin(this.serverType)) {
                 return;
             }
 
-            RedissonClient.subscribeTopic(ConstTopic.TOPIC_GRPC_CLIENT);
+            RedissonClient.getInstance().subscribeTopic(ConstTopic.TOPIC_GRPC_CLIENT);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            System.exit(-1);
         }
 //        try {
 //            Map<String, Object> redisMap = (Map<String, Object>) clusterMap.get("redis");
@@ -93,7 +99,7 @@ public class ServerComponent extends AbstractServerComponent {
     }
 
     @Override
-    protected void startDb() {
+    protected void startDatabase() {
         try {
             String gamePath = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.DB_GAME_PATH);
             String logPath = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.DB_LOG_PATH);
@@ -102,7 +108,6 @@ public class ServerComponent extends AbstractServerComponent {
             log.info("======================= [{}] mysql client started =======================", this.serverType().getServerId());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            System.exit(-1);
         }
     }
 
@@ -133,17 +138,16 @@ public class ServerComponent extends AbstractServerComponent {
                     && gateServerEntity.getGrpcClientHost().contains(serverEntity.getGrpcServerHost())
                     && gateServerEntity.getGrpcClientPort().contains(serverEntity.getGrpcServerPort())) {
                 TopicMessage grpcTopicMsg = new GrpcTopicMessage(ConstTopic.TOPIC_GRPC_CLIENT, gateServerEntity);
-                RedissonClient.publishTopic(grpcTopicMsg);
+                RedissonClient.getInstance().publishTopic(grpcTopicMsg);
                 return;
             }
             gateServerEntity.getGrpcServerId().add(serverEntity.getServerId());
             gateServerEntity.getGrpcClientHost().add(serverEntity.getGrpcServerHost());
             gateServerEntity.getGrpcClientPort().add(serverEntity.getGrpcServerPort());
             TopicMessage grpcTopicMsg = new GrpcTopicMessage(ConstTopic.TOPIC_GRPC_CLIENT, gateServerEntity);
-            RedissonClient.publishTopic(grpcTopicMsg);
+            RedissonClient.getInstance().publishTopic(grpcTopicMsg);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            System.exit(-1);
         }
     }
 
@@ -156,11 +160,10 @@ public class ServerComponent extends AbstractServerComponent {
         try {
             Object netty = clusterMap.get(Begin.NETTY.key);
             Address address = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(netty), Address.class);
-            NettyServer.bind(address.getHost(), address.getPort());
+            NettyServer.getInstance().start(address.getHost(), address.getPort());
             log.info("======================= [{}] websocket server started ip:{} port:{} =======================", this.serverType().getServerId(), address.getHost(), address.getPort());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            System.exit(-1);
         }
     }
 
@@ -179,7 +182,7 @@ public class ServerComponent extends AbstractServerComponent {
 
             Object jetty = clusterMap.get(Begin.JETTY.key);
             Map<String, Integer> map = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), Map.class);
-            JettyHttpServer.start(new JettyHttpHandler(), map);
+            JettyHttpServer.getInstance().start(new JettyHttpHandler(), map);
             serverEntity.setJettyHost(serverEntity.getHost());
             serverEntity.setJettyPort(map.get("port"));
             clusterService.saveServerEntity(serverEntity);

@@ -23,7 +23,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * 支持热加载的配置
+ * <系统属性配置类>
+ * <p>
+ * ps: 支持热加载的配置
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class PropertyConfig {
 

@@ -9,27 +9,53 @@ import com.game.proto.RouteServiceGrpc;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * <Grpc管理器实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class GrpcManager {
-
+    public static final Logger logger = LoggerFactory.getLogger(GrpcManager.class);
+    public final ActorThreadPoolExecutor serverExecutor = new ActorThreadPoolExecutor("grpc-server-thread", Runtime.getRuntime().availableProcessors() * 2 + 1);
+    public final ActorThreadPoolExecutor clientExecutor = new ActorThreadPoolExecutor("grpc-client-thread", Runtime.getRuntime().availableProcessors() * 2 + 1);
     private Map<String, GrpcClient> grpcClientMap = new HashMap<>();
 
-    public static GrpcManager grpcManager = new GrpcManager();
+    private static GrpcManager grpcManager = new GrpcManager();
 
     public static GrpcManager getInstance() {
         return grpcManager;
     }
 
-    public void startGrpcClient(ServerEntity gateServerEntity) {
+    /**
+     * 开启grpc服务端
+     *
+     * @param port 端口号
+     */
+    public void startGrpcServer(int port) {
+        GrpcServer grpcServer = new GrpcServer();
+        grpcServer.start(port);
+    }
 
-        CopyOnWriteArrayList<String> serverIds = gateServerEntity.getGrpcServerId();
-        CopyOnWriteArrayList<String> hosts = gateServerEntity.getGrpcClientHost();
-        CopyOnWriteArrayList<Integer> ports = gateServerEntity.getGrpcClientPort();
+    /**
+     * 开启grpc客户端
+     *
+     * @param serverEntity 服务器对象
+     */
+    public void startGrpcClient(ServerEntity serverEntity) {
+
+        CopyOnWriteArrayList<String> serverIds = serverEntity.getGrpcServerId();
+        CopyOnWriteArrayList<String> hosts = serverEntity.getGrpcClientHost();
+        CopyOnWriteArrayList<Integer> ports = serverEntity.getGrpcClientPort();
         if (CollectionUtils.isEmpty(serverIds) || CollectionUtils.isEmpty(hosts) || CollectionUtils.isEmpty(ports)) {
             return;
         }
@@ -53,18 +79,16 @@ public class GrpcManager {
         }
     }
 
-    public void startGrpcServer(int port) {
-        GrpcServer grpcServer = new GrpcServer();
-        grpcServer.start(port);
-    }
-
     public GrpcClient getGrpcClient(String serverId) {
         return grpcClientMap.get(serverId);
     }
 
+    /**
+     * <p>grpc 服务端
+     *
+     * @author yangcaiwang
+     */
     public class GrpcServer {
-        private ActorThreadPoolExecutor executor = new ActorThreadPoolExecutor("grpc-server-thread", Runtime.getRuntime().availableProcessors() * 2 + 1);
-
         private Server server;
 
         /**
@@ -80,11 +104,10 @@ public class GrpcManager {
                         .build();
 
                 server.start();
-//            server.awaitTermination();
+                Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
             } catch (Exception e) {
-                e.printStackTrace();
-                server.shutdown();
-                executor.shutdown();
+                logger.error(e.getMessage(), e);
+                shutdown();
             }
         }
 
@@ -106,10 +129,10 @@ public class GrpcManager {
                 if (null != server) {
                     // 等待5秒钟，不关闭也会强制退出
                     server.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-                    executor.shutdown();
+                    serverExecutor.shutdown();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -120,14 +143,11 @@ public class GrpcManager {
      * @author yangcaiwang
      */
     public class GrpcClient {
-        private ActorThreadPoolExecutor executor = new ActorThreadPoolExecutor("grpc-client-thread", Runtime.getRuntime().availableProcessors() * 2 + 1);
-
         private ManagedChannel channel;
 
         /**
-         * 异步存根，支持一元流、服务端流、客户端流、双向流四种模式
+         * 双向流模式
          */
-        private RouteServiceGrpc.RouteServiceStub asyncStub;
         private StreamObserver<CommonProto.RouteRequest> routeRequestStreamObserver;
 
         /**
@@ -143,15 +163,15 @@ public class GrpcManager {
                         .forAddress(host, port)
                         .usePlaintext()
                         .build();
+                Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
                 RouteServiceGrpc.RouteServiceStub asyncStub = RouteServiceGrpc.newStub(channel);
-
                 routeRequestStreamObserver = asyncStub.routeStream(new StreamObserver<CommonProto.RouteResponse>() {
                     @Override
                     public void onNext(CommonProto.RouteResponse routeResponse) {
                         CommonProto.RouteResponse.newBuilder().build();
 
                         // 处理接收到的消息
-                        executor.execute(new AbstractLinkedTask() {
+                        clientExecutor.execute(new AbstractLinkedTask() {
                             @Override
                             public Object getIdentity() {
                                 return routeResponse.getMsg().getPlayerId();
@@ -175,7 +195,8 @@ public class GrpcManager {
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
+                shutdown();
             }
 
             return this;
@@ -196,12 +217,13 @@ public class GrpcManager {
          */
         private void shutdown() {
             try {
-                if (null != asyncStub) {
-                    ManagedChannel channel = (ManagedChannel) asyncStub.getChannel();
-                    channel.shutdown().awaitTermination(3, TimeUnit.SECONDS);
+                if (null != channel) {
+                    // 等待5秒钟，不关闭也会强制退出
+                    channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                    clientExecutor.shutdown();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -211,14 +233,6 @@ public class GrpcManager {
 
         public void setChannel(ManagedChannel channel) {
             this.channel = channel;
-        }
-
-        public RouteServiceGrpc.RouteServiceStub getAsyncStub() {
-            return asyncStub;
-        }
-
-        public void setAsyncStub(RouteServiceGrpc.RouteServiceStub asyncStub) {
-            this.asyncStub = asyncStub;
         }
     }
 }

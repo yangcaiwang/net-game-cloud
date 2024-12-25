@@ -7,9 +7,6 @@ import com.common.module.internal.db.entity.DBEntityUtils;
 import java.lang.reflect.Field;
 import java.util.LinkedHashSet;
 
-/**
- * 当有重复记录就会忽略,执行后返回数字0
- */
 public final class INSERTIGNORE {
 
 	public static <T extends DBEntity> String BUILDSQL(Class<T> entityType, String table) {
@@ -19,9 +16,6 @@ public final class INSERTIGNORE {
 
 	/**
 	 * 去掉字段,直接传值,提高效率,如果和服导数据结构不一致就蛋疼了
-	 * 
-	 * @param entityType
-	 * @return
 	 */
 	private static <T extends DBEntity> String BUILDVALUESSQL(Class<T> entityType, String table) {
 

@@ -1,9 +1,17 @@
 package com.common.module.network.grpc;
 
 import com.common.module.cluster.entity.ServerEntity;
-import com.common.module.internal.cache.redission.topic.TopicMessage;
+import com.common.module.internal.cache.redission.event.TopicMessage;
 import com.common.module.util.StringUtils;
 
+/**
+ * <Grpc话题消息实现类>
+ * <p>
+ * ps: Grpc订阅redission分布式话题
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class GrpcTopicMessage extends TopicMessage {
 
     public ServerEntity gateServerEntity;

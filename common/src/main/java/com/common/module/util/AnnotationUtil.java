@@ -8,6 +8,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Set;
 
+/**
+ * <注解工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class AnnotationUtil {
 
     public static boolean isAnnotation(Class<?> clz, Class<? extends Annotation> annoClz) {

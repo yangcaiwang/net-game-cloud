@@ -2,6 +2,13 @@ package com.common.module.util;
 
 import com.dxy.library.snowflake.SnowflakeIdUtils;
 
+/**
+ * <雪花算法工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class SnowflakeIdWorker {
     // ==============================Fields========================================
     /**

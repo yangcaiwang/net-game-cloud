@@ -10,11 +10,11 @@
     <name>net-game-core</name>
     <packaging>pom</packaging>
     <modules>
-        <module>cluster/gate-server</module>
-        <module>cluster/login-server</module>
-        <module>cluster/game-server</module>
         <module>cluster/chat-server</module>
-        <module>cluster/web-server</module>
+        <module>cluster/game-server</module>
+        <module>cluster/gate-server</module>
+        <module>cluster/gm-server</module>
+        <module>cluster/login-server</module>
         <module>common</module>
         <module>proto</module>
     </modules>

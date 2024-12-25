@@ -20,9 +20,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * redis工具类
+ * <redis客户端工具类>
+ * <p>
  *
- * @author yangcaiwang
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 @Component
 public class RedisUtil {

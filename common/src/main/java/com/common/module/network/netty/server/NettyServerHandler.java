@@ -1,7 +1,7 @@
 package com.common.module.network.netty.server;
 
 import com.common.module.network.netty.common.IClient;
-import com.common.module.network.netty.listener.MessageListener;
+import com.common.module.network.netty.listener.MessageSuperListener;
 import com.common.module.network.netty.message.MsgManager;
 import com.common.module.cluster.property.PropertyConfig;
 import com.game.proto.CommonProto;
@@ -16,7 +16,11 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 
 /**
- * websocket 服务器handler，超大消息直接抛出异常，不管是text还是binary 处理后统一使用binary返回
+ * <netty服务端处理器实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 @ChannelHandler.Sharable
 public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
@@ -24,9 +28,9 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
     private static final Logger log = LoggerFactory.getLogger(NettyServerHandler.class);
 
     private final Executor handlerExecutor;
-    private final MessageListener listener;
+    private final MessageSuperListener listener;
 
-    public NettyServerHandler(MessageListener listener, Executor handlerExecutor) {
+    public NettyServerHandler(MessageSuperListener listener, Executor handlerExecutor) {
         super();
         this.handlerExecutor = handlerExecutor;
         this.listener = listener;

@@ -6,6 +6,13 @@ import com.common.module.cluster.enums.ServerType;
 import java.io.Serializable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * <服务器实体类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class ServerEntity implements Serializable {
     /**
      * 服务器id

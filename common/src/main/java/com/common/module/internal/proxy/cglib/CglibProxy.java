@@ -9,6 +9,9 @@ import net.sf.cglib.proxy.Enhancer;
 import java.lang.reflect.Method;
 
 /**
+ * <Cglib代理实现类>
+ * <p>
+ * ps:
  * cglib动态代理,可以代理任意对象,但是不能多重代理,也就是已经是代理对象不能再创建代理,出现异常:
  * </p>
  * Caused by: java.lang.ClassFormatError: Duplicate method name "newInstance"
@@ -16,6 +19,9 @@ import java.lang.reflect.Method;
  * </p>
  * 如果要实现多重代理,可以使用apring-aop动态代理(org.springframework.aop.framework.CglibAopProxy.
  * DynamicAdvisedInterceptor)
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class CglibProxy {
 

@@ -1,7 +1,14 @@
-package com.common.module.internal.cache.redission.topic;
+package com.common.module.internal.cache.redission.event;
 
 import java.io.Serializable;
 
+/**
+ * <话题(topic)消息抽象类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public abstract class TopicMessage implements Serializable {
 
     /**

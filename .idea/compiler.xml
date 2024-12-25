@@ -12,7 +12,7 @@
         <module name="login-server" />
         <module name="common" />
         <module name="proto" />
-        <module name="web-server" />
+        <module name="gm-server" />
         <module name="gate-server" />
       </profile>
     </annotationProcessing>
@@ -38,9 +38,9 @@
       <module name="game-server" options="" />
       <module name="gate-server" options="" />
       <module name="gm" options="" />
+      <module name="gm-server" options="" />
       <module name="login-server" options="" />
       <module name="spring-boot-starter-parent" options="-parameters" />
-      <module name="web-server" options="" />
     </option>
   </component>
 </project>

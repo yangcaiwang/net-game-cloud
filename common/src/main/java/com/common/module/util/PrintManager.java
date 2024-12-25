@@ -11,6 +11,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+/**
+ * <打印工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public final class PrintManager {
 
 	private static final PrintStream out_def = System.out;

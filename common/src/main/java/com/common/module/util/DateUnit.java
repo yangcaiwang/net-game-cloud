@@ -17,6 +17,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * <时间工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public final class DateUnit {
 
     /**
@@ -130,9 +138,6 @@ public final class DateUnit {
 
         /**
          * 根据星期几的数学表达式转成枚举
-         *
-         * @param week
-         * @return
          */
         static public EnumWeek valueOf(int week) {
             return map.get(week);
@@ -172,10 +177,6 @@ public final class DateUnit {
 
     /**
      * 时间戳转换
-     *
-     * @param duration 传入的时间戳
-     * @param unit     将要转换的时间单位
-     * @return
      */
     public static long convert(long duration, TimeUnit unit) {
         return unit.convert(duration, unit);
@@ -251,9 +252,6 @@ public final class DateUnit {
 
     /**
      * 时间为null或者time<1
-     *
-     * @param date
-     * @return
      */
     public static boolean isBlank(Date date) {
 
@@ -262,9 +260,6 @@ public final class DateUnit {
 
     /**
      * 时间为<1
-     *
-     * @param time
-     * @return
      */
     public static boolean isBlank(long time) {
 
@@ -273,11 +268,6 @@ public final class DateUnit {
 
     /**
      * 时间t是否处于当天h1:00:00~h2:00:00之间
-     *
-     * @param t  时间戳
-     * @param h1 开始小时点
-     * @param h2 结束小时点
-     * @return
      */
     public static boolean inHourTimes(long t, int h1, int h2) {
 
@@ -292,7 +282,6 @@ public final class DateUnit {
      * @param m1 开始分钟
      * @param h2 结束小时点
      * @param m2 结束分钟
-     * @return
      */
     public static boolean inHourMinuteTimes(long t, int h1, int m1, int h2, int m2) {
 
@@ -304,8 +293,7 @@ public final class DateUnit {
      *
      * @param t  待检查的时间
      * @param t1 当天00:00:00 ~ (t1)xx:xx:xx 的时间戳
-     * @param t2 当天00:00:00 ~ (t2)xx:xx:xx 的时间戳
-     * @return
+     * @param t2 当天00:00:00 ~ (t2)xx:xx:xx 的时间戳n
      */
     public static boolean inTimes(long t, int t1, int t2) {
 
@@ -318,9 +306,6 @@ public final class DateUnit {
 
     /**
      * 获取起始日期的0点时间戳,取1970-01-01 00:00:00
-     *
-     * @return
-     * @throws ParseException
      */
     public static long time0() throws ParseException {
 
@@ -329,8 +314,6 @@ public final class DateUnit {
 
     /**
      * 1970-01-01 00:00:00
-     *
-     * @return
      */
     public static Date firstDate0() {
 
@@ -339,8 +322,6 @@ public final class DateUnit {
 
     /**
      * 1970-01-01 08:00:00
-     *
-     * @return
      */
     public static Date firstDate() {
 
@@ -349,7 +330,6 @@ public final class DateUnit {
 
     /**
      * 周一0点时间戳
-     * @return
      */
     public static int monZeroSecond() {
         return (int) (DateUnit.nextWeekInMon(System.currentTimeMillis(), EnumWeek.MON, 0).getTime() / 1000L);
@@ -357,10 +337,10 @@ public final class DateUnit {
 
     /**
      * 根据当前时间,获取下几周指定星期几的0点时间(从周日开始算第一天)
+     *
      * @param nowTime 当前时间
-     * @param week  星期几
-     * @param value 隔几周,如果是本周,就传0
-     * @return
+     * @param week    星期几
+     * @param value   隔几周,如果是本周,就传0
      */
     public static int zeroWeekSec(long nowTime, EnumWeek week, int value) {
         return (int) (nextWeek(nowTime, week, value).getTime() / 1000L);
@@ -372,7 +352,6 @@ public final class DateUnit {
      * @param time      当前时间
      * @param week      星期几
      * @param nextValue 隔几周,如果是本周,就传0
-     * @return
      */
     public static Date nextWeek(long time, EnumWeek week, int nextValue) {
         long concurrentTime0 = timeAt0(new Date(time));
@@ -393,7 +372,6 @@ public final class DateUnit {
      * @param time      当前时间
      * @param week      星期几
      * @param nextValue 隔几周,如果是本周,就传0
-     * @return
      */
     public static Date nextWeekInMon(long time, EnumWeek week, int nextValue) {
         return nextWeekInMonHour(time, week, nextValue, 0);
@@ -405,7 +383,6 @@ public final class DateUnit {
      * @param time      当前时间
      * @param week      星期几
      * @param nextValue 隔几周,如果是本周,就传0
-     * @return
      */
     public static Date nextWeekInMonHour(long time, EnumWeek week, int nextValue, int hour) {
         if (hour < 0 || hour > 23) {
@@ -430,9 +407,6 @@ public final class DateUnit {
 
     /**
      * 获取这个时间是星期几
-     *
-     * @param time
-     * @return
      */
     public static EnumWeek dayOfWeek(long time) {
 
@@ -444,9 +418,6 @@ public final class DateUnit {
 
     /**
      * 获取这个时间是星期几,周一=1 周日=7
-     *
-     * @param time
-     * @return
      */
     public static int weekDay(long time) {
         Calendar c = Calendar.getInstance();
@@ -480,27 +451,16 @@ public final class DateUnit {
 
     /**
      * 获取今天是本年的第几周 从周日开始算
-     *
-     * @param time
-     * @return
      */
     public static int weekOfYear(long time) {
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time);
-//		c.set(Calendar.MONTH, Calendar.JANUARY);
-//		c.set(Calendar.DAY_OF_MONTH, 1);
-//		int weekDay = weekDay(c.getTimeInMillis());
-
-//		c.setTimeInMillis(time);
-//		c.setMinimalDaysInFirstWeek(7 - weekDay);
         return c.get(Calendar.WEEK_OF_YEAR);
     }
 
     /**
      * 获取今天是本年的第几周 从周一开始算 如果新年第一周不包含星期一 周期则为前一年的最后一周周期
-     * @param timestamp
-     * @return
      */
     public static int getWeekNumberOfYear(long timestamp) {
         // 将时间戳转换为LocalDate
@@ -535,23 +495,16 @@ public final class DateUnit {
 
     /**
      * 获取今天是本月的第几周
-     *
-     * @param time
-     * @return
      */
     public static int weekOfMonth(long time) {
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time);
-        int weekOfmonth = c.get(Calendar.WEEK_OF_MONTH) + 1;
-        return weekOfmonth;
+        return c.get(Calendar.WEEK_OF_MONTH) + 1;
     }
 
     /**
      * 年份
-     *
-     * @param time
-     * @return
      */
     public static int year(long time) {
 
@@ -563,9 +516,6 @@ public final class DateUnit {
 
     /**
      * 月份
-     *
-     * @param time
-     * @return
      */
     public static int month(long time) {
 
@@ -578,26 +528,20 @@ public final class DateUnit {
     /**
      * 获取两个时间点间隔相差的天数
      *
-     * @param smallTime
-     * @param largeTime
+     * @param smallTime 开始时间
+     * @param largeTime 结束时间
      * @return 天数, 从1开始, intervalDay 从0开始
      */
     public static int getDifferenceDay(long smallTime, long largeTime) {
         return intervalDay(smallTime, largeTime) + 1;
-//		Date date1 = new Date();
-//		date1.setTime(smallTime);
-//
-//		Date date2 = new Date();
-//		date2.setTime(largeTime);
-//		long diffInMillies = date2.getTime() - date1.getTime();
-//		return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
     /**
      * 真实相隔时间天，以每天5点一天
-     * @param smallTime
-     * @param largeTime
-     * @return
+     *
+     * @param smallTime 开始时间
+     * @param largeTime 结束时间
+     * @return 天数, 从1开始, intervalDay 从0开始
      */
     public static int getRealDiffTimeDayBy5(long smallTime, long largeTime) {
         long lastDay5 = timeAt5(smallTime);
@@ -605,19 +549,16 @@ public final class DateUnit {
             lastDay5 = timeAt5(getDiffDayMorning(smallTime, -1));
         }
         Date date1 = new Date();
-		date1.setTime(lastDay5);
+        date1.setTime(lastDay5);
 
-		Date date2 = new Date();
-		date2.setTime(largeTime);
-		long diffInMillies = date2.getTime() - date1.getTime();
-		return (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        Date date2 = new Date();
+        date2.setTime(largeTime);
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
     /**
      * 今天几号
-     *
-     * @param time
-     * @return
      */
     public static int day(long time) {
 
@@ -628,7 +569,7 @@ public final class DateUnit {
     }
 
     /**
-     * @param time
+     * @param time 时间戳
      * @return [月，日，时，分]
      */
     public static int[] getDayTimeArr(long time) {
@@ -643,6 +584,7 @@ public final class DateUnit {
 
     /**
      * 获取本月且间隔月数的开始时间戳
+     *
      * @param interval 间隔月数 0:本月
      * @return 时间戳
      */
@@ -664,10 +606,6 @@ public final class DateUnit {
 
     /**
      * 按指定格式转换日期表达式
-     *
-     * @param format
-     * @param time
-     * @return
      */
     public static String timeFormat(String format, long time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
@@ -677,9 +615,6 @@ public final class DateUnit {
 
     /**
      * 按yyyy-MM-dd HH:mm:ss 格式转换日期表达式
-     *
-     * @param time
-     * @return
      */
     public static String timeFormat(long time) {
         return timeFormat(JSON.DEFFAULT_DATE_FORMAT, time);
@@ -687,9 +622,6 @@ public final class DateUnit {
 
     /**
      * h时m分s秒
-     *
-     * @param time
-     * @return
      */
     public static String timeFormatSecond(final int time) {
         final int finalTime = time * MILLISECOND_OF_ONE_SECONDS;
@@ -711,11 +643,6 @@ public final class DateUnit {
 
     /**
      * 根据日期表达式转换时间戳
-     *
-     * @param format
-     * @param date
-     * @return
-     * @throws ParseException
      */
     public static long timeMills(String format, String date) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
@@ -725,10 +652,6 @@ public final class DateUnit {
 
     /**
      * 根据日期表达式(yyyy-MM-dd HH:mm:ss)转换时间戳
-     *
-     * @param date
-     * @return
-     * @throws ParseException
      */
     public static long timeMills(String date) throws ParseException {
 
@@ -737,11 +660,6 @@ public final class DateUnit {
 
     /**
      * 根据日期表达式转换日期
-     *
-     * @param format
-     * @param date
-     * @return
-     * @throws ParseException
      */
     public static Date timeDate(String format, String date) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
@@ -751,10 +669,6 @@ public final class DateUnit {
 
     /**
      * 根据日期表达式(yyyy-MM-dd HH:mm:ss)转换日期
-     *
-     * @param date
-     * @return
-     * @throws ParseException
      */
     public static Date timeDate(String date) throws ParseException {
 
@@ -763,25 +677,13 @@ public final class DateUnit {
 
     /**
      * 两个时间相隔天数,头一天23:59:59和下一天00:00:00也差一天,以两个时间在0点的时间戳对比得出
-     *
-     * @param begin
-     * @param end
-     * @return
      */
     public static int intervalDay(long begin, long end) {
         return (int) (LocalDateTime.ofInstant(Instant.ofEpochSecond(end / 1000), PropertyConfig.getGameTimeZoneId()).toLocalDate().toEpochDay() - LocalDateTime.ofInstant(Instant.ofEpochSecond(begin / 1000), PropertyConfig.getGameTimeZoneId()).toLocalDate().toEpochDay());
-
-//		long startDay = (begin - offsetTime) / MILLISECOND_OF_ONE_DAY;
-//		long afterDay = (end - offsetTime) / MILLISECOND_OF_ONE_DAY;
-//		return (int) (afterDay - startDay);
     }
 
     /**
      * 是否同一天
-     *
-     * @param t1
-     * @param t2
-     * @return
      */
     public static boolean isSameDay(long t1, long t2) {
 
@@ -789,10 +691,7 @@ public final class DateUnit {
     }
 
     public static boolean isSameMinute(int startTime, int endTime) {
-        if (endTime >= startTime && (endTime - startTime) < 60) {
-            return true;
-        }
-        return false;
+        return endTime >= startTime && (endTime - startTime) < 60;
     }
 
     /**
@@ -872,8 +771,6 @@ public final class DateUnit {
 
     /**
      * 获取开服当天0点时间戳
-     *
-     * @return
      */
     public static int openZero() {
         long result = timeAt(PropertyConfig.getOpenTime() * 1000L, 0, 0, 0);
@@ -937,9 +834,6 @@ public final class DateUnit {
 
     /**
      * 获取时间模版
-     *
-     * @param millis
-     * @return
      */
     public static DateTemplate getDateTemplate(long millis) {
         Calendar calendar = Calendar.getInstance();
@@ -957,9 +851,6 @@ public final class DateUnit {
 
     /**
      * 获取时间模版(单例对象，定时器里面使用)
-     *
-     * @param millis
-     * @return
      */
     public static DateTemplate getDateTemplateInstance(long millis) {
         Calendar calendar = Calendar.getInstance();
@@ -977,8 +868,6 @@ public final class DateUnit {
 
     /**
      * 获取时间模版
-     *
-     * @return
      */
     public static DateTemplate getDateTemplate() {
 
@@ -991,8 +880,6 @@ public final class DateUnit {
 
     /**
      * 获取当前时间从0点开始计算的总秒数
-     *
-     * @return
      */
     public static int getDaySecond() {
 
@@ -1002,8 +889,6 @@ public final class DateUnit {
 
     /**
      * 获取开服时间
-     *
-     * @return
      */
     public static int getOpenDays() {
         int day = getOpenDays(PropertyConfig.getOpenTime());
@@ -1012,8 +897,6 @@ public final class DateUnit {
 
     /**
      * 获取开服时间
-     *
-     * @return
      */
     public static int getMergeDays() {
         long serverMergeTime = PropertyConfig.getServerMergeTime();
@@ -1026,8 +909,6 @@ public final class DateUnit {
 
     /**
      * 获取开服时间
-     *
-     * @return
      */
     public static int getOpenDays(long openTime) {
         return DateUnit.intervalDay(TimeUnit.SECONDS.toMillis(openTime), System.currentTimeMillis()) + 1;
@@ -1035,8 +916,6 @@ public final class DateUnit {
 
     /**
      * 日期的模板
-     *
-     * @author lijishun
      */
     public static class DateTemplate implements Cloneable {
 
@@ -1109,7 +988,7 @@ public final class DateUnit {
      * 获取相隔周 周日开始算
      *
      * @param startTime 开始时间
-     * @param endTime 结束时间
+     * @param endTime   结束时间
      * @return 相隔周数
      */
     public static int getDiffWeek(long startTime, long endTime) {
@@ -1121,8 +1000,9 @@ public final class DateUnit {
 
     /**
      * 获取相隔周 周一开始算
+     *
      * @param startTime 开始时间
-     * @param endTime 结束时间
+     * @param endTime   结束时间
      * @return 相隔周数
      */
     public static int getDiffWeekByMon(long startTime, long endTime) {
@@ -1132,78 +1012,8 @@ public final class DateUnit {
         return (int) (Math.abs(time - time2) / DateUnit.MILLISECOND_OF_ONE_WEEK);
     }
 
-    public static void main(String[] args) {
-        System.out.println(nextWeek(1695028639673L, EnumWeek.MON, 1));
-        // int second = getDaySecond();
-        // System.out.println(second);
-//		System.err.println(getDateTemplate());
-//		System.err.println(getDateTemplate().getStringTemplete());
-//		System.err.println(MILLISECOND_OF_ONE_DAY);
-//		System.err.println(inHourMinuteTimes(System.currentTimeMillis(), 10, 30, 12, 30));
-//		String s = "999899981000000009";
-//		System.err.println(s + "," + s.length() + "，" + HashedFactory.absHashCode(s));
-//		System.err.println(StringUtils.isNumeric2(s));
-//		System.err.println(timeAt0());
-//
-//		System.err.println("----------------------------------------");
-//
-//		long t = System.nanoTime();
-//		TimeUnit unit = TimeUnit.NANOSECONDS;
-//		System.err.println("t=" + t + ",unit=" + unit);
-//
-//		System.err.println("castToNanos:" + castToNanos(t, unit));
-//		System.err.println("castMicros:" + castMicros(t, unit));
-//		System.err.println("castToMillis:" + castToMillis(t, unit));
-//		System.err.println("castToSeconds:" + castToSeconds(t, unit));
-//		System.err.println("castToMinutes:" + castToMinutes(t, unit));
-//		System.err.println("castToHours:" + castToHours(t, unit));
-//		System.err.println("castToDays:" + castToDays(t, unit));
-//		System.err.println("convert:" + convert(t, TimeUnit.SECONDS));
-//
-//		System.err.println(convert(Long.MAX_VALUE, TimeUnit.NANOSECONDS));
-//		System.err.println(castToNanos(Long.MAX_VALUE, TimeUnit.NANOSECONDS));
-//		Duration duration = castToDuration(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-//		System.err.println(duration.toNanos());
-//
-//		System.err.println("----------------------------------------");
-//
-//		System.err.println(convert(1L, TimeUnit.MINUTES));
-//		System.err.println(castToNanos(1L, TimeUnit.MINUTES));
-//		duration = castToDuration(1L, TimeUnit.MINUTES);
-//		System.err.println(duration.toNanos());
-//
-//		t = System.currentTimeMillis();
-//		System.err.println(timeFormat(t));
-//		System.err.println(timeFormat(DATE_FORMAT_SSS, t));
-//		System.err.println(timeFormat("yyyyMMddHHmmssSSS", t));
-//
-//		System.err.println(weekOfYear(1609644874000L));
-//
-//		System.err.println(intervalDay(1666749343530L, 1666626896000L));
-//
-//		System.err.println(getDiffDayMorning(1678868443000L, 0));
-//		System.err.println(getDiffWeek(1672502400000L, 1673625600000L));
-//		System.err.println(isSameMonth(1654016400000L, 1656604800000L));
-
-//		List<Integer> list =new ArrayList<>();
-//		String collect = list.stream().map(v -> String.valueOf(v)).collect(Collectors.joining(","));
-//		System.err.println(collect);
-
-        System.err.println(nextWeekInMon(1691287718000L, EnumWeek.MON, 0));
-
-        long time =  DateUnit.timeAt5(new Date()) + TimeUnit.DAYS.toMillis(1);
-        System.err.println(time);
-        long time1 =  DateUnit.timeAt5(new Date());
-//        int i = DateUnit.getRealDiffTimeDay(time1, time);
-//        System.err.println(i);
-    }
-
     /**
      * 判断两个时间是否是同一个月
-     *
-     * @param time1
-     * @param time2
-     * @return
      */
     public static boolean isSameMonth(long time1, long time2) {
         Calendar cal1 = Calendar.getInstance();
@@ -1258,8 +1068,7 @@ public final class DateUnit {
         LocalDate adjustedStartDate = startDate.with(DayOfWeek.MONDAY);
         LocalDate adjustedEndDate = endDate.with(DayOfWeek.MONDAY);
 
-        // 使用ChronoUnit类计算相差的周数
+        // 计算相差的周数
         return ChronoUnit.WEEKS.between(adjustedStartDate, adjustedEndDate);
     }
-
 }

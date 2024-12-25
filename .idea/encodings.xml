@@ -24,6 +24,8 @@
     <file url="file://$PROJECT_DIR$/cluster/game-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/gate-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/gate-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cluster/gm-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cluster/gm-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/gm/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/gm/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/kafka/src/main/java" charset="UTF-8" />
@@ -34,8 +36,6 @@
     <file url="file://$PROJECT_DIR$/cluster/scene/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cluster/web-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/cluster/web-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cluster/web/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />

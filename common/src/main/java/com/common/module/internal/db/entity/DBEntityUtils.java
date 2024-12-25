@@ -33,6 +33,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * <db实体工具类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class DBEntityUtils {
 
     private static final Logger log = LoggerFactory.getLogger(DBEntityUtils.class);
@@ -56,9 +63,6 @@ public class DBEntityUtils {
 
     /**
      * 将objects( 分表下标后缀,滚表前缀日期后缀,联合主键等) 拼接成一条字符串
-     *
-     * @param serializables
-     * @return
      */
     public static String merged(Serializable... serializables) {
         if (serializables == null || serializables.length < 1)
@@ -76,9 +80,6 @@ public class DBEntityUtils {
 
     /**
      * 把拼接的字符串还原成String[]
-     *
-     * @param s
-     * @return
      */
     public static String[] parsed(String s) {
         if (StringUtils.isEmpty(s))
@@ -88,10 +89,6 @@ public class DBEntityUtils {
 
     /**
      * 检测db实体对象申明的字段和注解的类型是否匹配,只对基本类型做检查
-     *
-     * @param field
-     * @param type
-     * @return
      */
     private static boolean match(Field field, DataType type) {
 
@@ -441,9 +438,6 @@ public class DBEntityUtils {
 
     /**
      * 所有的索引
-     *
-     * @param cls
-     * @return
      */
     public static Map<String, List<Field>> indexsNamedMap(Class<? extends DBEntity> cls) {
 
@@ -461,34 +455,6 @@ public class DBEntityUtils {
         }
         return indexMap;
     }
-
-    /**
-     * 唯一索引
-     *
-     * @param cls
-     * @return
-     */
-//    public static Map<String, List<Field>> uniqueIndexsNamedMap(Class<? extends DBEntity> cls) {
-//
-//	LinkedHashSet<Field> indexSet = Sets.newLinkedHashSet(indexSet(cls));
-//	indexSet.removeIf(field -> {
-//	    Index index = AnnotationFinder.findAnnotation(field, Index.class);
-//	    return !index.way().equals(Index.INDEX_TYPE_UNIQUE);
-//	});
-//
-//	Map<String, List<Field>> indexMap = indexSet.stream().collect(Collectors.groupingBy(field -> indexName(field), Collectors.toList()));
-//	for (String indexName : indexMap.keySet()) {
-//	    List<Field> indexFields = indexMap.get(indexName);
-//	    if (indexFields.size() > 1) {
-//		Set<Index> indexs = Sets.newHashSet();
-//		indexFields.forEach(field -> indexs.add(AnnotationFinder.findAnnotation(field, Index.class)));
-//		if (indexs.size() > 1) {
-//		    throw new RuntimeException(String.format("实体[%s]的联合索引[%s]不一致", cls, indexName));
-//		}
-//	    }
-//	}
-//	return indexMap;
-//    }
 
     /**
      * 获取对象所有非主键字段
@@ -553,21 +519,6 @@ public class DBEntityUtils {
         return result;
     }
 
-    /** 获取对象所有非主键字段的数据 */
-//    public static <E extends DBEntity> LinkedHashMap<Field, Object> valueMap(E obj) {
-//
-//	LinkedHashMap<Field, Object> result = Maps.newLinkedHashMap();
-//	LinkedHashSet<Field> valueOfFields = valueSet((Class<? extends DBEntity>) obj.getEntityType());
-//	for (Field field : valueOfFields) {
-//	    try {
-//		result.put(field, getValue(obj, field));
-//	    } catch (Exception e) {
-//		throw new RuntimeException(e.getMessage() + ":" + obj, e);
-//	    }
-//	}
-//	return result;
-//    }
-
     // ---------------------------------------------------------------------------------------------------------------
 
     /**
@@ -580,9 +531,6 @@ public class DBEntityUtils {
 
     /**
      * 是否允许删除条目，默认为true，如果某些数据比如player实体不允许删除，修改注解为false
-     *
-     * @param entityType
-     * @return
      */
     public static boolean deleteable(Class<? extends DBEntity> entityType) {
         Table table = AnnotationUtil.findAnnotation(entityType, Table.class);
@@ -636,9 +584,6 @@ public class DBEntityUtils {
 
     /**
      * 根据实体在内存的key计算出在哪个表
-     *
-     * @param obj 实体对象
-     * @return
      */
     public static <E extends DBEntity> String getTableName(E obj) {
 
@@ -647,10 +592,6 @@ public class DBEntityUtils {
 
     /**
      * 根据实体在内存的key计算出在哪个表
-     *
-     * @param entityType
-     * @param pks        主键转成的string作为内存的key
-     * @return
      */
     public static <E extends DBEntity> String getTableName(Class<E> entityType, Serializable... pks) {
         Validate.isTrue(pks != null && pks.length > 0);
@@ -691,9 +632,6 @@ public class DBEntityUtils {
 
     /**
      * 缓存配置
-     *
-     * @param entityType
-     * @return
      */
     public static Cached cache(Class<? extends DBEntity> entityType) {
 
@@ -703,9 +641,6 @@ public class DBEntityUtils {
 
     /**
      * 只读字段,插入后便不再更新
-     *
-     * @param field
-     * @return
      */
     public static boolean isReadOnly(Field field) {
 
@@ -714,9 +649,6 @@ public class DBEntityUtils {
 
     /**
      * 是否是主键字段
-     *
-     * @param field
-     * @return
      */
     public static boolean isPk(Field field) {
 
@@ -725,9 +657,6 @@ public class DBEntityUtils {
 
     /**
      * 主键是否自增
-     *
-     * @param clz
-     * @return
      */
     public static boolean autoPk(Class<? extends DBEntity> clz) {
         LinkedHashSet<Field> pkSet = keySet(clz);
@@ -745,9 +674,6 @@ public class DBEntityUtils {
 
     /**
      * 主键个数
-     *
-     * @param cls
-     * @return
      */
     public static int pkNum(Class<? extends DBEntity> cls) {
 
@@ -756,10 +682,6 @@ public class DBEntityUtils {
 
     /**
      * 索引个数
-     *
-     * @param cls
-     * @param index
-     * @return
      */
     public static int indexNum(Class<? extends DBEntity> cls, Field index) {
 
@@ -768,9 +690,6 @@ public class DBEntityUtils {
 
     /**
      * 是否唯一索引字段
-     *
-     * @param field
-     * @return
      */
     public static boolean isUniqueIndex(Field field) {
 
@@ -780,9 +699,6 @@ public class DBEntityUtils {
 
     /**
      * 是否索引字段
-     *
-     * @param field
-     * @return
      */
     public static boolean isIndex(Field field) {
 
@@ -791,9 +707,6 @@ public class DBEntityUtils {
 
     /**
      * 获取字段的名称
-     *
-     * @param field
-     * @return
      */
     public static String columnName(Field field) {
 
@@ -826,7 +739,6 @@ public class DBEntityUtils {
      *                   避免出现,不同类型数据id相同导致某些模块出问题</br>
      *                   比如,战斗成员(玩家id)和助战成员(助战id)所属的类型不同,但是id相同在战斗中通过唯一id标识无法取到想要的对象
      *                   </br>
-     * @return</br>
      */
     static int tableOffset(Class<? extends DBEntity> entityType) {
 
@@ -840,9 +752,6 @@ public class DBEntityUtils {
 
     /**
      * 获取索引的名称
-     *
-     * @param field
-     * @return
      */
     public static String indexName(Field field) {
 
@@ -871,9 +780,6 @@ public class DBEntityUtils {
 
     /**
      * 字段是否需要自定义持久化
-     *
-     * @param field
-     * @return
      */
     public static boolean customPersistent(Class<? extends DBEntity> objCls, Field field) {
 
@@ -882,11 +788,6 @@ public class DBEntityUtils {
 
     /**
      * 构造一个实体
-     *
-     * @param predicate  创建实体时执行的初始化过程
-     * @param entityType 实体类型
-     * @param pks      主键,可以是联合主键,但是主键顺序不能错
-     * @return
      */
     public static <E extends DBEntity> E newEntityInstance(Predicate<E> predicate, Class<E> entityType, Serializable... pks) {
         E entity = null;
@@ -937,9 +838,6 @@ public class DBEntityUtils {
 
     /**
      * 通过通用的分隔符连接主键在内存的值(String)
-     *
-     * @param pks
-     * @return
      */
     public static String mergedKey(Serializable... pks) {
         return merged(pks);
@@ -947,10 +845,6 @@ public class DBEntityUtils {
 
     /**
      * 通过通用的分隔符还原主键
-     *
-     * @param entityType
-     * @param mergedKey
-     * @return
      */
     public static Serializable[] parsed2Pks(Class<? extends DBEntity> entityType, String mergedKey) {
         try {
@@ -974,8 +868,6 @@ public class DBEntityUtils {
 
     /**
      * 检查主键顺序和类型是否正确
-     *
-     * @param pks
      */
     static void checkPks(Class<? extends DBEntity> entityType, Serializable... pks) {
         if (PropertyConfig.isDebug()) {
@@ -1017,13 +909,8 @@ public class DBEntityUtils {
 
     /**
      * 检查数据类型是否一样
-     *
-     * @param cls1
-     * @param cls2
-     * @return
      */
     private static boolean isSameClass(Class<?> cls1, Class<?> cls2) {
-
         if (cls1 == cls2) {
             return true;
         }
@@ -1053,5 +940,4 @@ public class DBEntityUtils {
         }
         return false;
     }
-
 }

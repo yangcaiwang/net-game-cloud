@@ -8,12 +8,17 @@ import com.game.proto.CommonProto;
 import io.netty.channel.Channel;
 
 /**
- * 使用protobuf协议的默认业务处理器实现，此处仅仅做消息分发对应服务器
+ * <netty服务端协议处理器实现类>
+ * <p>
+ * ps: 使用protobuf协议的默认业务处理器实现，此处仅仅做消息分发对应服务器
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class NettyServerProtobufHandler implements RouteMessageListener {
 
     @Override
-    public CommonProto.msg route(Channel channel, CommonProto.msg req, String serverId){
+    public CommonProto.msg route(Channel channel, CommonProto.msg req, String serverId) {
         GrpcManager.GrpcClient grpcClient = GrpcManager.getInstance().getGrpcClient(serverId);
         if (grpcClient != null) {
             CommonProto.RouteRequest build = CommonProto.RouteRequest.newBuilder()

@@ -18,7 +18,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * 缓存数据池
+ * <缓存数据池类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class Repositories {
 
@@ -42,10 +46,6 @@ public class Repositories {
 
 	/**
 	 * 获取数据仓库
-	 * 
-	 * @param entityType
-	 *            实体类型
-	 * @return
 	 */
 	public static <E extends DBEntity, Repository extends IRepository<E>> Repository getRepository(Class<E> entityType) {
 		Objects.requireNonNull(entityType);
@@ -71,10 +71,8 @@ public class Repositories {
 		repositories.values().forEach(IRepository::serverClose);
 		list.forEach(r -> ((DelayCachedRepository<? extends DBEntity>) r).shutDownFlushAll());
 		list.forEach(r -> ((DelayCachedRepository<? extends DBEntity>) r).flushAll());
-		actorThreadPoolExecutor.shutdownfully();
+		actorThreadPoolExecutor.shutdownFully();
 	}
-
-
 
 	///////////////////////////////////////////////// Caffeine - Cache - Options
 	///////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////

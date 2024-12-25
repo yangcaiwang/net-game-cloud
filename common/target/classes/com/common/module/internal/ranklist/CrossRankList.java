@@ -11,6 +11,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Predicate;
 
+/**
+ * <跨服排行榜成员实现类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class CrossRankList <E extends AbstractRankMember<E>> implements ICrossRankList<E> {
     transient protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -30,7 +37,6 @@ public class CrossRankList <E extends AbstractRankMember<E>> implements ICrossRa
         this.total = total;
         this.groupMap = Maps.newHashMap();
         this.groupList = Maps.newHashMap();
-//        this.groupList = total <= DEFAULT_SIZE ? Lists.newArrayListWithCapacity(total) : Lists.newArrayListWithCapacity(DEFAULT_SIZE);
     }
 
     @Override
@@ -51,9 +57,8 @@ public class CrossRankList <E extends AbstractRankMember<E>> implements ICrossRa
         List<E> initList = Lists.newArrayList(members);
         SortUtils.quickSort(initList, 0, initList.size() - 1);
         for (int i = 0; i < initList.size(); i++) {
-            int index = i;
-            E e = initList.get(index);
-            e.setRank(index + 1);
+            E e = initList.get(i);
+            e.setRank(i + 1);
         }
         for (int i = initList.size(); --i >= total; ) {
             initList.remove(i);
@@ -153,16 +158,6 @@ public class CrossRankList <E extends AbstractRankMember<E>> implements ICrossRa
             map.computeIfAbsent(RankChangedEvent.RankModifyType.DOWN, v -> Maps.newHashMap()).computeIfAbsent(before.getId(), v -> new AtomicInteger()).incrementAndGet();
             count++;
         }
-
-//        map.forEach((modifyType, m) -> {
-//            m.forEach((id, updRank) -> {
-//                E mem = getMemberById(groupId, id);
-//                if (mem != null) {
-//                    EventBusesImpl.getInstance().asyncPublish(name, new RankChangedEvent(name, id, updRank.get(), mem.getRank(), modifyType));
-//                }
-//            });
-//        });
-
         return count;
     }
 
@@ -187,15 +182,6 @@ public class CrossRankList <E extends AbstractRankMember<E>> implements ICrossRa
             map.computeIfAbsent(RankChangedEvent.RankModifyType.DOWN, v -> Maps.newHashMap()).computeIfAbsent(member.getId(), v -> new AtomicInteger()).incrementAndGet();
             count++;
         }
-
-//        map.forEach((modifyType, m) -> {
-//            m.forEach((id, updRank) -> {
-//                E mem = getMemberById(groupId, id);
-//                if (mem != null) {
-//                    EventBusesImpl.getInstance().asyncPublish(name, new RankChangedEvent(name, id, updRank.get(), mem.getRank(), modifyType));
-//                }
-//            });
-//        });
 
         return count;
     }

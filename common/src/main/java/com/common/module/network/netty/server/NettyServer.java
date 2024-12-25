@@ -1,8 +1,8 @@
 package com.common.module.network.netty.server;
 
+import com.common.module.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.common.module.network.netty.coder.NettyPacketDecoder;
 import com.common.module.network.netty.coder.NettyPacketEncoder;
-import com.common.module.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -13,11 +13,33 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * <netty服务端启动类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
+ */
 public class NettyServer {
-    public static void bind(String host, int port) throws Exception {
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1, new DefaultThreadFactory("HNettyBoss"));
-        EventLoopGroup workerGroup = new NioEventLoopGroup(16, new DefaultThreadFactory("HNettyWorker"));
+    private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
+
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
+    private ActorThreadPoolExecutor executor = new ActorThreadPoolExecutor("netty-server-thread", Runtime.getRuntime().availableProcessors() * 2);
+    private NettyServerHandler nettyServerHandler = new NettyServerHandler(new NettyServerProtobufHandler(), executor);
+    private ChannelFuture channelFuture;
+    private static NettyServer nettyServer = new NettyServer();
+
+    public static NettyServer getInstance() {
+        return nettyServer;
+    }
+
+    public void start(String host, int port) {
+        bossGroup = new NioEventLoopGroup(1, new DefaultThreadFactory("HNettyBoss"));
+        workerGroup = new NioEventLoopGroup(16, new DefaultThreadFactory("HNettyWorker"));
         try {
             // 服务端辅助启动类，用以降低服务端的开发复杂度
             ServerBootstrap bootstrap = new ServerBootstrap();
@@ -36,14 +58,35 @@ public class NettyServer {
                             ch.pipeline().addLast(new IdleStateHandler(7200, 0, 0));
                             ch.pipeline().addLast("decoder", new NettyPacketDecoder());
                             ch.pipeline().addLast("encoder", new NettyPacketEncoder());
-                            ch.pipeline().addLast(new NettyServerHandler(new NettyServerProtobufHandler(), new ActorThreadPoolExecutor("websocket-server-thread", Runtime.getRuntime().availableProcessors() * 2)));
+                            ch.pipeline().addLast(nettyServerHandler);
                         }
                     });
-            ChannelFuture future = bootstrap.bind(host, port).sync();
-            future.channel().closeFuture().sync();
-        } finally {
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
+            channelFuture = bootstrap.bind(host, port).sync();
+            Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    private void stop() {
+        try {
+            if (bossGroup != null) {
+                bossGroup.shutdownGracefully();
+            }
+
+            if (workerGroup != null) {
+                workerGroup.shutdownGracefully();
+            }
+
+            if (channelFuture != null) {
+                channelFuture.channel().close();
+            }
+
+            if (executor != null) {
+                executor.shutdown();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
     }
 }

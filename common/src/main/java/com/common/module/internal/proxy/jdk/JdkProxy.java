@@ -10,7 +10,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * Java自带的代理,必须是接口类型才能被代理,不会产生内存溢出问题,但是只能代理接口
+ * <Jdk代理实现类>
+ * <p>
+ * ps: Java自带的代理,必须是接口类型才能被代理,不会产生内存溢出问题,但是只能代理接口
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public class JdkProxy {
 

@@ -2,7 +2,11 @@
 package com.common.module.internal.db.entity;
 
 /**
- * 虚拟机内存对象
+ * <虚拟机内存对象接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public interface JVMable {
 
