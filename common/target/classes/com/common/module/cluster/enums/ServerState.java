@@ -51,4 +51,8 @@ public enum ServerState {
     public static boolean checkNeedWhiteList(int state) {
         return state == UNKNOWN.state;
     }
+    public static boolean isMaintain(int state) {
+        return state != HOT.state && state != NEW.state;
+    }
+
 }

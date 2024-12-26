@@ -4,9 +4,11 @@
 
 # 安装node.js@v16.20.2(ps:17及以上版本不兼容vue@2.6.12)
 https://blog.csdn.net/weixin_42474607/article/details/140769161
+npm config set prefix "C:\Program Files\nodejs\node_global"
+npm config set cache "C:\Program Files\nodejs\node_cache"
+
 # 进入项目目录
 cd gamer-ui
-
 # 安装依赖(windows下一定以管理员模式运行cmd)
 npm install
 
