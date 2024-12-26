@@ -26,12 +26,20 @@ public final class ProtocolProto {
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
-     * 不需要，只是为了标记第一个
+     * 首包
      * </pre>
      *
-     * <code>NONE = 0;</code>
+     * <code>FIRST_PACKET_CMD = 0;</code>
      */
-    NONE(0),
+    FIRST_PACKET_CMD(0),
+    /**
+     * <pre>
+     * 心跳
+     * </pre>
+     *
+     * <code>HEART_BEAT_CMD = 100000;</code>
+     */
+    HEART_BEAT_CMD(100000),
     /**
      * <pre>
      *================================Gm=======================================
@@ -51,22 +59,6 @@ public final class ProtocolProto {
     /**
      * <pre>
      *=========================================================================
-     * </pre>
-     *
-     * <code>HEART_BEAT_REQ = 100000;</code>
-     */
-    HEART_BEAT_REQ(100000),
-    /**
-     * <pre>
-     * 心跳
-     * </pre>
-     *
-     * <code>HEART_BEAT_RESP = 200000;</code>
-     */
-    HEART_BEAT_RESP(200000),
-    /**
-     * <pre>
-     * 进入游戏
      * </pre>
      *
      * <code>ENTER_GAME_REQ = 100001;</code>
@@ -117,12 +109,20 @@ public final class ProtocolProto {
 
     /**
      * <pre>
-     * 不需要，只是为了标记第一个
+     * 首包
      * </pre>
      *
-     * <code>NONE = 0;</code>
+     * <code>FIRST_PACKET_CMD = 0;</code>
      */
-    public static final int NONE_VALUE = 0;
+    public static final int FIRST_PACKET_CMD_VALUE = 0;
+    /**
+     * <pre>
+     * 心跳
+     * </pre>
+     *
+     * <code>HEART_BEAT_CMD = 100000;</code>
+     */
+    public static final int HEART_BEAT_CMD_VALUE = 100000;
     /**
      * <pre>
      *================================Gm=======================================
@@ -142,22 +142,6 @@ public final class ProtocolProto {
     /**
      * <pre>
      *=========================================================================
-     * </pre>
-     *
-     * <code>HEART_BEAT_REQ = 100000;</code>
-     */
-    public static final int HEART_BEAT_REQ_VALUE = 100000;
-    /**
-     * <pre>
-     * 心跳
-     * </pre>
-     *
-     * <code>HEART_BEAT_RESP = 200000;</code>
-     */
-    public static final int HEART_BEAT_RESP_VALUE = 200000;
-    /**
-     * <pre>
-     * 进入游戏
      * </pre>
      *
      * <code>ENTER_GAME_REQ = 100001;</code>
@@ -229,11 +213,10 @@ public final class ProtocolProto {
      */
     public static ProtocolCmd forNumber(int value) {
       switch (value) {
-        case 0: return NONE;
+        case 0: return FIRST_PACKET_CMD;
+        case 100000: return HEART_BEAT_CMD;
         case 110001: return ADD_LEVEL_REQ;
         case 210001: return ADD_LEVEL_RESP;
-        case 100000: return HEART_BEAT_REQ;
-        case 200000: return HEART_BEAT_RESP;
         case 100001: return ENTER_GAME_REQ;
         case 200001: return ENTER_GAME_RESP;
         case 300003: return PLAYER_UPDATE_NOTIFY;
@@ -305,15 +288,15 @@ public final class ProtocolProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016protocol.proto\022\010protocol*\217\002\n\013ProtocolC" +
-      "md\022\010\n\004NONE\020\000\022\023\n\rADD_LEVEL_REQ\020\261\333\006\022\024\n\016ADD" +
-      "_LEVEL_RESP\020\321\350\014\022\024\n\016HEART_BEAT_REQ\020\240\215\006\022\025\n" +
-      "\017HEART_BEAT_RESP\020\300\232\014\022\024\n\016ENTER_GAME_REQ\020\241" +
-      "\215\006\022\025\n\017ENTER_GAME_RESP\020\301\232\014\022\032\n\024PLAYER_UPDA" +
-      "TE_NOTIFY\020\343\247\022\022\034\n\026PLAYER_NEXT_DAY_NOTIFY\020" +
-      "\344\247\022\022\032\n\024PLAYER_RECONNECT_REQ\020\257\215\006\022\033\n\025PLAYE" +
-      "R_RECONNECT_RESP\020\317\232\014B\037\n\016com.game.protoB\r" +
-      "ProtocolProtob\006proto3"
+      "\n\016protocol.proto\022\010protocol*\204\002\n\013ProtocolC" +
+      "md\022\024\n\020FIRST_PACKET_CMD\020\000\022\024\n\016HEART_BEAT_C" +
+      "MD\020\240\215\006\022\023\n\rADD_LEVEL_REQ\020\261\333\006\022\024\n\016ADD_LEVEL" +
+      "_RESP\020\321\350\014\022\024\n\016ENTER_GAME_REQ\020\241\215\006\022\025\n\017ENTER" +
+      "_GAME_RESP\020\301\232\014\022\032\n\024PLAYER_UPDATE_NOTIFY\020\343" +
+      "\247\022\022\034\n\026PLAYER_NEXT_DAY_NOTIFY\020\344\247\022\022\032\n\024PLAY" +
+      "ER_RECONNECT_REQ\020\257\215\006\022\033\n\025PLAYER_RECONNECT" +
+      "_RESP\020\317\232\014B\037\n\016com.game.protoB\rProtocolPro" +
+      "tob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

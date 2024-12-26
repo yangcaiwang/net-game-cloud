@@ -1,5 +1,6 @@
 package com.common.module.network.netty.server;
 
+import com.common.module.internal.heart.netty.NettyHeartbeatProcess;
 import com.common.module.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.common.module.network.netty.coder.NettyPacketDecoder;
 import com.common.module.network.netty.coder.NettyPacketEncoder;
@@ -30,6 +31,7 @@ public class NettyServer {
     private EventLoopGroup workerGroup;
     private ActorThreadPoolExecutor executor = new ActorThreadPoolExecutor("netty-server-thread", Runtime.getRuntime().availableProcessors() * 2);
     private NettyServerHandler nettyServerHandler = new NettyServerHandler(new NettyServerProtobufHandler(), executor);
+    private NettyHeartbeatProcess nettyHeartbeatProcess;
     private ChannelFuture channelFuture;
     private static NettyServer nettyServer = new NettyServer();
 
@@ -37,7 +39,7 @@ public class NettyServer {
         return nettyServer;
     }
 
-    public void start(String host, int port) {
+    public void start(String host, int port, long heartbeatTime, long heartbeatTimeout) {
         bossGroup = new NioEventLoopGroup(1, new DefaultThreadFactory("HNettyBoss"));
         workerGroup = new NioEventLoopGroup(16, new DefaultThreadFactory("HNettyWorker"));
         try {
@@ -62,6 +64,11 @@ public class NettyServer {
                         }
                     });
             channelFuture = bootstrap.bind(host, port).sync();
+
+            // 开启心跳机制
+            nettyHeartbeatProcess = new NettyHeartbeatProcess(heartbeatTime, heartbeatTimeout);
+            nettyHeartbeatProcess.sent();
+            nettyHeartbeatProcess.monitor();
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
         } catch (InterruptedException e) {
             logger.error(e.getMessage(), e);
@@ -84,6 +91,10 @@ public class NettyServer {
 
             if (executor != null) {
                 executor.shutdown();
+            }
+
+            if (nettyHeartbeatProcess != null) {
+                nettyHeartbeatProcess.showdown();
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

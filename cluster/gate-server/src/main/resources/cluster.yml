@@ -6,11 +6,17 @@ cluster:
   port: 8000
 grpc:
   port: 7000
+  heartbeatTime: 10000
+  heartbeatTimeout: 30000
 netty:
   host: "127.0.0.1"
   port: 7001
+  heartbeatTime: 5000
+  heartbeatTimeout: 30000
 jetty:
   port: 9000
   httpMinThreads: 1
   httpMaxThreads: 10
   idleTimeout: 100
+  heartbeatTime: 30000
+  heartbeatTimeout: 60000

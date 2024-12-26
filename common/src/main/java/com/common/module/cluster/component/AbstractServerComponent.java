@@ -7,7 +7,7 @@ import com.common.module.internal.base.BaseConfigUtil;
 import com.common.module.internal.db.entity.IdentityCreator;
 import com.common.module.internal.db.entity.Repositories;
 import com.common.module.internal.loader.Scanner;
-import com.common.module.network.netty.message.MsgManager;
+import com.common.module.network.netty.message.MessageProcess;
 import com.common.module.util.PrintManager;
 import com.common.module.util.SystemUtils;
 import org.slf4j.Logger;
@@ -97,7 +97,7 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
     @Override
     public void stop() {
         try {
-            int players = MsgManager.kitOutAll();
+            int players = MessageProcess.getInstance().kitOutAll();
             if (players != 0) {
                 log.info("======================= [{}] kit out [{}] player =======================", serverType().getServerId(), players);
             }

@@ -18,11 +18,11 @@ import java.util.Vector;
  */
 public class HttpClient {
 
-    private String defaultContentEncoding = "UTF-8";
+    private final String DEFAULT_CONTENT_ENCODING = "UTF-8";
 
-    private int connectTimeout = 3000;
+    private final int CONNECT_TIME_OUT = 3000;
 
-    private int readTimeout = 5000;
+    private final int READ_TIME_OUT = 5000;
 
     private static HttpClient httpClient = new HttpClient();
 
@@ -35,7 +35,6 @@ public class HttpClient {
      *
      * @param urlString URL地址
      * @return 响应对象
-     * @throws IOException
      */
     public HttpResponse sendGet(String urlString) throws IOException {
         return this.send(urlString, "GET", null, null);
@@ -47,7 +46,6 @@ public class HttpClient {
      * @param urlString URL地址
      * @param params    参数集合
      * @return 响应对象
-     * @throws IOException
      */
     public HttpResponse sendGet(String urlString, Map<String, String> params) throws IOException {
         return this.send(urlString, "GET", params, null);
@@ -56,15 +54,14 @@ public class HttpClient {
     /**
      * 发送GET请求
      *
-     * @param urlString URL地址
-     * @param params    参数集合
-     * @param propertys 请求属性
+     * @param urlString  URL地址
+     * @param params     参数集合
+     * @param properties 请求属性
      * @return 响应对象
-     * @throws IOException
      */
-    public HttpResponse sendGet(String urlString, Map<String, String> params, Map<String, String> propertys)
+    public HttpResponse sendGet(String urlString, Map<String, String> params, Map<String, String> properties)
             throws IOException {
-        return this.send(urlString, "GET", params, propertys);
+        return this.send(urlString, "GET", params, properties);
     }
 
     /**
@@ -72,7 +69,6 @@ public class HttpClient {
      *
      * @param urlString URL地址
      * @return 响应对象
-     * @throws IOException
      */
     public HttpResponse sendPost(String urlString) throws IOException {
         return this.send(urlString, "POST", null, null);
@@ -84,7 +80,6 @@ public class HttpClient {
      * @param urlString URL地址
      * @param params    参数集合
      * @return 响应对象
-     * @throws IOException
      */
     public HttpResponse sendPost(String urlString, Map<String, String> params) throws IOException {
         return this.send(urlString, "POST", params, null);
@@ -93,23 +88,21 @@ public class HttpClient {
     /**
      * 发送POST请求
      *
-     * @param urlString URL地址
-     * @param params    参数集合
-     * @param propertys 请求属性
+     * @param urlString  URL地址
+     * @param params     参数集合
+     * @param properties 请求属性
      * @return 响应对象
-     * @throws IOException
      */
-    public HttpResponse sendPost(String urlString, Map<String, String> params, Map<String, String> propertys)
+    public HttpResponse sendPost(String urlString, Map<String, String> params, Map<String, String> properties)
             throws IOException {
-        return this.send(urlString, "POST", params, propertys);
+        return this.send(urlString, "POST", params, properties);
     }
 
     /**
      * 发送HTTP请求
      *
-     * @param urlString
+     * @param urlString URL地址
      * @return 响映对象
-     * @throws IOException
      */
     private HttpResponse send(String urlString, String method, Map<String, String> parameters,
                               Map<String, String> propertys) throws IOException {
@@ -134,10 +127,10 @@ public class HttpClient {
         urlConnection.setDoOutput(true);
         urlConnection.setDoInput(true);
         urlConnection.setUseCaches(false);
-        // 连接超时 设置为1秒
-        urlConnection.setConnectTimeout(connectTimeout);
-        // 读取超时 10秒
-        urlConnection.setReadTimeout(readTimeout);
+        // 连接超时 设置为3秒
+        urlConnection.setConnectTimeout(CONNECT_TIME_OUT);
+        // 读取超时 5秒
+        urlConnection.setReadTimeout(READ_TIME_OUT);
 
         if (propertys != null)
             for (String key : propertys.keySet()) {
@@ -145,12 +138,11 @@ public class HttpClient {
             }
 
         if (method.equalsIgnoreCase("POST") && parameters != null) {
-            StringBuffer param = new StringBuffer();
+            StringBuilder param = new StringBuilder();
             for (String key : parameters.keySet()) {
                 param.append("&");
                 param.append(key).append("=").append(parameters.get(key));
             }
-            // System.out.println(param.toString());
             urlConnection.getOutputStream().write(param.toString().getBytes());
             urlConnection.getOutputStream().flush();
             urlConnection.getOutputStream().close();
@@ -160,10 +152,6 @@ public class HttpClient {
 
     /**
      * 得到响应对象
-     *
-     * @param urlConnection
-     * @return 响应对象
-     * @throws IOException
      */
     private HttpResponse makeContent(String urlString, HttpURLConnection urlConnection) throws IOException {
         HttpResponse httpResponser = new HttpResponse();
@@ -183,7 +171,7 @@ public class HttpClient {
 
             String ecod = urlConnection.getContentEncoding();
             if (ecod == null)
-                ecod = this.defaultContentEncoding;
+                ecod = this.DEFAULT_CONTENT_ENCODING;
             httpResponser.urlString = urlString;
             httpResponser.go = urlConnection.getHeaderField("MyHeaderData");
             httpResponser.defaultPort = urlConnection.getURL().getDefaultPort();
@@ -195,9 +183,6 @@ public class HttpClient {
             httpResponser.query = urlConnection.getURL().getQuery();
             httpResponser.ref = urlConnection.getURL().getRef();
             httpResponser.userInfo = urlConnection.getURL().getUserInfo();
-
-            // httpResponser.content = new String(temp.toString().getBytes(),
-            // ecod);
             httpResponser.content = new String(temp.toString().getBytes());
             httpResponser.contentEncoding = ecod;
             httpResponser.code = urlConnection.getResponseCode();
@@ -214,20 +199,6 @@ public class HttpClient {
             if (urlConnection != null)
                 urlConnection.disconnect();
         }
-    }
-
-    /**
-     * 默认的响应字符集
-     */
-    public String getDefaultContentEncoding() {
-        return this.defaultContentEncoding;
-    }
-
-    /**
-     * 设置默认的响应字符集
-     */
-    public void setDefaultContentEncoding(String defaultContentEncoding) {
-        this.defaultContentEncoding = defaultContentEncoding;
     }
 
     public HttpResponse sendJson(String urlString, String jsonData, Map<String, String> propertys) throws IOException {

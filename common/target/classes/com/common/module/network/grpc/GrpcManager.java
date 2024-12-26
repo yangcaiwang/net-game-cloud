@@ -3,7 +3,7 @@ package com.common.module.network.grpc;
 import com.common.module.cluster.entity.ServerEntity;
 import com.common.module.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.common.module.internal.thread.task.linked.AbstractLinkedTask;
-import com.common.module.network.netty.message.MsgManager;
+import com.common.module.network.netty.message.MessageProcess;
 import com.game.proto.CommonProto;
 import com.game.proto.RouteServiceGrpc;
 import io.grpc.*;
@@ -41,8 +41,8 @@ public class GrpcManager {
      *
      * @param port 端口号
      */
-    public void startGrpcServer(int port) {
-        GrpcServer grpcServer = new GrpcServer();
+    public void startGrpcServer(int port, long keepAliveTime, long keepAliveTimeout) {
+        GrpcServer grpcServer = new GrpcServer(keepAliveTime, keepAliveTimeout);
         grpcServer.start(port);
     }
 
@@ -51,7 +51,7 @@ public class GrpcManager {
      *
      * @param serverEntity 服务器对象
      */
-    public void startGrpcClient(ServerEntity serverEntity) {
+    public void startGrpcClient(ServerEntity serverEntity, long keepAliveTime, long keepAliveTimeout) {
 
         CopyOnWriteArrayList<String> serverIds = serverEntity.getGrpcServerId();
         CopyOnWriteArrayList<String> hosts = serverEntity.getGrpcClientHost();
@@ -71,7 +71,7 @@ public class GrpcManager {
                         client.start(host, port);
                     }
                 } else {
-                    GrpcClient grpcClient = new GrpcClient();
+                    GrpcClient grpcClient = new GrpcClient(keepAliveTime, keepAliveTimeout);
                     grpcClient.start(host, port);
                     grpcClientMap.put(serverId, grpcClient);
                 }
@@ -89,7 +89,14 @@ public class GrpcManager {
      * @author yangcaiwang
      */
     public class GrpcServer {
+        private long heartbeatTime;
+        private long heartbeatTimeout;
         private Server server;
+
+        public GrpcServer(long heartbeatTime, long heartbeatTimeout) {
+            this.heartbeatTime = heartbeatTime;
+            this.heartbeatTimeout = heartbeatTimeout;
+        }
 
         /**
          * 启动服务端
@@ -101,6 +108,9 @@ public class GrpcManager {
 
                 server = ServerBuilder.forPort(port)
                         .addService(new RouteServiceImpl())
+                        .permitKeepAliveWithoutCalls(true)
+                        .keepAliveTime(heartbeatTime, TimeUnit.MILLISECONDS)
+                        .keepAliveTimeout(heartbeatTimeout, TimeUnit.MILLISECONDS)
                         .build();
 
                 server.start();
@@ -143,12 +153,19 @@ public class GrpcManager {
      * @author yangcaiwang
      */
     public class GrpcClient {
+        private long heartbeatTime;
+        private long heartbeatTimeout;
         private ManagedChannel channel;
 
         /**
          * 双向流模式
          */
         private StreamObserver<CommonProto.RouteRequest> routeRequestStreamObserver;
+
+        public GrpcClient(long heartbeatTime, long heartbeatTimeout) {
+            this.heartbeatTime = heartbeatTime;
+            this.heartbeatTimeout = heartbeatTimeout;
+        }
 
         /**
          * 启动客户端
@@ -162,6 +179,9 @@ public class GrpcManager {
                 channel = ManagedChannelBuilder
                         .forAddress(host, port)
                         .usePlaintext()
+                        .keepAliveWithoutCalls(true)
+                        .keepAliveTime(heartbeatTime, TimeUnit.MILLISECONDS)
+                        .keepAliveTimeout(heartbeatTimeout, TimeUnit.MILLISECONDS)
                         .build();
                 Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
                 RouteServiceGrpc.RouteServiceStub asyncStub = RouteServiceGrpc.newStub(channel);
@@ -179,7 +199,7 @@ public class GrpcManager {
 
                             @Override
                             protected void exec() throws Exception {
-                                MsgManager.sent(routeResponse.getMsg().getPlayerId(), routeResponse.getMsg().getCmd(), MsgManager.messageToAny(routeResponse.getMsg()));
+                                MessageProcess.getInstance().sent(routeResponse.getMsg().getPlayerId(), routeResponse.getMsg().getCmd(), MessageProcess.getInstance().messageToAny(routeResponse.getMsg()));
                             }
                         });
                     }

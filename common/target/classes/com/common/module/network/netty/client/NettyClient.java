@@ -2,7 +2,7 @@ package com.common.module.network.netty.client;
 
 import com.common.module.network.netty.coder.NettyPacketDecoder;
 import com.common.module.network.netty.coder.NettyPacketEncoder;
-import com.common.module.network.netty.message.MsgManager;
+import com.common.module.network.netty.message.MessageProcess;
 import com.game.proto.CommonProto;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -51,7 +51,7 @@ public class NettyClient {
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
             log.info("======================= [] websocket client started ip:{} port:{} =======================", host, port);
             // 首包
-            sent(MsgManager.buildMsg(0, 1, "game-1001", CommonProto.msg.newBuilder().build()));
+            sent(MessageProcess.getInstance().buildMsg(0, 1, "game-1001", CommonProto.msg.newBuilder().build()));
 
             // TODO 后端模仿客户端自测接口
 //            NettyClient.sent(MsgManager.buildMsg(1, CommonProto.msg.newBuilder().setAny(MsgManager.messageToAny(CommonProto.MiniItem.newBuilder().build())).build()));

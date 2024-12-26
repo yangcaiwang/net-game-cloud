@@ -1,6 +1,7 @@
 package com.common.module.cluster;
 
 import com.common.module.cluster.entity.ServerEntity;
+import com.common.module.cluster.enums.ServerType;
 
 /**
  * <集群操作分布式缓存接口>
@@ -26,6 +27,13 @@ public interface ClusterService {
      * @return {@link ServerEntity} 服务器对象
      */
     ServerEntity getServerEntity(String serverId);
+
+    /**
+     * 通过服务器类型 获取服务器对象
+     *
+     * @return {@link ServerEntity} 服务器对象
+     */
+    ServerEntity getServerEntity(ServerType serverType);
 
     /**
      * 通过组id获取网关对象

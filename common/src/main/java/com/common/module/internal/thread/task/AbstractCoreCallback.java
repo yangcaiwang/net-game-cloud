@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import java.util.concurrent.Callable;
 
 /**
- * 抽象的带回调的任务
+ * <带回调线程任务的抽象类>
+ * <p>
  *
- * @param <V>
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public abstract class AbstractCoreCallback<V> implements ICoreTask, Callable<V> {
 

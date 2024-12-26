@@ -1,6 +1,7 @@
 package com.common.module.cluster.entity;
 
 import com.common.module.cluster.constant.ClusterConstant;
+import com.common.module.cluster.enums.ServerState;
 import com.common.module.cluster.enums.ServerType;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * <服务器实体类>
  * <p>
+ * ps: 注册到redission分布式配置中心
  *
  * @author <yangcaiwang>
  * @version <1.0>
@@ -20,6 +22,16 @@ public class ServerEntity implements Serializable {
     private String serverId;
 
     /**
+     * 服务器类型 {@link ServerType}
+     */
+    private ServerType serverType;
+
+    /**
+     * 服务器状态 {@link ServerState}
+     */
+    private ServerState serverState;
+
+    /**
      * 组id
      */
     private int groupId;
@@ -28,11 +40,6 @@ public class ServerEntity implements Serializable {
      * 权重
      */
     private int weight;
-
-    /**
-     * 服务器类型 {@link ServerType}
-     */
-    private ServerType serverType;
 
     /**
      * 服务器ip
@@ -76,7 +83,6 @@ public class ServerEntity implements Serializable {
      */
     private int jettyPort;
 
-
     public int getGroupId() {
         return groupId;
     }
@@ -99,6 +105,14 @@ public class ServerEntity implements Serializable {
 
     public void setServerType(ServerType serverType) {
         this.serverType = serverType;
+    }
+
+    public ServerState getServerState() {
+        return serverState;
+    }
+
+    public void setServerState(ServerState serverState) {
+        this.serverState = serverState;
     }
 
     public String getServerId() {

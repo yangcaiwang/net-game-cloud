@@ -1,11 +1,15 @@
 package com.common.module.cluster;
 
 import com.common.module.cluster.constant.ClusterConstant;
-import com.common.module.cluster.enums.ServerType;
+import com.common.module.cluster.entity.ParseYml;
 import com.common.module.cluster.entity.ServerEntity;
+import com.common.module.cluster.enums.Begin;
+import com.common.module.cluster.enums.ServerType;
+import com.common.module.cluster.property.PropertyConfig;
 import com.common.module.internal.cache.redission.RedissonClient;
 import com.common.module.internal.loader.service.AbstractService;
 import com.common.module.network.grpc.GrpcManager;
+import com.common.module.util.SerializationUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
@@ -66,6 +70,21 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
     }
 
     @Override
+    public ServerEntity getServerEntity(ServerType serverType) {
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        Map<String, ServerEntity> serverEntityMap = groupMap.get(0);
+        if (MapUtils.isNotEmpty(serverEntityMap)) {
+            for (ServerEntity serverEntity : serverEntityMap.values()) {
+                if (serverEntity.getServerType() == serverType) {
+                    return serverEntity;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public ServerEntity getGateServerEntity(int groupId) {
         RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         if (MapUtils.isEmpty(groupMap)) {
@@ -85,7 +104,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
     }
 
     @Override
-    public void startGateGrpcClient(ServerEntity gateServerEntity) {
+    public void startGateGrpcClient(ServerEntity serverEntity) {
         RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         if (MapUtils.isEmpty(groupMap)) {
             return;
@@ -94,19 +113,27 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
         RReadWriteLock readWriteLock = groupMap.getReadWriteLock(1);
         RLock rLock = readWriteLock.writeLock();
         try {
-            Map<String, ServerEntity> serverEntityMap = groupMap.get(gateServerEntity.getGroupId());
+            Map<String, ServerEntity> serverEntityMap = groupMap.get(serverEntity.getGroupId());
             if (MapUtils.isEmpty(serverEntityMap)) {
                 return;
             }
 
-            serverEntityMap.put(gateServerEntity.getServerId(), gateServerEntity);
-            groupMap.put(gateServerEntity.getGroupId(), serverEntityMap);
+            serverEntityMap.put(serverEntity.getServerId(), serverEntity);
+            groupMap.put(serverEntity.getGroupId(), serverEntityMap);
+
+            String path = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.CLUSTER_PATH);
+            Map<String, Object> clusterMap = PropertyConfig.loadYml(path);
+            if (MapUtils.isNotEmpty(clusterMap)) {
+                Object grpc = clusterMap.get(Begin.GRPC_S.key);
+                ParseYml parseYmlGrpc = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(grpc), ParseYml.class);
+                GrpcManager.getInstance().startGrpcClient(serverEntity, parseYmlGrpc.getHeartbeatTime(), parseYmlGrpc.getHeartbeatTimeout());
+                log.info("======================= [{}] grpc client started ip::{} port:{} =======================", serverEntity.getServerType().getServerId(), serverEntity.getGrpcClientHost(), serverEntity.getGrpcClientPort());
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         } finally {
             rLock.unlock();
         }
-
-        GrpcManager.getInstance().startGrpcClient(gateServerEntity);
-        log.info("======================= [{}] grpc client started ip::{} port:{} =======================", gateServerEntity.getServerType().getServerId(), gateServerEntity.getGrpcClientHost(), gateServerEntity.getGrpcClientPort());
     }
 
     @Override

@@ -5,7 +5,11 @@ import com.common.module.cluster.property.PropertyConfig;
 import org.slf4j.Logger;
 
 /**
- * 抽象任务
+ * <线程任务的抽象类>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public abstract class AbstractCoreTask implements ICoreTask, Runnable {
 
@@ -13,8 +17,6 @@ public abstract class AbstractCoreTask implements ICoreTask, Runnable {
 
 	/**
 	 * 慢任务时间-毫秒
-	 * 
-	 * @return
 	 */
 	public int getSlowly() {
 		return SLOWLY;

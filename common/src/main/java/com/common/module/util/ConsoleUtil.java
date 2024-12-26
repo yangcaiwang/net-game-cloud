@@ -1,7 +1,7 @@
 
 package com.common.module.util;
 
-import com.common.module.network.netty.message.MsgManager;
+import com.common.module.network.netty.message.MessageProcess;
 
 import java.util.Scanner;
 
@@ -64,7 +64,7 @@ public class ConsoleUtil {
 				}
 				if (lowerCase.equalsIgnoreCase("online")) {
 					if (SystemUtils.isWindows()) {
-						int onlineSize = MsgManager.onlineSize();
+						int onlineSize = MessageProcess.getInstance().onlineSize();
 						System.out.println("在线数:" + onlineSize);
 					}
 				}

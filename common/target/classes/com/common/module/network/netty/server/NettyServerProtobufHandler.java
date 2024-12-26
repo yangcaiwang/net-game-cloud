@@ -3,7 +3,7 @@ package com.common.module.network.netty.server;
 import com.common.module.network.grpc.GrpcManager;
 import com.common.module.network.netty.common.IClient;
 import com.common.module.network.netty.listener.RouteMessageListener;
-import com.common.module.network.netty.message.MsgManager;
+import com.common.module.network.netty.message.MessageProcess;
 import com.game.proto.CommonProto;
 import io.netty.channel.Channel;
 
@@ -31,14 +31,14 @@ public class NettyServerProtobufHandler implements RouteMessageListener {
 
     @Override
     public void exec(Channel channel, CommonProto.msg req) throws Exception {
-        CommonProto.msg resp = route(channel, req, MsgManager.getAttr(channel, MsgManager.SERVER_IP));
+        CommonProto.msg resp = route(channel, req, MessageProcess.getInstance().getAttr(channel, MessageProcess.SERVER_IP));
         if (resp != null) {
-            MsgManager.sent(channel, resp);
+            MessageProcess.getInstance().sent(channel, resp);
         }
     }
 
     @Override
     public void onChannelClose(Channel channel, IClient.OfflineCause offlineCause) {
-        MsgManager.kitOut(channel, offlineCause);
+        MessageProcess.getInstance().kitOut(channel, offlineCause);
     }
 }

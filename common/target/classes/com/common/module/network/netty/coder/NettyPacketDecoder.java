@@ -1,6 +1,6 @@
 package com.common.module.network.netty.coder;
 
-import com.common.module.network.netty.message.MsgManager;
+import com.common.module.network.netty.message.MessageProcess;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -53,7 +53,7 @@ public class NettyPacketDecoder extends ByteToMessageDecoder {
             byte[] dataArr = new byte[in.readableBytes() - b == 0 ? 0 : new byte[b].length];
             in.readBytes(dataArr);
 
-            list.add(MsgManager.buildMsg(cmd, playerId, serverId, dataArr));
+            list.add(MessageProcess.getInstance().buildMsg(cmd, playerId, serverId, dataArr));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             in.clear();

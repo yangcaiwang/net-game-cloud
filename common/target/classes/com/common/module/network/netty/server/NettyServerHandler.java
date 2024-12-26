@@ -1,10 +1,11 @@
 package com.common.module.network.netty.server;
 
+import com.common.module.cluster.property.PropertyConfig;
 import com.common.module.network.netty.common.IClient;
 import com.common.module.network.netty.listener.MessageSuperListener;
-import com.common.module.network.netty.message.MsgManager;
-import com.common.module.cluster.property.PropertyConfig;
+import com.common.module.network.netty.message.MessageProcess;
 import com.game.proto.CommonProto;
+import com.game.proto.ProtocolProto;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -41,22 +42,20 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
         log.info("receive [{}]'s message [{}]", ctx, msgPacket);
         if (msgPacket instanceof CommonProto.msg) {
             CommonProto.msg msg = (CommonProto.msg) msgPacket;
-            long playerId = msg.getPlayerId();
-            String serverId = msg.getServerId();
             // 首包必须是cmd==0并且携带玩家id和服务器id 用于缓存attr
-            if (msg.getCmd() == 0 && playerId != 0 && StringUtils.isNotEmpty(serverId)) {
-                MsgManager.setAttr(ctx.channel(), MsgManager.SERVER_IP, msg.getServerId());
-                MsgManager.setAttr(ctx.channel(), MsgManager.PLAYER_ID, playerId);
-                MsgManager.channelMap.putIfAbsent(playerId, ctx.channel());
-                MsgManager.channelMap.putIfAbsent(playerId, ctx.channel());
-                MsgManager.sent(playerId, msg.getCmd(), null);
-                listener.handle(ctx, handlerExecutor, msg);
+            if (msg.getCmd() == ProtocolProto.ProtocolCmd.FIRST_PACKET_CMD_VALUE && msg.getPlayerId() != 0 && StringUtils.isNotEmpty(msg.getServerId())) {
+                MessageProcess.getInstance().initChannelAttr(ctx.channel(), msg);
                 return;
             }
 
-            if (!MsgManager.checkChannel(ctx.channel())) {
-                MsgManager.removeSession(ctx.channel());
+            if (!MessageProcess.getInstance().checkChannel(ctx.channel())) {
+                MessageProcess.getInstance().removeSession(ctx.channel());
                 return;
+            }
+
+            // 心跳机制
+            if (msg.getCmd() == ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE) {
+                MessageProcess.getInstance().setAttr(ctx.channel(), MessageProcess.HEART_BEAT, System.currentTimeMillis());
             }
 
             listener.handle(ctx, handlerExecutor, msg);
@@ -71,7 +70,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        MsgManager.removeSession(ctx.channel());
+        MessageProcess.getInstance().removeSession(ctx.channel());
     }
 
     @Override

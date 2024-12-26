@@ -9,6 +9,15 @@ package com.common.module.network.jetty.constant;
  */
 public interface HttpCommands {
 
+
+    /**
+     * http请求前缀
+     */
+    String HTTP_PREFIX = "http://";
+    /**
+     * 发送心跳包
+     */
+    String HEARTBEAT = "/heartbeatCommand.do";
     /**
      * 检测帐号是否存在
      */

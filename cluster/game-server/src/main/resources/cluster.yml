@@ -3,10 +3,15 @@ cluster:
   serverId: "game-1001"
   host: "127.0.0.1"
   port: 8001
-grpc:
-  port: 7000
 jetty:
   port: 9001
   httpMinThreads: 1
   httpMaxThreads: 10
   idleTimeout: 100
+  heartbeatTime: 30000
+  heartbeatTimeout: 60000
+grpc:
+  port: 7000
+  heartbeatTime: 10000
+  heartbeatTimeout: 30000
+

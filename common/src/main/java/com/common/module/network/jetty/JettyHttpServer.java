@@ -1,5 +1,7 @@
 package com.common.module.network.jetty;
 
+import com.common.module.cluster.enums.ServerType;
+import com.common.module.internal.heart.jetty.JettyHeartbeatProcess;
 import com.common.module.network.jetty.handler.JettyHttpHandler;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
@@ -24,17 +26,21 @@ public class JettyHttpServer {
 
     private Server jettyServer;
 
+    private JettyHeartbeatProcess jettyHeartbeatProcess;
+
     private static JettyHttpServer jettyHttpServer = new JettyHttpServer();
 
     public static JettyHttpServer getInstance() {
         return jettyHttpServer;
     }
 
-    public void start(JettyHttpHandler jettyHttpHandler, Map<String, Integer> map) throws Exception {
-        int port = map.get("port");
-        int httpMinThreads = map.get("httpMinThreads");
-        int httpMaxThreads = map.get("httpMaxThreads");
-        int idleTimeout = map.get("idleTimeout");
+    public void start(JettyHttpHandler jettyHttpHandler, Map<String, Object> map, ServerType serverType) throws Exception {
+        int port = (int) map.get("port");
+        int httpMinThreads = (int) map.get("httpMinThreads");
+        int httpMaxThreads = (int) map.get("httpMaxThreads");
+        int idleTimeout = (int) map.get("idleTimeout");
+        long heartbeatTime = (long) map.get("heartbeatTime");
+        long heartbeatTimeout = (long) map.get("heartbeatTimeout");
         jettyServer = new Server(getQueuedThreadPool(httpMinThreads, httpMaxThreads, idleTimeout));
         jettyServer.setDumpAfterStart(false);
         jettyServer.setDumpBeforeStop(false);
@@ -43,17 +49,14 @@ public class JettyHttpServer {
         jettyServer.setHandler(jettyHttpHandler);
         jettyServer.start();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
-    }
-
-    private void stop() {
-        if (jettyServer != null && jettyServer.isRunning()) {
-            try {
-                jettyServer.stop();
-            } catch (Exception e) {
-                logger.error(e.getMessage(),e);
-            }
+        jettyHeartbeatProcess = new JettyHeartbeatProcess(heartbeatTime, heartbeatTimeout);
+        if (serverType == ServerType.GM_SERVER) {
+            jettyHeartbeatProcess.monitor();
+        } else {
+            jettyHeartbeatProcess.sent();
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
 
     private QueuedThreadPool getQueuedThreadPool(int httpMinTreads, int httpMaxThreads, int idleTimeout) {
@@ -82,5 +85,24 @@ public class JettyHttpServer {
         http_config.setSendServerVersion(true);
         http_config.setSendDateHeader(true);
         return http_config;
+    }
+
+    private void stop() {
+        try {
+            if (jettyServer != null && jettyServer.isRunning()) {
+                jettyServer.stop();
+
+            }
+
+            if (jettyHeartbeatProcess != null) {
+                jettyHeartbeatProcess.showdown();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    public JettyHeartbeatProcess getJettyHeartbeatProcess() {
+        return jettyHeartbeatProcess;
     }
 }

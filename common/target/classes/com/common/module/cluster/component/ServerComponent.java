@@ -3,7 +3,7 @@ package com.common.module.cluster.component;
 import com.common.module.cluster.ClusterService;
 import com.common.module.cluster.ClusterServiceImpl;
 import com.common.module.cluster.constant.ClusterConstant;
-import com.common.module.cluster.entity.Address;
+import com.common.module.cluster.entity.ParseYml;
 import com.common.module.cluster.entity.ServerEntity;
 import com.common.module.cluster.enums.Begin;
 import com.common.module.cluster.enums.ServerType;
@@ -45,22 +45,26 @@ public class ServerComponent extends AbstractServerComponent {
         ServerEntity serverEntity = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(cluster), ServerEntity.class);
         serverEntity.setServerType(this.serverType());
 
+        // 注册grpc
         Object grpc = clusterMap.get(Begin.GRPC_S.key);
-        Address address = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(grpc), Address.class);
-
+        ParseYml parseYmlGrpc = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(grpc), ParseYml.class);
         serverEntity.setGrpcServerHost(serverEntity.getHost());
-        serverEntity.setGrpcServerPort(address.getPort());
+        serverEntity.setGrpcServerPort(parseYmlGrpc.getPort());
+
+        // 注册jetty
+        Object jetty = clusterMap.get(Begin.JETTY.key);
+        ParseYml parseYmlJetty = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), ParseYml.class);
+        serverEntity.setJettyHost(serverEntity.getHost());
+        serverEntity.setJettyPort(parseYmlJetty.getPort());
 
         // 把服务器注册到Redission
         ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
         boolean b = clusterService.saveServerEntity(serverEntity);
         if (b) {
-            if (!Begin.getInstance(Begin.GRPC_C).isBegin(this.serverType)) {
-                return;
+            if (Begin.getInstance(Begin.GRPC_C).isBegin(this.serverType)) {
+                GrpcManager.getInstance().startGrpcClient(serverEntity, parseYmlGrpc.getHeartbeatTime(), parseYmlGrpc.getHeartbeatTimeout());
+                log.info("======================= [{}] server registered =======================", this.serverType().getServerId());
             }
-
-            GrpcManager.getInstance().startGrpcClient(serverEntity);
-            log.info("======================= [{}] server registered =======================", this.serverType().getServerId());
         }
     }
 
@@ -125,7 +129,9 @@ public class ServerComponent extends AbstractServerComponent {
             }
 
             // 开启grpc服务端
-            GrpcManager.getInstance().startGrpcServer(serverEntity.getGrpcServerPort());
+            Object grpc = clusterMap.get(Begin.GRPC_S.key);
+            ParseYml parseYmlGrpc = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(grpc), ParseYml.class);
+            GrpcManager.getInstance().startGrpcServer(serverEntity.getGrpcServerPort(), parseYmlGrpc.getHeartbeatTime(), parseYmlGrpc.getHeartbeatTimeout());
             log.info("======================= [{}] grpc server started port:{} =======================", this.serverType().getServerId(), serverEntity.getGrpcServerPort());
 
             // 发布创建网关grpc客户端事件
@@ -159,9 +165,9 @@ public class ServerComponent extends AbstractServerComponent {
 
         try {
             Object netty = clusterMap.get(Begin.NETTY.key);
-            Address address = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(netty), Address.class);
-            NettyServer.getInstance().start(address.getHost(), address.getPort());
-            log.info("======================= [{}] websocket server started ip:{} port:{} =======================", this.serverType().getServerId(), address.getHost(), address.getPort());
+            ParseYml parseYml = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(netty), ParseYml.class);
+            NettyServer.getInstance().start(parseYml.getHost(), parseYml.getPort(), parseYml.getHeartbeatTime(), parseYml.getHeartbeatTimeout());
+            log.info("======================= [{}] websocket server started ip:{} port:{} =======================", this.serverType().getServerId(), parseYml.getHost(), parseYml.getPort());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -181,10 +187,10 @@ public class ServerComponent extends AbstractServerComponent {
             }
 
             Object jetty = clusterMap.get(Begin.JETTY.key);
-            Map<String, Integer> map = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), Map.class);
-            JettyHttpServer.getInstance().start(new JettyHttpHandler(), map);
+            Map<String, Object> map = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), Map.class);
+            JettyHttpServer.getInstance().start(new JettyHttpHandler(), map, this.serverType);
             serverEntity.setJettyHost(serverEntity.getHost());
-            serverEntity.setJettyPort(map.get("port"));
+            serverEntity.setJettyPort((Integer) map.get("port"));
             clusterService.saveServerEntity(serverEntity);
             log.info("======================= [{}] jetty server started port:{} =======================", this.serverType().getServerId(), serverEntity.getJettyPort());
         } catch (Exception e) {

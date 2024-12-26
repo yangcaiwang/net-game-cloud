@@ -43,8 +43,11 @@ public enum Begin {
                 serverTypes.add(ServerType.GATE_SERVER);
                 break;
             case JETTY:
+                serverTypes.add(ServerType.CHAT_SERVER);
                 serverTypes.add(ServerType.GATE_SERVER);
                 serverTypes.add(ServerType.GAME_SERVER);
+                serverTypes.add(ServerType.GM_SERVER);
+                serverTypes.add(ServerType.LOGIN_SERVER);
                 break;
             default:
         }

@@ -19,8 +19,8 @@ public enum ServerState {
     FREE(4, true), //空闲
     GRAY(5, false), //灰度
     MAINTAIN(6, true), //维护中
-    GIVEUP(7, false), //废弃
-    NOTOPEN(8, false),//未开放
+    NORMAL(7, true), //正常
+    ERROR(8, true),//掉线
     ;
 
     public final int state;

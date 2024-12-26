@@ -4,7 +4,11 @@ package com.common.module.internal.thread.task;
 import com.common.module.internal.loader.service.IService;
 
 /**
- * 任务超类
+ * <线程程任务接口>
+ * <p>
+ *
+ * @author <yangcaiwang>
+ * @version <1.0>
  */
 public interface ICoreTask extends IService {
 

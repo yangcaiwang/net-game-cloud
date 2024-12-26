@@ -14,24 +14,24 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * <周期线程池实现类>
+ * <延时周期线程池实现类>
  * <p>
  * ps: java并发包下自带的定时任务管理器
  *
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class ScheduledExecutorServiceScheduler {
+public class ScheduledExecutor {
 
-    private static final Logger log = LoggerFactory.getLogger(ScheduledExecutorServiceScheduler.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduledExecutor.class);
 
     private static ScheduledExecutorService scheduledExecutorService;
 
     public static ScheduledExecutorService scheduler() {
         if (scheduledExecutorService == null) {
-            synchronized (ScheduledExecutorServiceScheduler.class) {
+            synchronized (ScheduledExecutor.class) {
                 if (scheduledExecutorService == null) {
-                    scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() / 2 + 1, new NamedThreadFactory(ScheduledExecutorServiceScheduler.class.getSimpleName()));
+                    scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() / 2 + 1, new NamedThreadFactory(ScheduledExecutor.class.getSimpleName()));
                 }
             }
         }

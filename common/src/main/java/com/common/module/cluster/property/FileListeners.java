@@ -1,7 +1,7 @@
 
 package com.common.module.cluster.property;
 
-import com.common.module.internal.thread.pool.scheduled.ScheduledExecutorServiceScheduler;
+import com.common.module.internal.thread.pool.scheduled.ScheduledExecutor;
 import com.common.module.internal.thread.task.scheduled.AbstractScheduledTask;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -45,14 +45,14 @@ public class FileListeners {
 			return;
 		}
 		if (file.isFile() && filter.accept(file)) {
-			ScheduledExecutorServiceScheduler.scheduleWithFixedDelay(new FileModifiedListener(listener, file), 1, 3, TimeUnit.SECONDS);
+			ScheduledExecutor.scheduleWithFixedDelay(new FileModifiedListener(listener, file), 1, 3, TimeUnit.SECONDS);
 			return;
 		} else if (file.isDirectory()) {
 			File[] fs = file.listFiles(f -> filter.accept(f));
 			if (Objects.isNull(fs) || fs.length < 1) {
 				return;
 			}
-			ScheduledExecutorServiceScheduler.scheduleWithFixedDelay(new FileModifiedListener(listener, fs), 4, 5, TimeUnit.SECONDS);
+			ScheduledExecutor.scheduleWithFixedDelay(new FileModifiedListener(listener, fs), 4, 5, TimeUnit.SECONDS);
 			return;
 		}
 	}

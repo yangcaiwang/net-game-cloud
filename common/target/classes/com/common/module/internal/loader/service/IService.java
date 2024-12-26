@@ -8,7 +8,7 @@ import com.common.module.internal.db.entity.IdentityCreator;
 import com.common.module.internal.db.entity.Repositories;
 import com.common.module.internal.delay.ServerTimerTask;
 import com.common.module.internal.delay.ServerTimerTaskQueue;
-import com.common.module.internal.thread.pool.scheduled.ScheduledExecutorServiceScheduler;
+import com.common.module.internal.thread.pool.scheduled.ScheduledExecutor;
 import com.common.module.internal.thread.task.AbstractCoreTask;
 
 import java.io.Serializable;
@@ -169,7 +169,7 @@ public interface IService {
 	 *            只有run函数的任务(run->exec)
 	 */
 	default <R extends AbstractCoreTask> void runAsync(R r) {
-		runAsync(r, ScheduledExecutorServiceScheduler.scheduler());
+		runAsync(r, ScheduledExecutor.scheduler());
 	}
 
 	/**
@@ -179,6 +179,6 @@ public interface IService {
 	 *            只有run函数的任务(run->exec)
 	 */
 	default <R extends AbstractCoreTask> void runAsync(R r, Executor executor) {
-		ScheduledExecutorServiceScheduler.execute(r, executor);
+		ScheduledExecutor.execute(r, executor);
 	}
 }

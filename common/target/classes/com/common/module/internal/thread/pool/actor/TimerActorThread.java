@@ -22,29 +22,21 @@ public final class TimerActorThread implements Runnable, ICoreTask {
 
     final Runnable task;
 
-    int timeOutSec;
+    long intervalTime;
 
     long countTime;
 
-    public TimerActorThread(String threadName, int timeOutSec, Runnable task) {
-        this.timeOutSec = timeOutSec;
+    public TimerActorThread(String threadName, long intervalTime, Runnable task) {
+        this.intervalTime = intervalTime;
         this.task = task;
         this.thread = new Thread(this, threadName);
         this.thread.start();
     }
 
-
-    public boolean isStopped() {
-        return !run;
-    }
-
     public void shutdown() {
         shutdown = true;
         synchronized (this) {
-            try {
-                this.notifyAll();
-            } finally {
-            }
+            this.notifyAll();
         }
     }
 
@@ -58,7 +50,7 @@ public final class TimerActorThread implements Runnable, ICoreTask {
             }
             synchronized (this) {
                 try {
-                    this.wait(this.timeOutSec);
+                    this.wait(this.intervalTime);
                 } catch (InterruptedException e) {
                     log.error("线程【{}】 InterruptedException", thread.getName());
                 }
@@ -74,7 +66,6 @@ public final class TimerActorThread implements Runnable, ICoreTask {
             task.run();
         } catch (Exception e) {
             log.error(String.format("actorTask run err,err=[%s] ", e.getMessage()), e);
-        } finally {
         }
     }
 }

@@ -38,9 +38,8 @@ public class JettyHttpHandler extends AbstractHandler {
             String url = request.getRequestURI();
             Map<String, String> params = new HashMap<>();
             String action = "";
-            if (url.contains("api")) {
-                String[] array = url.split("api/");
-                String[] actions = array[1].split("[.]");
+            if (url.contains("do")) {
+                String[] actions = url.split("[.]");
                 action = actions[0];
                 analyticalParameters(params, baseRequest, request);
             } else {
