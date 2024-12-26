@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.LoginLogMapper">
+
+    <resultMap type="LoginLog" id="LoginLogResult">
+        <id     property="id"              column="id"               />
+        <result property="roleId"      column="role_id"             />
+		<result property="roleName"          column="role_name"             />
+		<result property="roleLevel"           column="role_level"              />
+		<result property="loginTime"          column="login_time"              />
+		<result property="logoutTime"          column="logout_time"              />
+		<result property="firstCreateTime"      column="first_create_time"             />
+	</resultMap>
+
+   <select id="selectLoginLogById" resultMap="LoginLogResult"  >
+   	select id,role_id,role_name,`role_level`,login_time,logout_time,first_create_time from `${tabName}`
+		<where>
+			<if test="log.roleId != null and log.roleId != 0">
+				AND role_id = #{log.roleId}
+			</if>
+			<if test="log.roleName != null and log.roleName != ''">
+				AND role_name like concat('%', #{log.roleName}, '%')
+			</if>
+			<if test="log.roleLevel != null and log.roleLevel != 0">
+				AND role_level = #{log.roleLevel}
+			</if>
+			<if test="log.loginTime != null and log.loginTime != ''">
+				AND login_time = #{log.loginTime}
+			</if>
+			<if test="log.logoutTime != null and log.logoutTime != ''">
+				AND logout_time = #{log.logoutTime}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+	    order by first_create_time desc limit #{limitStart}, #{limitEnd}
+	   <!-- 数据范围过滤 -->
+	   ${log.params.dataScope}
+   </select>
+
+	<select id="selectLoginLogByIdAll" resultMap="LoginLogResult"  >
+		select id,role_id,role_name,`role_level`,login_time,logout_time,first_create_time from `${tabName}`
+		<where>
+			<if test="log.roleId != null and log.roleId != 0">
+				AND role_id = #{log.roleId}
+			</if>
+			<if test="log.roleName != null and log.roleName != ''">
+				AND role_name like concat('%', #{log.roleName}, '%')
+			</if>
+			<if test="log.roleLevel != null and log.roleLevel != 0">
+				AND role_level = #{log.roleLevel}
+			</if>
+			<if test="log.loginTime != null and log.loginTime != ''">
+				AND login_time = #{log.loginTime}
+			</if>
+			<if test="log.logoutTime != null and log.logoutTime != ''">
+				AND logout_time = #{log.logoutTime}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+		 order by first_create_time desc
+		<!-- 数据范围过滤 -->
+		${log.params.dataScope}
+	</select>
+
+	<select id="countLog" resultType="Long"  >
+		select count(1) from `${tabName}`
+		<where>
+			<if test="log.roleId != null and log.roleId != 0">
+				AND role_id = #{log.roleId}
+			</if>
+			<if test="log.roleName != null and log.roleName != ''">
+				AND role_name like concat('%', #{log.roleName}, '%')
+			</if>
+			<if test="log.roleLevel != null and log.roleLevel != 0">
+				AND role_level = #{log.roleLevel}
+			</if>
+			<if test="log.loginTime != null and log.loginTime != ''">
+				AND login_time = #{log.loginTime}
+			</if>
+			<if test="log.logoutTime != null and log.logoutTime != ''">
+				AND logout_time = #{log.logoutTime}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+		<!-- 数据范围过滤 -->
+		${log.params.dataScope}
+	</select>
+
+	<select id="countTable" parameterType="String" resultType="String" >
+<!--		show tables like '%log_operation%'-->
+		SELECT table_name FROM information_schema.tables WHERE
+		table_schema=#{schemaName} AND table_name like '%role_progress_log%'
+	</select>
+
+</mapper>

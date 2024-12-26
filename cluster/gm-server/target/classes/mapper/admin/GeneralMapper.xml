@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.GeneralMapper">
+
+    <resultMap type="General" id="GeneralResult">
+        <id     property="roleId"                column="role_id"               />
+        <result property="generalMap"                column="general_data"             />
+	</resultMap>
+
+    <sql id="selectGeneralVo">
+        select role_id,general_data from general_data
+    </sql>
+
+   <select id="selectGeneralById" parameterType="Long" resultMap="GeneralResult">
+   	<include refid="selectGeneralVo"/>
+	   where role_id = #{roleId}
+   </select>
+
+</mapper>

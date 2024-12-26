@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.ProtocolFileDescMapper">
+    
+    <resultMap type="ProtocolFileDesc" id="ProtocolFileDescResult">
+        <result property="id"    column="id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="syntax"    column="syntax"    />
+        <result property="javaPackage"    column="java_package"    />
+        <result property="javaOuterClassname"    column="java_outer_classname"    />
+        <result property="imports"    column="imports"    />
+        <result property="fileDesc"    column="file_desc"    />
+        <result property="fileVersion"    column="file_version"    />
+        <result property="cmdPre"    column="cmd_pre"    />
+    </resultMap>
+
+    <sql id="selectProtocolFileDescVo">
+        select id, file_name, syntax, java_package, java_outer_classname, imports, file_desc, file_version, cmd_pre from protocol_file_desc
+    </sql>
+
+    <select id="selectProtocolFileDescList" parameterType="ProtocolFileDesc" resultMap="ProtocolFileDescResult">
+        <include refid="selectProtocolFileDescVo"/>
+        <where>
+            <if test="id != null and id != 0">
+                AND id = #{id}
+            </if>
+            <if test="fileName != null">
+                AND file_name = #{fileName}
+            </if>
+            <if test="fileVersion != null">
+                AND file_version = #{fileVersion}
+            </if>
+        </where>
+        order by cmd_pre asc
+    </select>
+
+    <select id="selectProtocolFileDescById" parameterType="Integer" resultMap="ProtocolFileDescResult">
+        <include refid="selectProtocolFileDescVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertProtocolFileDesc" parameterType="ProtocolFileDesc" useGeneratedKeys="true" keyProperty="id">
+        insert into protocol_file_desc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileName != null">file_name,</if>
+            <if test="syntax != null">syntax,</if>
+            <if test="javaPackage != null">java_package,</if>
+            <if test="javaOuterClassname != null">java_outer_classname,</if>
+            <if test="imports != null">imports,</if>
+            <if test="fileDesc != null">file_desc,</if>
+            <if test="fileVersion != null">file_version,</if>
+            <if test="cmdPre != null">cmd_pre,</if>
+            <if test="id != null">id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileName != null">#{fileName},</if>
+            <if test="syntax != null">#{syntax},</if>
+            <if test="javaPackage != null">#{javaPackage},</if>
+            <if test="javaOuterClassname != null">#{javaOuterClassname},</if>
+            <if test="imports != null">#{imports},</if>
+            <if test="fileDesc != null">#{fileDesc},</if>
+            <if test="fileVersion != null">#{fileVersion},</if>
+            <if test="cmdPre != null">#{cmdPre},</if>
+            <if test="id != null">#{id},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProtocolFileDesc" parameterType="ProtocolFileDesc">
+        update protocol_file_desc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="syntax != null">syntax = #{syntax},</if>
+            <if test="javaPackage != null">java_package = #{javaPackage},</if>
+            <if test="javaOuterClassname != null">java_outer_classname = #{javaOuterClassname},</if>
+            <if test="imports != null">imports = #{imports},</if>
+            <if test="fileDesc != null">file_desc = #{fileDesc},</if>
+            <if test="fileVersion != null">file_version = #{fileVersion},</if>
+            <if test="cmdPre != null">cmd_pre = #{cmdPre},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProtocolFileDescById" parameterType="Integer">
+        delete from protocol_file_desc where id = #{id}
+    </delete>
+
+    <delete id="deleteProtocolFileDescByVersion" parameterType="String">
+        delete from protocol_file_desc where file_version = #{version}
+    </delete>
+
+</mapper>

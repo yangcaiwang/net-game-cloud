@@ -47,31 +47,33 @@ public class ServerComponent extends AbstractServerComponent {
 
         // 注册grpc
         Object grpc = clusterMap.get(Begin.GRPC_S.key);
-        ParseYml parseYmlGrpc = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(grpc), ParseYml.class);
-        serverEntity.setGrpcServerHost(serverEntity.getHost());
-        serverEntity.setGrpcServerPort(parseYmlGrpc.getPort());
+        if (grpc != null) {
+            ParseYml parseYmlGrpc = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(grpc), ParseYml.class);
+            serverEntity.setGrpcServerHost(serverEntity.getHost());
+            serverEntity.setGrpcServerPort(parseYmlGrpc.getPort());
+            if (Begin.getInstance(Begin.GRPC_C).isBegin(this.serverType)) {
+                GrpcManager.getInstance().startGrpcClient(serverEntity, parseYmlGrpc.getHeartbeatTime(), parseYmlGrpc.getHeartbeatTimeout());
+            }
+        }
 
         // 注册jetty
         Object jetty = clusterMap.get(Begin.JETTY.key);
-        ParseYml parseYmlJetty = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), ParseYml.class);
-        serverEntity.setJettyHost(serverEntity.getHost());
-        serverEntity.setJettyPort(parseYmlJetty.getPort());
+        if (jetty != null) {
+            ParseYml parseYmlJetty = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), ParseYml.class);
+            serverEntity.setJettyHost(serverEntity.getHost());
+            serverEntity.setJettyPort(parseYmlJetty.getPort());
+        }
 
         // 把服务器注册到Redission
         ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
-        boolean b = clusterService.saveServerEntity(serverEntity);
-        if (b) {
-            if (Begin.getInstance(Begin.GRPC_C).isBegin(this.serverType)) {
-                GrpcManager.getInstance().startGrpcClient(serverEntity, parseYmlGrpc.getHeartbeatTime(), parseYmlGrpc.getHeartbeatTimeout());
-                log.info("======================= [{}] server registered =======================", this.serverType().getServerId());
-            }
-        }
+        clusterService.saveServerEntity(serverEntity);
+        log.info("======================= [{}] server registered =======================", this.serverType().getServerId());
     }
 
     @Override
     protected void startRedission() {
         try {
-            String pathname = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.REDISSION_PATH);
+            String pathname = PropertyConfig.getPrefixPath() + PropertyConfig.getString("redission.path", "");
             RedissonClient.getInstance().start(pathname);
             log.info("======================= [{}] redission client started =======================", this.serverType().getServerId());
 
@@ -105,8 +107,12 @@ public class ServerComponent extends AbstractServerComponent {
     @Override
     protected void startDatabase() {
         try {
-            String gamePath = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.DB_GAME_PATH);
-            String logPath = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.DB_LOG_PATH);
+            if (!Begin.getInstance(Begin.DATABASE).isBegin(this.serverType)) {
+                return;
+            }
+
+            String gamePath = PropertyConfig.getPrefixPath() + PropertyConfig.getString("db.game.path", "");
+            String logPath = PropertyConfig.getPrefixPath() + PropertyConfig.getString("db.log.path", "");
             Properties[] properties = PropertyConfig.loadProperties(gamePath, logPath);
             Mysql.getInstance().createPools(properties);
             log.info("======================= [{}] mysql client started =======================", this.serverType().getServerId());
@@ -187,10 +193,10 @@ public class ServerComponent extends AbstractServerComponent {
             }
 
             Object jetty = clusterMap.get(Begin.JETTY.key);
-            Map<String, Object> map = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), Map.class);
+            Map<String, Integer> map = SerializationUtils.jsonToBean(SerializationUtils.beanToJson(jetty), Map.class);
             JettyHttpServer.getInstance().start(new JettyHttpHandler(), map, this.serverType);
             serverEntity.setJettyHost(serverEntity.getHost());
-            serverEntity.setJettyPort((Integer) map.get("port"));
+            serverEntity.setJettyPort(map.get("port"));
             clusterService.saveServerEntity(serverEntity);
             log.info("======================= [{}] jetty server started port:{} =======================", this.serverType().getServerId(), serverEntity.getJettyPort());
         } catch (Exception e) {

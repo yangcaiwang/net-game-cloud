@@ -11,6 +11,7 @@ import java.util.List;
  * @version <1.0>
  */
 public enum Begin {
+    DATABASE("db"),
     GRPC_C("grpc"),
     GRPC_S("grpc"),
     NETTY("netty"),
@@ -35,14 +36,17 @@ public enum Begin {
     public boolean isBegin(ServerType serverType) {
         List<ServerType> serverTypes = new ArrayList<>();
         switch (this) {
+            case DATABASE:
             case GRPC_S:
                 serverTypes.add(ServerType.GAME_SERVER);
+                serverTypes.add(ServerType.BATTLE_SERVER);
                 break;
             case GRPC_C:
             case NETTY:
                 serverTypes.add(ServerType.GATE_SERVER);
                 break;
             case JETTY:
+                serverTypes.add(ServerType.BATTLE_SERVER);
                 serverTypes.add(ServerType.CHAT_SERVER);
                 serverTypes.add(ServerType.GATE_SERVER);
                 serverTypes.add(ServerType.GAME_SERVER);

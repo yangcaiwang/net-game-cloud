@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.RechargeOrderMapper">
+    
+    <resultMap type="RechargeOrder" id="RechargeOrderResult">
+        <result property="order"    column="order"    />
+        <result property="uid"    column="uid"    />
+        <result property="productId"    column="product_id"    />
+        <result property="channelId"    column="channel_id"    />
+        <result property="gameId"    column="game_id"    />
+        <result property="attachPlatformId"    column="attach_platform_id"    />
+        <result property="attachServerId"    column="attach_server_id"    />
+        <result property="request"    column="request"    />
+        <result property="resultCode"    column="result_code"    />
+        <result property="errorMsg"    column="error_msg"    />
+        <result property="amount"    column="amount"    />
+        <result property="roleId"    column="role_id"    />
+        <result property="billNo"    column="bill_no"    />
+        <result property="testType"    column="test_type"    />
+        <result property="testType"    column="test_type"    />
+        <result property="appId"    column="app_id"    />
+        <result property="createTime"        column="create_time"             />
+    </resultMap>
+
+<!--    <sql id="selectRechargeOrderVo">-->
+<!--        select order, uid, product_id, channel_id, game_id, attach_platform_id, attach_server_id, request, result_code, error_msg, amount, role_id, bill_no, test_type, id from recharge_order___1-->
+<!--    </sql>-->
+
+<!--    <sql id="selectRechargeOrderVo">-->
+<!--        select order, uid, product_id, channel_id, game_id, attach_platform_id, attach_server_id, request, result_code, error_msg, amount, role_id, bill_no, test_type, id from `${tabName}`-->
+<!--    </sql>-->
+
+    <select id="selectRechargeOrderList" resultMap="RechargeOrderResult">
+        select `order`, `uid`, product_id, channel_id, game_id, attach_platform_id, attach_server_id, `request`, result_code, error_msg, `amount`, role_id, bill_no, test_type, `id`, app_id, create_time from `${tabName}`
+        <where>
+            <if test="rechargeOrder.order != null  and rechargeOrder.order != ''"> and `order` = #{rechargeOrder.order}</if>
+            <if test="rechargeOrder.uid != null  and rechargeOrder.uid != ''"> and `uid` = #{rechargeOrder.uid}</if>
+            <if test="rechargeOrder.productId != null  and rechargeOrder.productId != ''"> and `product_id` = #{rechargeOrder.productId}</if>
+            <if test="rechargeOrder.channelId != null  and rechargeOrder.channelId != ''"> and `channel_id` = #{rechargeOrder.channelId}</if>
+            <if test="rechargeOrder.roleId != null "> and `role_id` = #{rechargeOrder.roleId}</if>
+            <if test="rechargeOrder.billNo != null  and rechargeOrder.billNo != ''"> and `bill_no` = #{rechargeOrder.billNo}</if>
+            <if test="rechargeOrder.appId != null  and rechargeOrder.appId != ''"> and `app_id` = #{rechargeOrder.appId}</if>
+            <if test="rechargeOrder.attachServerId != null "> and `attach_server_id` = #{rechargeOrder.attachServerId}</if>
+            <if test="rechargeOrder.params.beginTime != null and rechargeOrder.params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d%H%i%s') &gt;= date_format(#{rechargeOrder.params.beginTime},'%y%m%d%H%i%s')
+            </if>
+            <if test="rechargeOrder.params.endTime != null and rechargeOrder.params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d%H%i%s') &lt;= date_format(#{rechargeOrder.params.endTime},'%y%m%d%H%i%s')
+            </if>
+        </where>
+        order by id limit ${limitStart}, ${limitEnd}
+    </select>
+    
+    <insert id="insertRechargeOrder">
+        insert into `${tabName}`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rechargeOrder.order != null">`order`,</if>
+            <if test="rechargeOrder.uid != null">`uid`,</if>
+            <if test="rechargeOrder.productId != null">`product_id`,</if>
+            <if test="rechargeOrder.channelId != null">`channel_id`,</if>
+            <if test="rechargeOrder.gameId != null">`game_id`,</if>
+            <if test="rechargeOrder.attachPlatformId != null">`attach_platform_id`,</if>
+            <if test="rechargeOrder.attachServerId != null">`attach_server_id`,</if>
+            <if test="rechargeOrder.request != null">`request`,</if>
+            <if test="rechargeOrder.resultCode != null">`result_code`,</if>
+            <if test="rechargeOrder.errorMsg != null">`error_msg`,</if>
+            <if test="rechargeOrder.amount != null">`amount`,</if>
+            <if test="rechargeOrder.roleId != null">`role_id`,</if>
+            <if test="rechargeOrder.billNo != null">`bill_no`,</if>
+            <if test="rechargeOrder.testType != null">`test_type`,</if>
+            <if test="rechargeOrder.appId != null">`app_id`,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rechargeOrder.order != null">#{rechargeOrder.order},</if>
+            <if test="rechargeOrder.uid != null">#{rechargeOrder.uid},</if>
+            <if test="rechargeOrder.productId != null">#{rechargeOrder.productId},</if>
+            <if test="rechargeOrder.channelId != null">#{rechargeOrder.channelId},</if>
+            <if test="rechargeOrder.gameId != null">#{rechargeOrder.gameId},</if>
+            <if test="rechargeOrder.attachPlatformId != null">#{rechargeOrder.attachPlatformId},</if>
+            <if test="rechargeOrder.attachServerId != null">#{rechargeOrder.attachServerId},</if>
+            <if test="rechargeOrder.request != null">#{rechargeOrder.request},</if>
+            <if test="rechargeOrder.resultCode != null">#{rechargeOrder.resultCode},</if>
+            <if test="rechargeOrder.errorMsg != null">#{rechargeOrder.errorMsg},</if>
+            <if test="rechargeOrder.amount != null">#{rechargeOrder.amount},</if>
+            <if test="rechargeOrder.roleId != null">#{rechargeOrder.roleId},</if>
+            <if test="rechargeOrder.billNo != null">#{rechargeOrder.billNo},</if>
+            <if test="rechargeOrder.testType != null">#{rechargeOrder.testType},</if>
+            <if test="rechargeOrder.appId != null">#{rechargeOrder.appId},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <select id="countTableSize" resultType="Long" >
+        select count(1) from `${tabName}`
+        <where>
+            <if test="rechargeOrder.roleId != null">
+                AND role_id = #{rechargeOrder.roleId}
+            </if>
+            <if test="rechargeOrder.order != null">
+                AND `order` = #{rechargeOrder.order}
+            </if>
+            <if test="rechargeOrder.uid != null">
+                AND `uid` = #{rechargeOrder.uid}
+            </if>
+            <if test="rechargeOrder.productId != null">
+                AND product_id = #{rechargeOrder.productId}
+            </if>
+            <if test="rechargeOrder.channelId != null">
+                AND channel_id = #{rechargeOrder.channelId}
+            </if>
+            <if test="rechargeOrder.billNo != null">
+                AND bill_no = #{rechargeOrder.billNo}
+            </if>
+            <if test="rechargeOrder.appId != null">
+                AND app_id = #{rechargeOrder.appId}
+            </if>
+            <if test="rechargeOrder.channelId != null">
+                AND channel_id = #{rechargeOrder.channelId}
+            </if>
+            <if test="rechargeOrder.attachServerId != null">
+                AND attach_server_id = #{rechargeOrder.attachServerId}
+            </if>
+            <if test="rechargeOrder.params.beginTime != null and rechargeOrder.params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d%H%i%s') &gt;= date_format(#{rechargeOrder.params.beginTime},'%y%m%d%H%i%s')
+            </if>
+            <if test="rechargeOrder.params.endTime != null and rechargeOrder.params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d%H%i%s') &lt;= date_format(#{rechargeOrder.params.endTime},'%y%m%d%H%i%s')
+            </if>
+        </where>
+        <!-- 数据范围过滤 -->
+        ${rechargeOrder.params.dataScope}
+    </select>
+</mapper>

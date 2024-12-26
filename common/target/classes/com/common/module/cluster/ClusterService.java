@@ -18,7 +18,7 @@ public interface ClusterService {
      * @param serverEntity 服务器对象
      * @return {@link Boolean} 服务器对象
      */
-    boolean saveServerEntity(ServerEntity serverEntity);
+    void saveServerEntity(ServerEntity serverEntity);
 
     /**
      * 通过服务器id 获取服务器对象

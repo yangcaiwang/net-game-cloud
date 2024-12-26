@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.GmMailMapper">
+
+    <resultMap type="GmMail" id="GmMailResult">
+        <id     property="id"              column="id"               />
+        <result property="serverList"      column="server_list"             />
+		<result property="targetIds"       column="target_ids"             />
+		<result property="title"           column="title"              />
+		<result property="content"         column="content"             />
+		<result property="sendType"        column="send_type"             />
+		<result property="items"           column="items"             />
+		<result property="mailStatus"      column="mail_status"             />
+		<result property="validTime"      column="valid_time"           />
+        <result property="createBy"        column="create_by"             />
+        <result property="createTime"      column="create_time"           />
+        <result property="updateBy"        column="update_by"             />
+        <result property="updateTime"      column="update_time"           />
+        <result property="remark"          column="remark"                />
+	</resultMap>
+
+    <sql id="selectGmMailVo">
+		select id,server_list,target_ids,title,content,send_type,items,mail_status,valid_time,create_by,create_time,update_by,update_time,remark from gm_mail
+    </sql>
+
+	<select id="selectGmMailList" parameterType="GmMail" resultMap="GmMailResult">
+		<include refid="selectGmMailVo"/>
+		<where>
+			<if test="id != null and id != 0">
+				AND id = #{id}
+			</if>
+		</where>
+
+		order by create_time desc
+	</select>
+
+	<select id="selectMailById" parameterType="Long" resultMap="GmMailResult">
+		<include refid="selectGmMailVo"/>
+		where id = #{id}
+	</select>
+
+	<select id="selectMailByIds" parameterType="Long" resultMap="GmMailResult">
+		<include refid="selectGmMailVo"/>
+		where id in
+		<foreach collection="array" item="sid" open="(" separator="," close=")">
+			#{sid}
+		</foreach>
+	</select>
+
+	<insert id="insertGmMail" parameterType="GmMail" useGeneratedKeys="true" keyProperty="id">
+		insert into gm_mail(
+			<if test="serverList != null and serverList != ''">server_list,</if>
+			<if test="targetIds != null and targetIds != ''">target_ids,</if>
+			<if test="title != null and title != ''">title,</if>
+			<if test="content != null and content != ''">content,</if>
+			<if test="sendType != null and sendType != 0">send_type,</if>
+			<if test="items != null and items != ''">items,</if>
+			<if test="mailStatus != null and mailStatus != 0">mail_status,</if>
+			<if test="remark != null and remark != ''">remark,</if>
+			<if test="validTime != null">valid_time,</if>
+			<if test="createBy != null and createBy != ''">create_by,</if>
+			create_time
+		)values(
+			<if test="serverList != null and serverList != ''">#{serverList},</if>
+			<if test="targetIds != null and targetIds != ''">#{targetIds},</if>
+			<if test="title != null and title != ''">#{title},</if>
+			<if test="content != null and content != ''">#{content},</if>
+			<if test="sendType != null and sendType != 0">#{sendType},</if>
+			<if test="items != null and items != ''">#{items},</if>
+			<if test="mailStatus != null and mailStatus != 0">#{mailStatus},</if>
+			<if test="remark != null and remark != ''">#{remark},</if>
+			<if test="validTime != null">#{validTime},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
+			sysdate()
+		)
+	</insert>
+
+	<update id="updateGmMail" parameterType="GmServer">
+		update gm_mail
+		<set>
+			<if test="serverList != null and serverList != ''">server_list = #{serverList},</if>
+			<if test="targetIds != null and targetIds != ''">target_ids = #{targetIds},</if>
+			<if test="title != null and title != ''">title = #{title},</if>
+			<if test="content != null and content != ''">content = #{content},</if>
+			<if test="sendType != null and sendType != 0">send_type = #{sendType},</if>
+			<if test="items != null and items != ''">items = #{items},</if>
+			<if test="mailStatus != null and mailStatus != 0">mail_status = #{mailStatus},</if>
+			<if test="remark != null and remark != ''">remark = #{remark},</if>
+			<if test="validTime != null">valid_time = #{validTime},</if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			update_time = sysdate()
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateGmMailStatus">
+		update gm_mail
+		<set>
+			mail_status = #{mail.mailStatus},
+			update_by = #{mail.updateBy},
+			update_time = sysdate()
+		</set>
+		where mail_status is null and id in
+		<foreach collection="sid" item="sid" open="(" separator="," close=")">
+			#{sid}
+		</foreach>
+	</update>
+
+	<delete id="deleteGmMailById" parameterType="Long">
+		delete from gm_mail where id = #{id}
+	</delete>
+
+	<delete id="deleteGmMailByIds" parameterType="Long">
+		delete from gm_mail where id in
+		<foreach collection="array" item="sid" open="(" separator="," close=")">
+			#{sid}
+		</foreach>
+	</delete>
+
+</mapper>

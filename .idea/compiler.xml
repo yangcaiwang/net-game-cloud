@@ -12,6 +12,7 @@
         <module name="login-server" />
         <module name="common" />
         <module name="proto" />
+        <module name="battle-server" />
         <module name="gm-server" />
         <module name="gate-server" />
       </profile>
@@ -32,6 +33,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="battle-server" options="" />
       <module name="chat-server" options="" />
       <module name="cluster" options="" />
       <module name="demo" options="" />

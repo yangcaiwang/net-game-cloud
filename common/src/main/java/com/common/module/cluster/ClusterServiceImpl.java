@@ -32,7 +32,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
     public static final Logger log = LoggerFactory.getLogger(ClusterServiceImpl.class);
 
     @Override
-    public boolean saveServerEntity(ServerEntity serverEntity) {
+    public void saveServerEntity(ServerEntity serverEntity) {
         RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         RReadWriteLock readWriteLock = groupMap.getReadWriteLock(1);
         RLock rLock = readWriteLock.writeLock();
@@ -45,11 +45,9 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
             groupMap.put(serverEntity.getGroupId(), serverEntityMap);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return false;
         } finally {
             rLock.unlock();
         }
-        return true;
     }
 
     @Override
@@ -121,7 +119,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
             serverEntityMap.put(serverEntity.getServerId(), serverEntity);
             groupMap.put(serverEntity.getGroupId(), serverEntityMap);
 
-            String path = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.CLUSTER_PATH);
+            String path = PropertyConfig.getPrefixPath() + PropertyConfig.getString("cluster.path", "");
             Map<String, Object> clusterMap = PropertyConfig.loadYml(path);
             if (MapUtils.isNotEmpty(clusterMap)) {
                 Object grpc = clusterMap.get(Begin.GRPC_S.key);

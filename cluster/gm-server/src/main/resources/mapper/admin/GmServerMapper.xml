@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.GmServerMapper">
+
+    <resultMap type="GmServer" id="GmServerResult">
+        <id     property="serverKeyId"         column="server_key_id"               />
+        <result property="serverId"            column="server_id"             />
+		<result property="serverName"          column="server_name"             />
+		<result property="platformId"          column="platform_id"             />
+		<result property="sort"            	   column="sort"              />
+		<result property="outHost"             column="out_host"             />
+		<result property="inHost"              column="in_host"             />
+		<result property="clientPort"          column="client_port"             />
+		<result property="inPort"              column="in_port"             />
+		<result property="openTime"            column="open_time"             />
+		<result property="dbUrl"            column="db_url"             />
+		<result property="dbLogUrl"            column="db_log_url"             />
+		<result property="dbUser"            column="db_user"             />
+		<result property="dbPass"            column="db_pass"             />
+		<result property="runStatus"           column="run_status"             />
+		<result property="showOut"           column="show_out"             />
+		<result property="serverType"           column="server_ype"             />
+		<result property="serverStatus"        column="server_status"             />
+		<result property="registerSwitch"        column="register_switch"             />
+		<result property="homePath"        column="home_path"             />
+        <result property="createBy"            column="create_by"             />
+        <result property="createTime"          column="create_time"           />
+        <result property="updateBy"            column="update_by"             />
+        <result property="updateTime"          column="update_time"           />
+        <result property="remark"              column="remark"                />
+		<association property="platform"    column="platform_id" javaType="GmPlatform" resultMap="platformResult" />
+	</resultMap>
+
+	<resultMap id="platformResult" type="GmPlatform">
+		<result property="platformName"  column="platform_name"   />
+	</resultMap>
+
+    <sql id="selectServerVo">
+        select s.server_key_id,s.server_id,s.server_name,s.platform_id,s.sort,s.out_host,s.in_host,s.client_port,s.in_port,
+		s.open_time,s.db_url,s.db_log_url,s.db_user,s.db_pass,s.server_type,
+		s.run_status,s.server_status,s.show_out,s.create_by,s.create_time,s.update_by,s.update_time,s.remark,
+		p.platform_name, s.home_path, s.register_switch
+		from gm_server s
+		    left join gm_platform p on s.platform_id = p.platform_id
+    </sql>
+
+        <select id="selectServerList" parameterType="GmServer" resultMap="GmServerResult">
+    		<include refid="selectServerVo"/>
+    		where 1 = 1
+    		<if test="serverId != null and serverId != 0">
+    			AND server_id = #{serverId}
+    		</if>
+    		<if test="serverName != null and serverName != ''">
+    			AND server_name like concat('%', #{serverName}, '%')
+    		</if>
+    		order by sort
+    	</select>
+
+    	<select id="selectServerAll" resultMap="GmServerResult">
+    		<include refid="selectServerVo"/>
+    	</select>
+
+    	<select id="selectServerById" parameterType="Long" resultMap="GmServerResult">
+    		<include refid="selectServerVo"/>
+    		where server_key_id = #{pid}
+    	</select>
+
+		<select id="selectServerByIds" parameterType="Long" resultMap="GmServerResult">
+			<include refid="selectServerVo"/>
+			where server_key_id in
+			<foreach collection="array" item="sid" open="(" separator="," close=")">
+				#{sid}
+			</foreach>
+		</select>
+
+     	<insert id="insertServer" parameterType="GmServer" useGeneratedKeys="true" keyProperty="serverKeyId">
+     		insert into gm_server(
+				<if test="serverKeyId != null and serverKeyId != 0">server_key_id,</if>
+				<if test="serverId != null and serverId != 0">server_id,</if>
+     			<if test="serverName != null and serverName != ''">server_name,</if>
+				<if test="platformId != null and platformId != ''">platform_id,</if>
+				<if test="outHost != null and outHost != ''">out_host,</if>
+				<if test="inHost != null and inHost != ''">in_host,</if>
+				<if test="clientPort != null and clientPort != 0">client_port,</if>
+				<if test="inPort != null and inPort != 0">in_port,</if>
+				<if test="openTime != null">open_time,</if>
+				<if test="dbUrl != null and dbUrl != ''">db_url,</if>
+				<if test="dbLogUrl != null and dbLogUrl != ''">db_log_url,</if>
+				<if test="dbUser != null and dbUser != ''">db_user,</if>
+				<if test="dbPass != null and dbPass != ''">db_pass,</if>
+				<if test="runStatus != null">run_status,</if>
+				<if test="showOut != null">show_out,</if>
+				<if test="serverType != null">server_type,</if>
+				<if test="serverStatus != null">server_status,</if>
+				<if test="registerSwitch != null">register_switch,</if>
+				<if test="sort != null and sort != 0">sort,</if>
+				<if test="homePath != null">home_path,</if>
+     			<if test="remark != null and remark != ''">remark,</if>
+     			<if test="createBy != null and createBy != ''">create_by,</if>
+     			create_time
+     		)values(
+				<if test="serverKeyId != null and serverKeyId != 0">#{serverKeyId},</if>
+				<if test="serverId != null and serverId != 0">#{serverId},</if>
+     			<if test="serverName != null and serverName != ''">#{serverName},</if>
+				<if test="platformId != null and platformId != ''">#{platformId},</if>
+				<if test="outHost != null and outHost != ''">#{outHost},</if>
+				<if test="inHost != null and inHost != ''">#{inHost},</if>
+				<if test="clientPort != null and clientPort != 0">#{clientPort},</if>
+				<if test="inPort != null and inPort != 0">#{inPort},</if>
+				<if test="openTime != null">#{openTime},</if>
+				<if test="dbUrl != null and dbUrl != ''">#{dbUrl},</if>
+				<if test="dbLogUrl != null and dbLogUrl != ''">#{dbLogUrl},</if>
+				<if test="dbUser != null and dbUser != ''">#{dbUser},</if>
+				<if test="dbPass != null and dbPass != ''">#{dbPass},</if>
+				<if test="runStatus != null">#{runStatus},</if>
+				<if test="showOut != null">#{showOut},</if>
+				<if test="serverType != null">#{serverType},</if>
+				<if test="serverStatus != null">#{serverStatus},</if>
+				<if test="registerSwitch != null">#{registerSwitch},</if>
+				<if test="sort != null and sort != 0">#{sort},</if>
+				<if test="homePath != null">#{homePath},</if>
+     			<if test="remark != null and remark != ''">#{remark},</if>
+     			<if test="createBy != null and createBy != ''">#{createBy},</if>
+     			sysdate()
+     		)
+    	</insert>
+
+    	<update id="updateServer" parameterType="GmServer">
+     		update gm_server
+     		<set>
+				<if test="platformId != null and platformId != ''">platform_id = #{platformId},</if>
+				<if test="serverId != null and serverId != ''">server_id = #{serverId},</if>
+				<if test="serverName != null and serverName != ''">server_name = #{serverName},</if>
+				<if test="outHost != null and outHost != ''">out_host = #{outHost},</if>
+				<if test="inHost != null and inHost != ''">in_host = #{inHost},</if>
+				<if test="clientPort != null and clientPort != 0">client_port = #{clientPort},</if>
+				<if test="inPort != null and inPort != 0">in_port = #{inPort},</if>
+				<if test="openTime != null">open_time = #{openTime},</if>
+				<if test="dbUrl != null and dbUrl != ''">db_url = #{dbUrl},</if>
+				<if test="dbLogUrl != null and dbLogUrl != ''">db_log_url = #{dbLogUrl},</if>
+				<if test="dbUser != null and dbUser != ''">db_user = #{dbUser},</if>
+				<if test="dbPass != null and dbPass != ''">db_pass = #{dbPass},</if>
+				<if test="runStatus != null">run_status = #{runStatus},</if>
+				<if test="showOut != null">show_out = #{showOut},</if>
+				<if test="serverType != null">server_type = #{serverType},</if>
+				<if test="serverStatus != null">server_status = #{serverStatus},</if>
+				<if test="registerSwitch != null">register_switch = #{registerSwitch},</if>
+				<if test="sort != null and sort != 0">sort = #{sort},</if>
+				<if test="homePath != null and homePath != ''">home_path = #{homePath},</if>
+				<if test="remark != null and remark != ''">remark = #{remark},</if>
+				<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+     			update_time = sysdate()
+     		</set>
+     		where server_key_id = #{serverKeyId}
+    	</update>
+
+    	<delete id="deleteServerById" parameterType="Long">
+    		delete from gm_server where server_key_id = #{sid}
+     	</delete>
+
+     	<delete id="deleteServerByIds" parameterType="Long">
+    		delete from gm_server where server_key_id in
+     		<foreach collection="array" item="sid" open="(" separator="," close=")">
+     			#{sid}
+            </foreach>
+     	</delete>
+
+	<select id="countServer" resultType="Long"  >
+		select count(1) from gm_server
+	</select>
+</mapper>

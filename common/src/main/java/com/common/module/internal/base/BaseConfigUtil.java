@@ -1,14 +1,12 @@
 package com.common.module.internal.base;
 
 import com.alibaba.fastjson.JSONObject;
-import com.common.module.internal.base.annotation.JsonToBaseConfig;
+import com.common.module.cluster.property.FileListeners;
 import com.common.module.internal.base.annotation.BaseConfig;
+import com.common.module.internal.base.annotation.JsonToBaseConfig;
 import com.common.module.internal.base.config.AbstractConfig;
 import com.common.module.internal.base.event.TemplateFileChangedEvent;
-import com.common.module.cluster.enums.ServerType;
 import com.common.module.internal.event.EventBusesImpl;
-import com.common.module.internal.db.entity.IdentityCreator;
-import com.common.module.cluster.property.FileListeners;
 import com.common.module.internal.loader.Scanner;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -23,12 +21,15 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <基础配置数据工具类>
  * <p>
- * ps: 解析json文件转化配置类 放入缓存 {@link BaseConfigCache}
+ * ps: 解析json文件转化配置类 放入缓存 {@link AbstractConfigCache}
  *
  * @author <yangcaiwang>
  * @version <1.0>
@@ -48,12 +49,12 @@ public class BaseConfigUtil {
 
     private final String FILE_SUFFIX = ".json";
 
-    public void load(String rootPath) {
+    public void load(String rootPath, String scanPath) {
         load_path = rootPath;
         if (isLoaded) {
             return;
         }
-        initFields();
+        initFields(scanPath);
         try {
             for (String fileName : resConfigFields.keySet()) {
                 reload(fileName);
@@ -65,9 +66,9 @@ public class BaseConfigUtil {
         isLoaded = true;
     }
 
-    private void initFields() {
+    private void initFields(String scanPath) {
         Set<Class<?>> set = new HashSet<>();
-        Scanner.getInstance().scan(set, BaseConfigCache.class.getPackage().getName(), v -> v.isAnnotationPresent(BaseConfig.class));
+        Scanner.getInstance().scan(set, scanPath, v -> v.isAnnotationPresent(BaseConfig.class));
 
         for (Class<?> aClass : set) {
             Field[] declaredFields = aClass.getDeclaredFields();
@@ -117,12 +118,6 @@ public class BaseConfigUtil {
         try {
             Field field = resConfigFields.get(fileName);
             JsonToBaseConfig annotation = field.getAnnotation(JsonToBaseConfig.class);
-            // 通过服务器类型读取对应配置，节约内存，读取配置文件，需要看是否需要指定服务器类型，默认游戏服
-            if (annotation.serverType() != ServerType.ALL_SERVER && !Objects.equals(annotation.serverType(), IdentityCreator.SERVER_TYPE)) {
-                logger.error("配置：{} 服务器类型：{} 无法加载到内存", fileName, annotation.serverType());
-                return;
-            }
-
             String key = annotation.key();
             String getKey = "get" + key.substring(0, 1).toUpperCase() + key.substring(1);
             Map<Object, Object> map = new HashMap<>();

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.GmAddItemMapper">
+    
+    <resultMap type="GmAddItem" id="GmAddItemResult">
+        <result property="id"    column="id"    />
+        <result property="serverId"    column="server_id"    />
+        <result property="roleIds"    column="role_ids"    />
+        <result property="item"    column="item"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectGmAddItemVo">
+        select id, server_id, role_ids, item, status, create_by, create_time, update_by, update_time from gm_add_item
+    </sql>
+
+    <select id="selectGmAddItemList" parameterType="GmAddItem" resultMap="GmAddItemResult">
+        <include refid="selectGmAddItemVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectGmAddItemById" parameterType="Long" resultMap="GmAddItemResult">
+        <include refid="selectGmAddItemVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectItemByIds" parameterType="Long" resultMap="GmAddItemResult">
+        <include refid="selectGmAddItemVo"/>
+        where id in
+        <foreach collection="array" item="sid" open="(" separator="," close=")">
+            #{sid}
+        </foreach>
+    </select>
+        
+    <insert id="insertGmAddItem" parameterType="GmAddItem" useGeneratedKeys="true" keyProperty="id">
+        insert into gm_add_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serverId != null">server_id,</if>
+            <if test="roleIds != null">role_ids,</if>
+            <if test="item != null">item,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serverId != null">#{serverId},</if>
+            <if test="roleIds != null">#{roleIds},</if>
+            <if test="item != null">#{item},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateGmAddItem" parameterType="GmAddItem">
+        update gm_add_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serverId != null">server_id = #{serverId},</if>
+            <if test="roleIds != null">role_ids = #{roleIds},</if>
+            <if test="item != null">item = #{item},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateGmAddItemStatus">
+        update gm_add_item
+        <trim prefix="SET" suffixOverrides=",">
+            status = #{item.status},
+            update_by = #{item.updateBy},
+            update_time = sysdate()
+        </trim>
+        where (status is null or status = 0) and id in
+        <foreach collection="sid" item="sid" open="(" separator="," close=")">
+            #{sid}
+        </foreach>
+    </update>
+
+    <delete id="deleteGmAddItemById" parameterType="Long">
+        delete from gm_add_item where id = #{id}
+    </delete>
+
+    <delete id="deleteGmAddItemByIds" parameterType="String">
+        delete from gm_add_item where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

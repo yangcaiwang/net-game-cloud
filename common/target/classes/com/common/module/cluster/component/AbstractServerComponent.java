@@ -50,18 +50,18 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
     @Override
     public void init() {
         try {
-            // (1)初始化静态配置
+            // (1)初始化配置
             String serverPath = PropertyConfig.getPrefixPath() + "/" + ClusterConstant.CLUSTER_PREFIX + "/" + serverType().getName() + ClusterConstant.SERVER_PATH;
             PropertyConfig.load(serverPath);
-            log.info("======================= [{}] 初始化静态配置完毕 =======================", serverType().getName());
+            log.info("======================= [{}] 初始化配置完毕 =======================", serverType().getName());
 
             // (2)初始化日志
-            String log4jPath = System.getProperty(ClusterConstant.LOG4J_PATH);
+            String log4jPath = PropertyConfig.getString("log4j.path", "");
             PropertyConfig.initLog4J2(log4jPath);
             log.info("======================= [{}] 初始化日志完毕 =======================", serverType().getName());
 
             // (3)初始化集群配置
-            String path = PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.CLUSTER_PATH);
+            String path = PropertyConfig.getPrefixPath() + PropertyConfig.getString("cluster.path", "");
             clusterMap = PropertyConfig.loadYml(path);
             Map<String, Object> cluster = (Map<String, Object>) clusterMap.get(ClusterConstant.CLUSTER_PREFIX);
             serverType().setServerId((String) cluster.get("serverId"));
@@ -69,7 +69,7 @@ public abstract class AbstractServerComponent implements ServerSuperComponent {
             log.info("======================= [{}] 初始化集群配置完毕 =======================", serverType().getName());
 
             // (4)初始化基础配置
-            BaseConfigUtil.getInstance().load(PropertyConfig.getPrefixPath() + System.getProperty(ClusterConstant.JSON_PATH));
+            BaseConfigUtil.getInstance().load(PropertyConfig.getPrefixPath() + PropertyConfig.getString("template.path", ""), "com." + serverType().getName().replace("-", "."));
             log.info("======================= [{}] 初始化基础配置完毕 =======================", serverType().getName());
 
             // (5)扫描单例

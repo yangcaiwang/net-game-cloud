@@ -8,10 +8,10 @@
         <Property name="LOG_ERROR_LEVEL" value="error"/>
         <Property name="LOG_WARN_LEVEL" value="warn"/>
         <!-- 在当前目录下创建目录做日志存放的目录 -->
-        <Property name="LOG_HOME" value="./logs/gm-server_logs"/>
+        <Property name="LOG_HOME" value="./logs/chat-server_logs"/>
         <!-- 档案日志存放目录 -->
-        <Property name="LOG_ARCHIVE" value="./logs/gm-server_logs/archive"/>
-        <Property name="LOG_ARCHIVE_SQL" value="./logs/gm-server_logs/sql"/>
+        <Property name="LOG_ARCHIVE" value="./logs/chat-server_logs/archive"/>
+        <Property name="LOG_ARCHIVE_SQL" value="./logs/chat-server_logs/sql"/>
         <!-- 日志文件大小，超过这个大小将被压缩 -->
         <Property name="LOG_MAX_SIZE" value="1024 MB"/>
         <!-- 保留多少天以内的日志 -->

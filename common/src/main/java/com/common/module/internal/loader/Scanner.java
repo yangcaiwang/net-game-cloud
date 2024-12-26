@@ -166,7 +166,6 @@ public class Scanner {
             String classSimpleName = file.getName().substring(0, file.getName().length() - 6);
             String packageName = packageDir.replace('/', '.');
             String className = packageName + '.' + classSimpleName;
-            log.debug("search file class  [{}]", className);
             clz = Class.forName(className);
             if (AnnotationUtil.isAnnotation(clz, Deprecated.class))
                 return;

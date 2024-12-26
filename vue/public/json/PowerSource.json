@@ -1,0 +1,398 @@
+[
+  {
+    "id": 1001,
+    "sourceName": "登陆"
+  },
+  {
+    "id": 1002,
+    "sourceName": "将领升级"
+  },
+  {
+    "id": 1003,
+    "sourceName": "将领技能升级"
+  },
+  {
+    "id": 1004,
+    "sourceName": "将领进修"
+  },
+  {
+    "id": 1005,
+    "sourceName": "获得新将领"
+  },
+  {
+    "id": 1006,
+    "sourceName": "军团技能升级"
+  },
+  {
+    "id": 1007,
+    "sourceName": "军团技能重置"
+  },
+  {
+    "id": 1008,
+    "sourceName": "特权属性"
+  },
+  {
+    "id": 1009,
+    "sourceName": "将领装备变化"
+  },
+  {
+    "id": 1010,
+    "sourceName": "将领装备一键操作穿戴"
+  },
+  {
+    "id": 1011,
+    "sourceName": "将领装备升级"
+  },
+  {
+    "id": 1012,
+    "sourceName": "将领升星"
+  },
+  {
+    "id": 1013,
+    "sourceName": "将领无双突破"
+  },
+  {
+    "id": 1014,
+    "sourceName": "将领重生"
+  },
+  {
+    "id": 1015,
+    "sourceName": "将领等级共鸣"
+  },
+  {
+    "id": 1016,
+    "sourceName": "将领等级共鸣卸下"
+  },
+  {
+    "id": 1017,
+    "sourceName": "图鉴升级"
+  },
+  {
+    "id": 1018,
+    "sourceName": "兵营"
+  },
+  {
+    "id": 1019,
+    "sourceName": "爵位"
+  },
+  {
+    "id": 1020,
+    "sourceName": "军衔晋升"
+  },
+  {
+    "id": 1021,
+    "sourceName": "军衔令牌升级"
+  },
+  {
+    "id": 1022,
+    "sourceName": "鬼谷秘术组合"
+  },
+  {
+    "id": 1023,
+    "sourceName": "鬼谷秘术激活"
+  },
+  {
+    "id": 1024,
+    "sourceName": "鬼谷秘术升星"
+  },
+  {
+    "id": 1025,
+    "sourceName": "鬼谷秘术淬炼"
+  },
+  {
+    "id": 1026,
+    "sourceName": "鬼谷秘术重生"
+  },
+  {
+    "id": 1027,
+    "sourceName": "将领刷新羁绊"
+  },
+  {
+    "id": 1028,
+    "sourceName": "神器"
+  },
+  {
+    "id": 1029,
+    "sourceName": "将领锦囊升品"
+  },
+  {
+    "id": 1030,
+    "sourceName": "将领锦囊升级"
+  },
+  {
+    "id": 1031,
+    "sourceName": "锦囊共鸣"
+  },
+  {
+    "id": 1032,
+    "sourceName": "将领等级共鸣自动变化"
+  },
+  {
+    "id": 1033,
+    "sourceName": "锦囊解锁"
+  },
+  {
+    "id": 1034,
+    "sourceName": "天命槽位解锁"
+  },
+  {
+    "id": 1035,
+    "sourceName": "天命槽位升级"
+  },
+  {
+    "id": 1036,
+    "sourceName": "已装备的天命道具突破"
+  },
+  {
+    "id": 1037,
+    "sourceName": "天命装备变化"
+  },
+  {
+    "id": 1038,
+    "sourceName": "宝物系统解锁宝物"
+  },
+  {
+    "id": 1039,
+    "sourceName": "宝物系统升级"
+  },
+  {
+    "id": 1040,
+    "sourceName": "宝物系统升星"
+  },
+  {
+    "id": 1041,
+    "sourceName": "宝物系统打磨"
+  },
+  {
+    "id": 1042,
+    "sourceName": "宝物系统升级组合"
+  },
+  {
+    "id": 1043,
+    "sourceName": "主角皮肤"
+  },
+  {
+    "id": 1044,
+    "sourceName": "绘卷升星"
+  },
+  {
+    "id": 1045,
+    "sourceName": "绘卷技能升级"
+  },
+  {
+    "id": 1046,
+    "sourceName": "绘卷技能重置"
+  },
+  {
+    "id": 1047,
+    "sourceName": "绘卷章节重置"
+  },
+  {
+    "id": 1048,
+    "sourceName": "兵符 装备"
+  },
+  {
+    "id": 1049,
+    "sourceName": "兵符升星"
+  },
+  {
+    "id": 1050,
+    "sourceName": "兵符淬炼"
+  },
+  {
+    "id": 1053,
+    "sourceName": "装备突破"
+  },
+  {
+    "id": 1051,
+    "sourceName": "突破装备重铸"
+  },
+  {
+    "id": 1052,
+    "sourceName": "突破装备洗练"
+  },
+  {
+    "id": 1054,
+    "sourceName": "坐骑升阶"
+  },
+  {
+    "id": 1055,
+    "sourceName": "坐骑喂养"
+  },
+  {
+    "id": 1056,
+    "sourceName": "坐骑技能替换"
+  },
+  {
+    "id": 1057,
+    "sourceName": "宠物升星"
+  },
+  {
+    "id": 1058,
+    "sourceName": "宠物升级"
+  },
+  {
+    "id": 1059,
+    "sourceName": "获得灵宠"
+  },
+  {
+    "id": 1060,
+    "sourceName": "灵宠上下阵"
+  },
+  {
+    "id": 1061,
+    "sourceName": "神器重生"
+  },
+  {
+    "id": 1062,
+    "sourceName": "将魂装备"
+  },
+  {
+    "id": 1063,
+    "sourceName": "将魂一键装备"
+  },
+  {
+    "id": 1064,
+    "sourceName": "将魂装备强化"
+  },
+  {
+    "id": 1065,
+    "sourceName": "将魂成就"
+  },
+  {
+    "id": 1066,
+    "sourceName": "兵种进阶"
+  },
+  {
+    "id": 1067,
+    "sourceName": "专属兵种激活"
+  },
+  {
+    "id": 1068,
+    "sourceName": "坐骑激活"
+  },
+  {
+    "id": 1069,
+    "sourceName": "战魂 将军府加成"
+  },
+  {
+    "id": 1070,
+    "sourceName": "将领置换"
+  },
+  {
+    "id": 1071,
+    "sourceName": "将印精炼"
+  },
+  {
+    "id": 1072,
+    "sourceName": "将印重铸"
+  },
+  {
+    "id": 1073,
+    "sourceName": "将印上装备"
+  },
+  {
+    "id": 1074,
+    "sourceName": "将印下装备"
+  },
+  {
+    "id": 1075,
+    "sourceName": "天赋激活技能"
+  },
+  {
+    "id": 1076,
+    "sourceName": "天赋升级"
+  },
+  {
+    "id": 1077,
+    "sourceName": "天赋重置"
+  },
+  {
+    "id": 1078,
+    "sourceName": "宝物任务"
+  },
+  {
+    "id": 1079,
+    "sourceName": "军团特殊技能升级"
+  },
+  {
+    "id": 1080,
+    "sourceName": "将领上阵"
+  },
+  {
+    "id": 1081,
+    "sourceName": "将领重置"
+  },
+  {
+    "id": 1082,
+    "sourceName": "将印定制"
+  },
+  {
+    "id": 1083,
+    "sourceName": "奇书提升"
+  },
+  {
+    "id": 1084,
+    "sourceName": "获得武神殿称号"
+  },
+  {
+    "id": 1085,
+    "sourceName": "失去武神殿称号"
+  },
+  {
+    "id": 1086,
+    "sourceName": "帝威升级"
+  },
+  {
+    "id": 1087,
+    "sourceName": "宠物提升天赋"
+  },
+  {
+    "id": 1088,
+    "sourceName": "玩家称号"
+  },
+  {
+    "id": 1089,
+    "sourceName": "将领战法装备变化"
+  },
+  {
+    "id": 1090,
+    "sourceName": "将领盔甲升阶"
+  },
+  {
+    "id": 1091,
+    "sourceName": "将领盔甲强化"
+  },
+  {
+    "id": 1092,
+    "sourceName": "将领盔甲共鸣"
+  },
+  {
+    "id": 1093,
+    "sourceName": "文韬武略升级"
+  },
+  {
+    "id": 1094,
+    "sourceName": "将领盔甲交换"
+  },
+  {
+    "id": 1095,
+    "sourceName": "军魂洗练保存"
+  },
+  {
+    "id": 1096,
+    "sourceName": "军魂转换保存"
+  },
+  {
+    "id": 1097,
+    "sourceName": "军魂升级"
+  },
+  {
+    "id": 1098,
+    "sourceName": "军魂装备"
+  },
+  {
+    "id": 1099,
+    "sourceName": "军魂卸下"
+  }
+]

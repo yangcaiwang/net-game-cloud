@@ -34,13 +34,13 @@ public class JettyHttpServer {
         return jettyHttpServer;
     }
 
-    public void start(JettyHttpHandler jettyHttpHandler, Map<String, Object> map, ServerType serverType) throws Exception {
-        int port = (int) map.get("port");
-        int httpMinThreads = (int) map.get("httpMinThreads");
-        int httpMaxThreads = (int) map.get("httpMaxThreads");
-        int idleTimeout = (int) map.get("idleTimeout");
-        long heartbeatTime = (long) map.get("heartbeatTime");
-        long heartbeatTimeout = (long) map.get("heartbeatTimeout");
+    public void start(JettyHttpHandler jettyHttpHandler, Map<String, Integer> map, ServerType serverType) throws Exception {
+        int port = map.get("port");
+        int httpMinThreads =  map.get("httpMinThreads");
+        int httpMaxThreads = map.get("httpMaxThreads");
+        int idleTimeout =  map.get("idleTimeout");
+        int heartbeatTime =  map.get("heartbeatTime");
+        int heartbeatTimeout = map.get("heartbeatTimeout");
         jettyServer = new Server(getQueuedThreadPool(httpMinThreads, httpMaxThreads, idleTimeout));
         jettyServer.setDumpAfterStart(false);
         jettyServer.setDumpBeforeStop(false);

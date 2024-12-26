@@ -1,7 +1,6 @@
 package com.common.module.internal.base.annotation;
 
 import com.common.module.internal.base.config.AbstractConfig;
-import com.common.module.cluster.enums.ServerType;
 
 import java.lang.annotation.*;
 
@@ -24,6 +23,4 @@ public @interface JsonToBaseConfig {
      * 解析需要的类
      */
     Class<?> clz() default AbstractConfig.class;
-
-    ServerType serverType() default ServerType.GATE_SERVER;
 }

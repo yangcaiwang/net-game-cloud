@@ -1,7 +1,0 @@
-cluster.path=/cluster/gate-server/src/main/resources/cluster.yml
-redis.path=/cluster/gate-server/src/main/resources/redis.yml
-redission.path=/cluster/gate-server/src/main/resources/redission.yml
-db.game.path=/cluster/gate-server/src/main/resources/db_game.properties
-db.log.path=/cluster/gate-server/src/main/resources/db_log.properties
-json.path=/cluster/gate-server/src/main/resources/template
-log4j.path=./src/main/resources/log4j2.xml

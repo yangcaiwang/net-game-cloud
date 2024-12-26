@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.GmPlatformMapper">
+
+    <resultMap type="GmPlatform" id="GmPlatformResult">
+		<id     property="platformId"         column="platform_id"               />
+        <result property="platformName"       column="platform_name"             />
+        <result property="sort"            	  column="sort"              />
+        <result property="whiteListStatus"    column="white_list_status"             />
+		<result property="autoRegisterSwitch"    column="auto_register_switch"             />
+        <result property="createBy"           column="create_by"             />
+        <result property="createTime"         column="create_time"           />
+        <result property="updateBy"           column="update_by"             />
+        <result property="updateTime"         column="update_time"           />
+        <result property="remark"             column="remark"                />
+    </resultMap>
+
+    <sql id="selectPlatformVo">
+        select platform_id, platform_name, sort, white_list_status , create_time, remark, auto_register_switch from gm_platform
+    </sql>
+
+        <select id="selectPlatformList" parameterType="GmPlatform" resultMap="GmPlatformResult">
+    		<include refid="selectPlatformVo"/>
+			<where>
+				<if test="platformId != null and platformId != 0">
+					AND platform_id = #{platformId}
+				</if>
+				<if test="platformName != null and platformName != ''">
+					AND platform_name like concat('%', #{platformName}, '%')
+				</if>
+			</where>
+    		order by sort
+    	</select>
+
+    	<select id="selectPlatformAll" resultMap="GmPlatformResult">
+    		<include refid="selectPlatformVo"/>
+    	</select>
+
+    	<select id="selectPlatformById" parameterType="Long" resultMap="GmPlatformResult">
+    		<include refid="selectPlatformVo"/>
+    		where platform_id = #{platformId}
+    	</select>
+
+     	<insert id="insertPlatform" parameterType="GmPlatform" useGeneratedKeys="true" keyProperty="platformId">
+     		insert into gm_platform(
+				<if test="platformId != null and platformId != 0">platform_id,</if>
+     			<if test="platformName != null and platformName != ''">platform_name,</if>
+     			<if test="sort != null and sort != ''">sort,</if>
+     			<if test="whiteListStatus != null and whiteListStatus != ''">white_list_status,</if>
+     			<if test="remark != null and remark != ''">remark,</if>
+				<if test="autoRegisterSwitch != null">auto_register_switch,</if>
+     			<if test="createBy != null and createBy != ''">create_by,</if>
+     			create_time
+     		)values(
+				<if test="platformId != null and platformId != 0">#{platformId},</if>
+     			<if test="platformName != null and platformName != ''">#{platformName},</if>
+     			<if test="sort != null and sort != ''">#{sort},</if>
+     			<if test="whiteListStatus != null and whiteListStatus != ''">#{whiteListStatus},</if>
+     			<if test="remark != null and remark != ''">#{remark},</if>
+				<if test="autoRegisterSwitch != null">#{autoRegisterSwitch},</if>
+     			<if test="createBy != null and createBy != ''">#{createBy},</if>
+     			sysdate()
+     		)
+    	</insert>
+
+    	<update id="updatePlatform" parameterType="GmPlatform">
+     		update gm_platform
+     		<set>
+				<if test="platformId != null and platformId != ''">platform_id = #{platformId},</if>
+				<if test="platformName != null and platformName != ''">platform_name = #{platformName},</if>
+     			<if test="sort != null and sort != ''">sort = #{sort},</if>
+     			<if test="whiteListStatus != null and whiteListStatus != ''">white_list_status = #{whiteListStatus},</if>
+     			<if test="remark != null">remark = #{remark},</if>
+				<if test="autoRegisterSwitch != null">auto_register_switch = #{autoRegisterSwitch},</if>
+     			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+     			update_time = sysdate()
+     		</set>
+     		where platform_id = #{platformId}
+    	</update>
+
+    	<delete id="deletePlatformById" parameterType="Long">
+    		delete from gm_platform where platform_id = #{pid}
+     	</delete>
+
+     	<delete id="deletePlatformByIds" parameterType="Long">
+    		delete from gm_platform where platform_id in
+     		<foreach collection="array" item="pid" open="(" separator="," close=")">
+     			#{pid}
+            </foreach>
+     	</delete>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.GmRechargeMapper">
+    
+    <resultMap type="GmRecharge" id="GmRechargeResult">
+        <result property="id"    column="id"    />
+        <result property="roleIds"    column="role_ids"    />
+        <result property="rechargeIds"    column="recharge_ids"    />
+        <result property="serverId"    column="server_id"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectGmRechargeVo">
+        select id, role_ids, recharge_ids, server_id, status, create_by, create_time, update_by, update_time from gm_recharge
+    </sql>
+
+    <select id="selectGmRechargeList" parameterType="GmRecharge" resultMap="GmRechargeResult">
+        <include refid="selectGmRechargeVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectGmRechargeById" parameterType="Long" resultMap="GmRechargeResult">
+        <include refid="selectGmRechargeVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectGmRechargeByIds" parameterType="Long" resultMap="GmRechargeResult">
+        <include refid="selectGmRechargeVo"/>
+        where id in
+        <foreach collection="array" item="sid" open="(" separator="," close=")">
+            #{sid}
+        </foreach>
+    </select>
+        
+    <insert id="insertGmRecharge" parameterType="GmRecharge" useGeneratedKeys="true" keyProperty="id">
+        insert into gm_recharge
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleIds != null">role_ids,</if>
+            <if test="rechargeIds != null">recharge_ids,</if>
+            <if test="serverId != null">server_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleIds != null">#{roleIds},</if>
+            <if test="rechargeIds != null">#{rechargeIds},</if>
+            <if test="serverId != null">#{serverId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateGmRecharge" parameterType="GmRecharge">
+        update gm_recharge
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roleIds != null">role_ids = #{roleIds},</if>
+            <if test="rechargeIds != null">recharge_ids = #{rechargeIds},</if>
+            <if test="serverId != null">server_id = #{serverId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateGmRechargeStatus">
+        update gm_recharge
+        <trim prefix="SET" suffixOverrides=",">
+            status = #{recharge.status},
+            update_by = #{recharge.updateBy},
+            update_time = sysdate()
+        </trim>
+        where (status is null or status = 0) and id in
+        <foreach collection="sid" item="sid" open="(" separator="," close=")">
+            #{sid}
+        </foreach>
+    </update>
+
+    <delete id="deleteGmRechargeById" parameterType="Long">
+        delete from gm_recharge where id = #{id}
+    </delete>
+
+    <delete id="deleteGmRechargeByIds" parameterType="String">
+        delete from gm_recharge where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

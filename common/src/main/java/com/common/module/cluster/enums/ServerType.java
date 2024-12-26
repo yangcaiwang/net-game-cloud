@@ -9,11 +9,12 @@ package com.common.module.cluster.enums;
  */
 public enum ServerType {
     ALL_SERVER(0, "all-server", ""),
-    CHAT_SERVER(1, "chat-server", ""),
-    GAME_SERVER(2, "game-server", ""),
-    GATE_SERVER(3, "gate-server", ""),
-    GM_SERVER(4, "gm-server", ""),
-    LOGIN_SERVER(5, "login-server", ""),
+    BATTLE_SERVER(1, "battle-server", ""),
+    CHAT_SERVER(2, "chat-server", ""),
+    GAME_SERVER(3, "game-server", ""),
+    GATE_SERVER(4, "gate-server", ""),
+    GM_SERVER(5, "gm-server", ""),
+    LOGIN_SERVER(6, "login-server", ""),
     ;
 
     private final int value;

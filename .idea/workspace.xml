@@ -5,61 +5,839 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="优化">
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/cluster.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/db_game.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/db_log.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/log4j2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/path.cnf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/redis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/redission.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/template/Constant.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/cluster.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/db_game.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/db_log.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/log4j2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/path.cnf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/redis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/redission.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/template/Constant.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/heart/HeartbeatProcess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/heart/jetty/JettyHeartbeatProcess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/heart/netty/NettyHeartbeatProcess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/command/HeartbeatCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/battle-server/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/resources/cluster.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/resources/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/resources/redis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/resources/redission.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/resources/template/Constant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/server.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/game-server/src/main/resources/server.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/GmApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/GmServletInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/BaseConfigCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/config/ActivityOpenConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/config/GameArgConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/config/ItemConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/config/ItemSourceConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/config/LanguageAllConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/base/config/PowerSourceConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ActivityOpen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ExceptionLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/Gangs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GangsMember.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/General.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GeneralLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmAddItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmBroadcast.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmExecuteCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmPlatform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmRecharge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/GmWhiteList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/Item.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ItemLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/LoginLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/PlayerBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/PlayerMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/PowerLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ProtocolCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ProtocolFileDesc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ProtocolFileStruct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/ProtocolFileStructField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/RechargeDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/RechargeOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/RechargeSum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/BackMail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/ItemPair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/RoleAccount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/RoleServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/SdkGiftSend.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/SdkRechargeOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/SdkShopGoodsSend.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/model/SdkVipCustomerServiceInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/vo/GeneralVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/domain/vo/ItemVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ActivityOpenMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ExceptionLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GangsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GangsMemberMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GeneralLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GeneralMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmAddItemMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmBroadcastMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmExecuteCommandMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmMailMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmPlatformMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmRechargeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmServerMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/GmWhiteListMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ItemLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ItemMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/LoginLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/PlayerMailMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/PlayerMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/PowerLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ProtocolCmdMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ProtocolFileDescMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ProtocolFileStructFieldMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/ProtocolFileStructMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/RechargeDetailMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/mapper/RechargeOrderMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IAccountBindService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IActivityOpenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IExceptionLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGangsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGmAddItemService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGmBroadcastService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGmExecuteCommandService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGmMailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGmRechargeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IGmWhiteListService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IPlatformService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IPlayerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IProtocolService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IRechargeDetailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IRechargeOrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/IServerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/AccountBindServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/ActivityOpenServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/ExceptionLogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GangsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GmAddItemServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GmBroadcastServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GmExecuteCommandServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GmMailServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GmRechargeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/GmWhiteListServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/PlatformServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/PlayerServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/ProtocolServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/RechargeDetailServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/RechargeOrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/service/impl/ServerServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/tcp/cache/LoginServerCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/admin/tcp/constant/Commands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/DataScope.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/DataSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/Excel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/Excels.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/Log.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/RateLimiter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/annotation/RepeatSubmit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/config/GamerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/constant/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/constant/GenConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/constant/HttpStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/constant/NettyConst.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/constant/ScheduleConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/constant/UserConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/controller/BaseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/AjaxResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/BaseEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/TreeEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/TreeSelect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/entity/SysDept.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/entity/SysDictData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/entity/SysDictType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/entity/SysMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/entity/SysRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/entity/SysUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/model/LoginBody.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/model/LoginUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/domain/model/RegisterBody.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/page/PageDomain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/page/TableDataInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/page/TableSupport.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/redis/RedisCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/text/CharsetKit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/text/Convert.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/core/text/StrFormatter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/BusinessStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/BusinessType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/DataSourceType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/HttpMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/LimitType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/OperatorType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/enums/UserStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/DemoModeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/GlobalException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/ServiceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/UtilException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/base/BaseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/file/FileException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/file/FileNameLengthLimitExceededException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/file/FileSizeLimitExceededException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/file/InvalidExtensionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/job/TaskException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/user/CaptchaException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/user/CaptchaExpireException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/user/UserException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/exception/user/UserPasswordNotMatchException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/filter/RepeatableFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/filter/RepeatedlyRequestWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/filter/XssFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/filter/XssHttpServletRequestWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/Arith.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/DateUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/DictUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ExceptionUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ExecuteShellUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/HashedFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/LogUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/MailUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/MessageUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/PageUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ParamParseUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/SecurityUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/SerializationUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ServletUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/StringUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/Threads.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/bean/BeanUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/bean/BeanValidators.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/crypto/CryptoUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/file/FileListeners.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/file/FileTypeUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/file/FileUploadUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/file/FileUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/file/ImageUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/file/MimeTypeUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/html/EscapeUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/html/HTMLFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/http/HttpHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/http/HttpUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ip/AddressUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ip/IpUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/poi/ExcelHandlerAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/poi/ExcelUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/reflect/ReflectUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/sign/Base64.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/sign/Md5Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/spring/SpringUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/sql/SqlUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/ssl/RSAUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/uuid/IdUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/uuid/Seq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/utils/uuid/UUID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/xss/Xss.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/common/xss/XssValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/aspectj/DataScopeAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/aspectj/DataSourceAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/aspectj/LogAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/aspectj/RateLimiterAspect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/CaptchaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/DruidConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/FastJson2JsonRedisSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/FilterConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/KaptchaTextCreator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/MyBatisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/ResourcesConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/ServerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/ThreadPoolConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/config/properties/DruidProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/datasource/DatabaseSourceKeyConst.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/datasource/DynamicDataSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/datasource/DynamicDataSourceContextHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/interceptor/RepeatSubmitInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/interceptor/impl/SameUrlDataInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/manager/AsyncManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/manager/ShutdownManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/manager/factory/AsyncFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/security/filter/JwtAuthenticationTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/security/handle/AuthenticationEntryPointImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/security/handle/LogoutSuccessHandlerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/domain/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/domain/server/Cpu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/domain/server/Jvm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/domain/server/Mem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/domain/server/Sys.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/domain/server/SysFile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/service/PermissionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/service/SysLoginService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/service/SysPermissionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/service/SysRegisterService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/service/TokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/framework/web/service/UserDetailsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/config/GenConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/controller/GenController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/domain/GenTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/domain/GenTableColumn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/mapper/GenTableColumnMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/mapper/GenTableMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/service/GenTableColumnServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/service/GenTableServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/service/IGenTableColumnService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/service/IGenTableService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/util/GenUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/util/VelocityInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/generator/util/VelocityUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/controller/SysJobController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/controller/SysJobLogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/domain/SysJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/domain/SysJobLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/mapper/SysJobLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/mapper/SysJobMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/service/ISysJobLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/service/ISysJobService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/service/impl/SysJobLogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/service/impl/SysJobServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/task/RyTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/util/AbstractQuartzJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/util/CronUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/util/JobInvokeUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/util/QuartzDisallowConcurrentExecution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/util/QuartzJobExecution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/quartz/util/ScheduleUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysLogininfor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysNotice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysOperLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysPost.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysRoleDept.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysRoleMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysUserOnline.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysUserPost.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/SysUserRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/vo/MetaVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/domain/vo/RouterVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysConfigMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysDeptMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysDictDataMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysDictTypeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysLogininforMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysMenuMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysNoticeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysOperLogMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysPostMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysRoleDeptMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysRoleMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysRoleMenuMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysUserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysUserPostMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/mapper/SysUserRoleMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysConfigService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysDeptService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysDictDataService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysDictTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysLogininforService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysMenuService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysNoticeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysOperLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysPostService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysRoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysUserOnlineService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/ISysUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysConfigServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysDeptServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysDictDataServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysDictTypeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysLogininforServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysMenuServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysNoticeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysOperLogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysPostServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysRoleServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysUserOnlineServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/gm/server/system/service/impl/SysUserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/generator.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ActivityOpenMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ExceptionLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GangsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GangsMemberMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GeneralLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GeneralMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmAddItemMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmBroadcastMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmExecuteCommandMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmMailMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmPlatformMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmRechargeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmServerMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/GmWhiteListMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ItemLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ItemMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/LoginLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/PlayerMailMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/PlayerMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/PowerLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ProtocolCmdMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ProtocolFileDescMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ProtocolFileStructFieldMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/ProtocolFileStructMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/RechargeDetailMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/admin/RechargeOrderMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/generator/GenTableColumnMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/generator/GenTableMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/quartz/SysJobLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/quartz/SysJobMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysConfigMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysDeptMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysDictDataMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysDictTypeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysLogininforMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysMenuMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysNoticeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysOperLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysPostMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysRoleDeptMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysRoleMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysRoleMenuMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysUserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysUserPostMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mapper/system/SysUserRoleMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/mybatis/mybatis-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/server.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/ssl/rsa_private_key.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/ssl/rsa_public_key.pem" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/template/ActivityOpen.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/template/GameArg.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/template/Item.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/template/ItemSource.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/template/LanguageAll.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/cluster.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/generator.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/log4j2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ActivityOpenMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ExceptionLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GangsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GangsMemberMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GeneralLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GeneralMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmAddItemMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmBroadcastMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmExecuteCommandMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmMailMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmPlatformMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmRechargeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmServerMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/GmWhiteListMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ItemLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ItemMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/LoginLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/PlayerMailMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/PlayerMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/PowerLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ProtocolCmdMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ProtocolFileDescMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ProtocolFileStructFieldMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/ProtocolFileStructMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/RechargeDetailMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/admin/RechargeOrderMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/generator/GenTableColumnMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/generator/GenTableMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/quartz/SysJobLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/quartz/SysJobMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysConfigMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysDeptMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysDictDataMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysDictTypeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysLogininforMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysMenuMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysNoticeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysOperLogMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysPostMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysRoleDeptMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysRoleMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysRoleMenuMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysUserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysUserPostMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mapper/system/SysUserRoleMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/mybatis/mybatis-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/redis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cluster/gm-server/target/classes/redission.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/gm-gamer.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/quartz.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.env.development" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.env.production" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.env.staging" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/babel.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/bin/build.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/bin/package-tar.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/bin/package.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/bin/run-web.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/build/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/html/ie.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/json/ActivityOpen.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/json/Item.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/json/ItemSource.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/json/PowerSource.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/devTools/devTools.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/activityOpen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/broadcast.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/command.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/exceptionLog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/gangs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/item.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/mail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/platform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/player.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/recharge.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/rechargeLog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/gameGm/whiteList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/menu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/cache.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/job.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/jobLog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/logininfor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/online.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/operlog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/monitor/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/dept.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/dict/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/dict/type.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/menu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/notice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/post.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/role.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/system/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/api/tool/gen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/401_images/401.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/404_images/404.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/404_images/404_cloud.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/404.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/bug.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/build.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/button.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/cascader.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/chart.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/checkbox.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/clipboard.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/code.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/color.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/component.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/dashboard.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/date-range.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/date.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/dict.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/documentation.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/download.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/drag.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/druid.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/edit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/education.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/email.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/example.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/excel.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/exit-fullscreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/eye-open.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/eye.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/form.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/fullscreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/github.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/guide.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/input.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/international.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/job.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/language.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/link.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/list.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/lock.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/log.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/logininfor.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/message.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/money.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/monitor.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/nested.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/number.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/online.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/password.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/pdf.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/people.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/peoples.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/phone.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/post.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/qq.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/question.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/radio.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/rate.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/redis.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/row.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/search.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/select.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/server.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/shopping.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/size.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/skill.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/slider.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/star.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/swagger.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/switch.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/system.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/tab.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/table.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/textarea.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/theme.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/time-range.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/time.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/tool.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/tree-table.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/tree.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/upload.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/user.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/validCode.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/wechat.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svg/zip.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/icons/svgo.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/images/dark.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/images/light.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/images/login-background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/images/profile.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/logo/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/logo/logo_v1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/btn.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/element-ui.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/element-variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/mixin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/ruoyi.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/sidebar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/transition.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/assets/styles/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Breadcrumb/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/day.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/hour.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/min.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/month.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/result.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/second.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/week.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Crontab/year.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/DictData/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/DictTag/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Editor/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/FileUpload/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Hamburger/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/HeaderSearch/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/IconSelect/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/IconSelect/requireIcons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/ImagePreview/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/ImageUpload/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Pagination/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/PanThumb/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/ParentView/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/RightPanel/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/RightToolbar/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/Screenfull/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/SizeSelect/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/SvgIcon/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/ThemePicker/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/TopNav/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/components/iFrame/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/AppMain.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/InnerLink/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Navbar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Settings/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/FixiOSBug.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Link.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Logo.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/SidebarItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/TagsView/ScrollPane.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/TagsView/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/devToolLayout/mixin/ResizeHandler.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/dialog/drag.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/dialog/dragHeight.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/dialog/dragWidth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/module/clipboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/permission/hasPermi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/directive/permission/hasRole.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/AppMain.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/InnerLink/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Navbar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Settings/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Sidebar/FixiOSBug.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Sidebar/Item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Sidebar/Link.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Sidebar/Logo.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Sidebar/SidebarItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/Sidebar/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/TagsView/ScrollPane.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/TagsView/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/components/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/layout/mixin/ResizeHandler.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/plugins/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/plugins/cache.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/plugins/download.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/plugins/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/plugins/modal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/plugins/tab.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/router/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/getters.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/modules/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/modules/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/modules/settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/modules/tagsView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/store/modules/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/dict/Dict.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/dict/DictConverter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/dict/DictData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/dict/DictMeta.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/dict/DictOptions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/dict/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/errorCode.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/format.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/css.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/drawingDefault.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/html.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/icon.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/js.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/generator/render.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/jsencrypt.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/permission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/request.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/scroll-to.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/utils/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/activity/activity/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/components/icons/element-icons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/components/icons/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/components/icons/svg-icons.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/dashboard/BarChart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/dashboard/LineChart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/dashboard/PanelGroup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/dashboard/PieChart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/dashboard/RaddarChart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/dashboard/mixins/resize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/devTools/genProto/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/devTools/updateCnf/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/error/401.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/error/404.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/broadcast/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/command/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/exception/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/gangs/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/item/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/mail/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/platform/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/player/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/recharge/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/server/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/gameGm/whitelist/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/index_v1.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/cache/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/druid/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/job/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/job/log.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/logininfor/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/online/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/operlog/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/monitor/server/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/rechargelog/rechargelog/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/rechargelog/rechargesum/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/redirect.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/register.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/config/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/dept/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/dict/data.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/dict/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/menu/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/notice/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/post/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/role/authUser.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/role/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/role/selectUser.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/user/authRole.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/user/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/user/profile/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/user/profile/resetPwd.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/user/profile/userAvatar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/system/user/profile/userInfo.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/build/CodeTypeDialog.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/build/DraggableItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/build/IconsDialog.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/build/RightPanel.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/build/TreeNodeDialog.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/build/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/gen/basicInfoForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/gen/editTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/gen/genInfoForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/gen/importTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/gen/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/src/views/tool/swagger/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/game-server/src/main/resources/cluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/game-server/src/main/resources/cluster.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/gate-server/src/main/resources/cluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/gate-server/src/main/resources/cluster.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/gate-server/target/classes/cluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/gate-server/target/classes/cluster.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/login-server/src/main/resources/cluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/login-server/src/main/resources/cluster.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cluster/login-server/src/main/resources/path.cnf" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/login-server/src/main/resources/path.cnf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/db_game.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/db_log.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/chat-server/src/main/resources/path.cnf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/game-server/src/main/resources/path.cnf" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/login-server/src/main/resources/server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/game-server/target/classes/cluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/game-server/target/classes/cluster.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gate-server/src/main/resources/db_game.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gate-server/src/main/resources/db_log.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gate-server/src/main/resources/path.cnf" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/resources/server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gm-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/gm-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gm-server/src/main/java/com/game/gm/WebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/battle-server/src/main/java/com/battle/server/WebApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/db_game.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/db_log.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gm-server/src/main/resources/path.cnf" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/gate-server/src/main/resources/server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/gm-server/src/test/java/com/game/gm/WebApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/battle-server/src/test/java/com/battle/server/WebApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/login-server/src/main/resources/db_game.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/login-server/src/main/resources/db_log.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/login-server/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cluster/login-server/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cluster/login-server/src/main/resources/path.cnf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/ClusterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/ClusterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/ClusterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/ClusterServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/component/AbstractServerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/component/AbstractServerComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/component/ServerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/component/ServerComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/entity/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/entity/ParseYml.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/entity/ServerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/entity/ServerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/constant/ClusterConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/constant/ClusterConstant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/enums/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/enums/Begin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/property/FileListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/property/FileListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/loader/service/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/loader/service/IService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/pool/actor/TimerActorThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/pool/actor/TimerActorThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/pool/scheduled/ScheduledExecutorServiceScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/pool/scheduled/ScheduledExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/task/AbstractCoreCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/task/AbstractCoreCallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/task/AbstractCoreTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/task/AbstractCoreTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/task/ICoreTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/thread/task/ICoreTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/grpc/GrpcManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/grpc/GrpcManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/HttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/enums/ServerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/enums/ServerType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/MessageProcess.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/MessagePublish.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/MessageSubscribe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/MqMessageBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/RetryCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/ThreadPoolSubscribe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/common/Constants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/common/DetailRes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/cluster/mq/common/MessageWithTime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/BaseConfigCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/AbstractConfigCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/BaseConfigUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/BaseConfigUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/annotation/JsonToBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/base/annotation/JsonToBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/loader/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/internal/loader/Scanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/JettyHttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/JettyHttpServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/constant/HttpCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/constant/HttpCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/handler/JettyHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/jetty/handler/JettyHttpHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/client/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/coder/NettyPacketDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/coder/NettyPacketDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/message/MsgManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/message/MessageProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServerProtobufHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/network/netty/server/NettyServerProtobufHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/common/module/util/ConsoleUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/common/module/util/ConsoleUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/ClusterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/ClusterService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/ClusterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/ClusterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/ClusterServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/ClusterServiceImpl.class" afterDir="false" />
@@ -68,59 +846,53 @@
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/component/AbstractServerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/component/AbstractServerComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/component/ServerComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/component/ServerComponent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/component/ServerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/component/ServerComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/entity/Address.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/entity/Address.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/entity/ServerEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/entity/ServerEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/entity/ServerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/entity/ServerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/constant/ClusterConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/constant/ClusterConstant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/constant/ClusterConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/constant/ClusterConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/Begin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/Begin$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/Begin.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/Begin.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/Begin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/property/FileListeners.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/property/FileListeners.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/property/FileListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/property/FileListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/service/IService.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/service/IService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/service/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/service/IService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/pool/actor/TimerActorThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/pool/actor/TimerActorThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/pool/actor/TimerActorThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/pool/actor/TimerActorThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/pool/scheduled/ScheduledExecutorServiceScheduler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/pool/scheduled/ScheduledExecutorServiceScheduler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreCallback.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreCallback.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreCallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/AbstractCoreTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/ICoreTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/ICoreTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/ICoreTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/thread/task/ICoreTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcClient$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcClient$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager$GrpcServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/grpc/GrpcManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerState.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerState.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerType.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/enums/ServerType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MessageProcess.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MessageProcess.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MessagePublish.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MessagePublish.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MessageSubscribe.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MessageSubscribe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MqMessageBuilder$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MqMessageBuilder$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MqMessageBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/MqMessageBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/RetryCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/RetryCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/ThreadPoolSubscribe$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/ThreadPoolSubscribe$ThreadPoolConsumerBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/ThreadPoolSubscribe.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/ThreadPoolSubscribe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/common/Constants.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/common/Constants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/common/DetailRes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/common/DetailRes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/common/MessageWithTime.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/cluster/mq/common/MessageWithTime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/BaseConfigCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/BaseConfigCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/BaseConfigUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/BaseConfigUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/BaseConfigUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/BaseConfigUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/annotation/JsonToBaseConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/annotation/JsonToBaseConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/annotation/JsonToBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/base/annotation/JsonToBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/Scanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/Scanner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/loader/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/cglib/CglibProxy$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/cglib/CglibProxy$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/cglib/CglibProxy$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/cglib/CglibProxy$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/jdk/JdkProxy$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/jdk/JdkProxy$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/jdk/JdkProxy$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/internal/proxy/jdk/JdkProxy$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/JettyHttpServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/JettyHttpServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/JettyHttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/JettyHttpServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/constant/HttpCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/constant/HttpCommands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/constant/HttpCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/constant/HttpCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/handler/JettyHttpHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/handler/JettyHttpHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/handler/JettyHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/jetty/handler/JettyHttpHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/client/NettyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/client/NettyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/client/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/coder/NettyPacketDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/coder/NettyPacketDecoder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/coder/NettyPacketDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/coder/NettyPacketDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/message/MsgManager$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/message/MsgManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/message/MsgManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerProtobufHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerProtobufHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerProtobufHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/network/netty/server/NettyServerProtobufHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/util/ConsoleUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/util/ConsoleUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/target/classes/com/common/module/util/ConsoleUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/target/classes/com/common/module/util/ConsoleUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/ProtocolProto.java" beforeDir="false" afterPath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/ProtocolProto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/proto/protocol.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/src/main/proto/protocol.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/target/classes/com/game/proto/ProtocolProto$ProtocolCmd$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/proto/target/classes/com/game/proto/ProtocolProto$ProtocolCmd$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/target/classes/com/game/proto/ProtocolProto$ProtocolCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/proto/target/classes/com/game/proto/ProtocolProto$ProtocolCmd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/target/classes/com/game/proto/ProtocolProto.class" beforeDir="false" afterPath="$PROJECT_DIR$/proto/target/classes/com/game/proto/ProtocolProto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/proto/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto/target/final-server.jar" beforeDir="false" afterPath="$PROJECT_DIR$/proto/target/final-server.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,18 +973,19 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/Environment/Java/Game/net-game-core/cluster/chat-server/src/main/resources",
+    "last_opened_file_path": "C:/Environment/Java/Game/net-game-core/cluster/battle-server/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Environment/Java/Game/net-game-server/app/src/main/java/com/common/module/Main.java",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -225,18 +998,18 @@
       <recent name="com.common.module.cluster.config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\battle-server\src\main\resources" />
       <recent name="C:\Environment\Java\Game\net-game-core\cluster\chat-server\src\main\resources" />
-      <recent name="C:\Environment\Java\Game\net-game-core\cluster\gm-server\src\main\resources" />
-      <recent name="C:\Environment\Java\Game\net-game-core\cluster\gate-server\src\main\resources" />
-      <recent name="C:\Environment\Java\Game\net-game-core\cluster\game-server\src\main\resources\template" />
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\login-server\src\main\resources" />
       <recent name="C:\Environment\Java\Game\net-game-core\cluster\game-server\src\main\resources" />
+      <recent name="C:\Environment\Java\Game\net-game-core\cluster\gate-server\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Environment\Java\Game\net-game-core\cluster" />
+      <recent name="C:\Environment\Java\Game\net-game-core\web\src\main\resources" />
+      <recent name="C:\Environment\Java\Game\net-game-core\web\src\main\resources\mapper\generator" />
       <recent name="C:\Environment\Java\Game\net-game-core\proto\src\main\proto" />
       <recent name="C:\Environment\Java\Game\net-game-server\cluster" />
-      <recent name="C:\Environment\Java\Game\net-game-server\cluster\game\src\main\resources" />
-      <recent name="C:\Environment\Java\Game\net-game-server" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.gate.node" />
@@ -256,7 +1029,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GateApplication">
+  <component name="RunManager" selected="Spring Boot.GmApplication">
     <configuration name="AttributeClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.common.module.internal.netty.test.AttributeClient" />
       <module name="common" />
@@ -296,19 +1069,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.game.proto.Test" />
-      <module name="proto" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.game.proto.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="net-game-server" />
       <method v="2">
@@ -337,6 +1097,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GamerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="gm-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.game.web.admin.GamerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GateApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" activateToolWindowBeforeRun="false" temporary="true" nameIsGenerated="true">
       <option name="INCLUDE_PROVIDED_SCOPE" value="false" />
       <module name="gate-server" />
@@ -352,6 +1119,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GmApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="gm-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.gm.server.admin.GmApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gm.server.admin.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LoginServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="login-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.gm.server.LoginServerApplication" />
@@ -360,8 +1140,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <configuration name="WebApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="gm-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.web.WebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="battle-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.battle.server.WebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebApplication (3)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="gm-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.game.web.WebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="battle-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.game.gm.WebApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -371,20 +1172,24 @@
       <item itemvalue="Application.AttributeClient" />
       <item itemvalue="Application.AttributeServer" />
       <item itemvalue="Application.NettyClient" />
-      <item itemvalue="Application.Test" />
+      <item itemvalue="Spring Boot.GamerApplication" />
+      <item itemvalue="Spring Boot.WebApplication (1)" />
+      <item itemvalue="Spring Boot.WebApplication (2)" />
+      <item itemvalue="Spring Boot.WebApplication (3)" />
       <item itemvalue="Spring Boot.LoginServerApplication" />
       <item itemvalue="Spring Boot.WebApplication" />
       <item itemvalue="Spring Boot.ChatApplication" />
       <item itemvalue="Spring Boot.GameApplication" />
+      <item itemvalue="Spring Boot.GmApplication" />
       <item itemvalue="Spring Boot.GateApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.GmApplication" />
         <item itemvalue="Spring Boot.GateApplication" />
         <item itemvalue="Application.NettyClient" />
         <item itemvalue="Application.AttributeClient" />
         <item itemvalue="Application.AttributeServer" />
-        <item itemvalue="Application.Test" />
       </list>
     </recent_temporary>
   </component>
@@ -469,7 +1274,13 @@
       <workItem from="1735080971679" duration="1239000" />
       <workItem from="1735116707774" duration="10242000" />
       <workItem from="1735144539906" duration="11848000" />
-      <workItem from="1735156431245" duration="18298000" />
+      <workItem from="1735156431245" duration="18637000" />
+      <workItem from="1735219438271" duration="58000" />
+      <workItem from="1735228347027" duration="4780000" />
+      <workItem from="1735233203003" duration="7146000" />
+      <workItem from="1735240366509" duration="969000" />
+      <workItem from="1735241342138" duration="452000" />
+      <workItem from="1735241828916" duration="11886000" />
     </task>
     <task id="LOCAL-00001" summary="微服务游戏架构">
       <option name="closed" value="true" />
@@ -487,7 +1298,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735156330359</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="优化">
+      <option name="closed" value="true" />
+      <created>1735175063545</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1735175063545</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

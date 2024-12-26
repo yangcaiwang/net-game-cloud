@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gm.server.admin.mapper.PowerLogMapper">
+
+    <resultMap type="PowerLog" id="PowerLogResult">
+        <id     property="id"              column="id"               />
+        <result property="roleId"      column="role_id"             />
+		<result property="prePower"          column="pre_power"             />
+		<result property="power"           column="power"              />
+		<result property="powerChangeReason"          column="power_change_reason"              />
+		<result property="powerDesc"          column="power_desc"              />
+		<result property="firstCreateTime"      column="first_create_time"             />
+	</resultMap>
+
+   <select id="selectPowerLogById" resultMap="PowerLogResult"  >
+   	select id,role_id,pre_power,`power`,power_change_reason,power_desc,first_create_time from `${tabName}`
+		<where>
+			<if test="roleId != null and roleId != 0">
+				AND role_id = #{roleId}
+			</if>
+			<if test="log.prePower != null and log.prePower != 0">
+				AND pre_power = #{log.prePower}
+			</if>
+			<if test="log.power != null and log.power != 0">
+				AND power = #{log.power}
+			</if>
+			<if test="log.powerChangeReason != null and log.powerChangeReason != 0">
+				AND power_change_reason = #{log.powerChangeReason}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+	    order by first_create_time desc, pre_power desc limit #{limitStart}, #{limitEnd}
+	   <!-- 数据范围过滤 -->
+	   ${log.params.dataScope}
+   </select>
+
+	<select id="selectPowerLogByIdAll" resultMap="PowerLogResult"  >
+		select id,role_id,pre_power,`power`,power_change_reason,power_desc,first_create_time from `${tabName}`
+		<where>
+			<if test="roleId != null and roleId != 0">
+				AND role_id = #{roleId}
+			</if>
+			<if test="log.prePower != null and log.prePower != 0">
+				AND pre_power = #{log.prePower}
+			</if>
+			<if test="log.power != null and log.power != 0">
+				AND power = #{log.power}
+			</if>
+			<if test="log.powerChangeReason != null and log.powerChangeReason != 0">
+				AND power_change_reason = #{log.powerChangeReason}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+		 order by first_create_time desc, pre_power desc
+		<!-- 数据范围过滤 -->
+		${log.params.dataScope}
+	</select>
+
+	<select id="countPowerLog" resultType="Long"  >
+		select count(1) from `${tabName}`
+		<where>
+			<if test="roleId != null and roleId != 0">
+				AND role_id = #{roleId}
+			</if>
+			<if test="log.prePower != null and log.prePower != 0">
+				AND pre_power = #{log.prePower}
+			</if>
+			<if test="log.power != null and log.power != 0">
+				AND power = #{log.power}
+			</if>
+			<if test="log.powerChangeReason != null and log.powerChangeReason != 0">
+				AND power_change_reason = #{log.powerChangeReason}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+		<!-- 数据范围过滤 -->
+		${log.params.dataScope}
+	</select>
+
+	<select id="countTable" parameterType="String" resultType="String" >
+<!--		show tables like '%log_operation%'-->
+		SELECT table_name FROM information_schema.tables WHERE
+		table_schema=#{schemaName} AND table_name like '%role_power_log%'
+	</select>
+
+</mapper>
