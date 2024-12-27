@@ -5,16 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ycw</groupId>
-        <artifactId>net-game-core</artifactId>
+        <artifactId>net-game-cloud</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>proto</artifactId>
+
     <name>proto</name>
+    <artifactId>proto</artifactId>
     <packaging>jar</packaging>
-    <properties>
-        <java.version>1.8.0</java.version>
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.google.protobuf</groupId>
@@ -33,6 +32,7 @@
             <artifactId>grpc-stub</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <finalName>final-server</finalName>
         <!--   &lt;!&ndash; os系统信息插件, protobuf-maven-plugin需要获取系统信息下载相应的protobuf程序 &ndash;&gt;-->

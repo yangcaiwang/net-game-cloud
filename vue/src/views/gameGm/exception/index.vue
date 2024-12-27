@@ -131,7 +131,7 @@
         </template>
       </el-table-column> -->
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import { listLog, getLog, delLog, cleanLog } from "@/api/gameGm/exceptionLog";
+import {cleanLog, delLog, listLog} from "@/api/gameGm/exceptionLog";
 
 export default {
   name: "Log",

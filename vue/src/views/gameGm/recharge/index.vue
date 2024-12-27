@@ -126,7 +126,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -190,8 +190,8 @@
 </template>
 
 <script>
-import { listRecharge, getRecharge, delRecharge, addRecharge, updateRecharge, pass } from "@/api/gameGm/recharge";
-import { listServerAll } from "@/api/gameGm/server";
+import {addRecharge, delRecharge, getRecharge, listRecharge, pass, updateRecharge} from "@/api/gameGm/recharge";
+import {listServerAll} from "@/api/gameGm/server";
 
 export default {
   name: "Recharge",

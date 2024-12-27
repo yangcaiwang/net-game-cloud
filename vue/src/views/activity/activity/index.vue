@@ -212,7 +212,7 @@
                 :key="openType.value"
                 :label="openType.label"
                 :value="openType.value"
-                
+
               /> -->
           </el-select>
           <!-- <span slot="label">
@@ -269,8 +269,8 @@
 </template>
 
 <script>
-import { listOpen, getOpen, delOpen, addOpen, updateOpen, changeStatus } from "@/api/gameGm/activityOpen";
-import { listServerAll } from "@/api/gameGm/server";
+import {addOpen, changeStatus, delOpen, getOpen, listOpen, updateOpen} from "@/api/gameGm/activityOpen";
+import {listServerAll} from "@/api/gameGm/server";
 import axios from "axios";
 
 export default {

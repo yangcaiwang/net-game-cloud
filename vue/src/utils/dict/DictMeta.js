@@ -1,4 +1,4 @@
-import { mergeRecursive } from "@/utils/format";
+import {mergeRecursive} from "@/utils/format";
 import DictOptions from './DictOptions'
 
 /**

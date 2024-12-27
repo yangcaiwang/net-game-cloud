@@ -729,8 +729,21 @@
 </template>
 
 <script>
-import { listPlayer, listPlayerGeneral, listPlayerItem, getPlayerBase, listPlayerItemLog, getPlayerMail, delPlayer, kitout, listPlayerPowerLog, listPlayerLoginLog, listPlayerGeneralLog, mailInvalid } from "@/api/gameGm/player";
-import { listServerAll } from "@/api/gameGm/server";
+import {
+  delPlayer,
+  getPlayerBase,
+  getPlayerMail,
+  kitout,
+  listPlayer,
+  listPlayerGeneral,
+  listPlayerGeneralLog,
+  listPlayerItem,
+  listPlayerItemLog,
+  listPlayerLoginLog,
+  listPlayerPowerLog,
+  mailInvalid
+} from "@/api/gameGm/player";
+import {listServerAll} from "@/api/gameGm/server";
 import axios from "axios";
 // import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
 // import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/system/dept";

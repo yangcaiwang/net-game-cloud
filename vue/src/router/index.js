@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-Vue.use(Router)
-
 /* Layout */
 import Layout from '@/layout'
 import DevLayout from '@/devToolLayout'
+
+Vue.use(Router)
+
 /**
  * Note: 路由配置项
  *

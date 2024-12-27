@@ -7,14 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="chat-server" />
-        <module name="game-server" />
-        <module name="login-server" />
-        <module name="common" />
+        <module name="battle" />
+        <module name="core" />
+        <module name="game" />
+        <module name="chat" />
+        <module name="gm" />
         <module name="proto" />
-        <module name="battle-server" />
-        <module name="gm-server" />
-        <module name="gate-server" />
+        <module name="gate" />
+        <module name="login" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,7 +22,6 @@
       <module name="center" target="1.8" />
       <module name="cluster" target="1.8" />
       <module name="demo" target="1.8" />
-      <module name="gm" target="1.8" />
       <module name="kafka" target="1.8" />
       <module name="net-game-server" target="1.8" />
       <module name="proto (1)" target="1.8" />
@@ -33,15 +32,15 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="battle-server" options="" />
-      <module name="chat-server" options="" />
+      <module name="battle" options="" />
+      <module name="chat" options="" />
       <module name="cluster" options="" />
       <module name="demo" options="" />
-      <module name="game-server" options="" />
-      <module name="gate-server" options="" />
+      <module name="game" options="" />
+      <module name="gate" options="" />
       <module name="gm" options="" />
-      <module name="gm-server" options="" />
-      <module name="login-server" options="" />
+      <module name="login" options="" />
+      <module name="server" options="" />
       <module name="spring-boot-starter-parent" options="-parameters" />
     </option>
   </component>

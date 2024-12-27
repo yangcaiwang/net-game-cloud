@@ -1,0 +1,59 @@
+node:
+  groupId: 1
+  weight: 100
+  serverId: "game-1001"
+  host: "127.0.0.1"
+  port: 6001
+grpc:
+  port: 8000
+  heartbeatTime: 10000
+  heartbeatTimeout: 30000
+jetty:
+  port: 9001
+  httpMinThreads: 1
+  httpMaxThreads: 10
+  idleTimeout: 100
+  heartbeatTime: 30000
+  heartbeatTimeout: 60000
+dbGame:
+  name: db_log
+  auto: true
+  username: root
+  password: ycw123129
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/db_log?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&useServerPrepStmts=true&cachePrepStmts=true&allowMultiQueries=true&rewriteBatchedStatements=true
+  initialSize: 2
+  maxIdle: 2
+  minIdle: 1
+  maxTotal: 50
+  logAbandoned: true
+  removeAbandoned: true
+  removeAbandonedTimeout: 180
+  maxWait: 1000
+  validationQuery: SELECT 1
+  testWhileIdle: true
+  testOnBorrow: false
+  timeBetweenEvictionRunsMillis: 30000
+  minEvictableIdleTimeMillis: 1800000
+  numTestsPerEvictionRun: 10
+dbLog:
+  name: db_log
+  auto: true
+  username: root
+  password: ycw123129
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/db_log?serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false&useServerPrepStmts=true&cachePrepStmts=true&allowMultiQueries=true&rewriteBatchedStatements=true
+  initialSize: 2
+  maxIdle: 2
+  minIdle: 1
+  maxTotal: 50
+  logAbandoned: true
+  removeAbandoned: true
+  removeAbandonedTimeout: 180
+  maxWait: 1000
+  validationQuery: SELECT 1
+  testWhileIdle: true
+  testOnBorrow: false
+  timeBetweenEvictionRunsMillis: 30000
+  minEvictableIdleTimeMillis: 1800000
+  numTestsPerEvictionRun: 10

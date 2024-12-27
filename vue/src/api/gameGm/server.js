@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { parseStrEmpty } from "@/utils/format";
+import {parseStrEmpty} from "@/utils/format";
 
 // 查询服务器列表
 export function listServer(query) {

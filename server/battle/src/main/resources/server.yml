@@ -1,0 +1,17 @@
+node:
+  groupId: 1
+  weight: 100
+  serverId: "battle-1001"
+  host: "127.0.0.1"
+  port: 6006
+grpc:
+  port: 8003
+  heartbeatTime: 10000
+  heartbeatTimeout: 30000
+jetty:
+  port: 9006
+  httpMinThreads: 1
+  httpMaxThreads: 10
+  idleTimeout: 100
+  heartbeatTime: 30000
+  heartbeatTimeout: 60000

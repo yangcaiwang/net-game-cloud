@@ -254,8 +254,8 @@
 </template>
 
 <script>
-import { listItem, getItem, delItem, addItem, updateItem, pass } from "@/api/gameGm/item";
-import { listServerAll } from "@/api/gameGm/server";
+import {addItem, delItem, getItem, listItem, pass, updateItem} from "@/api/gameGm/item";
+import {listServerAll} from "@/api/gameGm/server";
 import axios from "axios";
 
 export default {

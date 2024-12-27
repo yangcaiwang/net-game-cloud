@@ -140,7 +140,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -200,8 +200,8 @@
 </template>
 
 <script>
-import { listBroadcast, getBroadcast, delBroadcast, addBroadcast, updateBroadcast, pass } from "@/api/gameGm/broadcast";
-import { listServerAll } from "@/api/gameGm/server";
+import {addBroadcast, delBroadcast, getBroadcast, listBroadcast, pass, updateBroadcast} from "@/api/gameGm/broadcast";
+import {listServerAll} from "@/api/gameGm/server";
 
 export default {
   name: "Broadcast",

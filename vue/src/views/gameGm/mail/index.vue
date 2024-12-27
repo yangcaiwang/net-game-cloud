@@ -246,8 +246,8 @@
 </template>
 
 <script>
-import { listMail, delMail, addMail, updateMail, passMail } from "@/api/gameGm/mail";
-import { listServerAll } from "@/api/gameGm/server";
+import {addMail, delMail, listMail, passMail, updateMail} from "@/api/gameGm/mail";
+import {listServerAll} from "@/api/gameGm/server";
 import axios from "axios";
 // import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
 // import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/system/dept";

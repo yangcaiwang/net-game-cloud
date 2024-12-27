@@ -82,7 +82,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -131,8 +131,8 @@
 </template>
 
 <script>
-import { listList, getList, delList, addList, updateList } from "@/api/gameGm/whiteList";
-import { listPlatform } from "@/api/gameGm/platform";
+import {addList, delList, getList, listList, updateList} from "@/api/gameGm/whiteList";
+import {listPlatform} from "@/api/gameGm/platform";
 
 export default {
   name: "List",

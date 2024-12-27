@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ycw.gm.admin.mapper.GeneralLogMapper">
+
+    <resultMap type="GeneralLog" id="GeneralLogResult">
+        <id     property="id"              column="id"               />
+        <result property="roleId"      column="role_id"             />
+		<result property="genId"          column="gen_id"             />
+		<result property="genResId"          column="gen_res_id"             />
+		<result property="genName"           column="gen_name"              />
+		<result property="reason"          column="reason"              />
+		<result property="reasonId"          column="reason_id"              />
+		<result property="optType"          column="opt_type"              />
+		<result property="args"          column="args"              />
+		<result property="firstCreateTime"      column="first_create_time"             />
+	</resultMap>
+
+   <select id="selectGeneralLogById" resultMap="GeneralLogResult"  >
+   	select id,role_id,gen_id,gen_res_id,`gen_name`,reason,reason_id,opt_type,args,first_create_time from `${tabName}`
+		<where>
+			<if test="log.roleId != null and log.roleId != 0">
+				AND role_id = #{log.roleId}
+			</if>
+			<if test="log.genId != null and log.genId != 0">
+				AND gen_id = #{log.genId}
+			</if>
+			<if test="log.genResId != null and log.genResId != 0">
+				AND gen_res_id = #{log.genResId}
+			</if>
+			<if test="log.genName != null and log.genName != ''">
+				AND gen_name like concat('%', #{log.genName}, '%')
+			</if>
+			<if test="log.reason != null and log.reason != ''">
+				AND reason like concat('%', #{log.reason}, '%')
+			</if>
+			<if test="log.reasonId != null and log.reasonId != 0">
+				AND reason_id = #{log.reasonId}
+			</if>
+			<if test="log.optType != null and log.optType != 0">
+				AND opt_type = #{log.optType}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+	    order by first_create_time desc limit #{limitStart}, #{limitEnd}
+	   <!-- 数据范围过滤 -->
+	   ${log.params.dataScope}
+   </select>
+
+	<select id="selectGeneralLogByIdAll" resultMap="GeneralLogResult"  >
+		select id,role_id,gen_id,gen_res_id,`gen_name`,reason,reason_id,opt_type,args,first_create_time from `${tabName}`
+		<where>
+			<if test="log.roleId != null and log.roleId != 0">
+				AND role_id = #{log.roleId}
+			</if>
+			<if test="log.genId != null and log.genId != 0">
+				AND gen_id = #{log.genId}
+			</if>
+			<if test="log.genResId != null and log.genResId != 0">
+				AND gen_res_id = #{log.genResId}
+			</if>
+			<if test="log.genName != null and log.genName != ''">
+				AND gen_name like concat('%', #{log.genName}, '%')
+			</if>
+			<if test="log.reason != null and log.reason != ''">
+				AND reason like concat('%', #{log.reason}, '%')
+			</if>
+			<if test="log.reasonId != null and log.reasonId != 0">
+				AND reason_id = #{log.reasonId}
+			</if>
+			<if test="log.optType != null and log.optType != 0">
+				AND opt_type = #{log.optType}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+		 order by first_create_time desc
+		<!-- 数据范围过滤 -->
+		${log.params.dataScope}
+	</select>
+
+	<select id="countLog" resultType="Long"  >
+		select count(1) from `${tabName}`
+		<where>
+			<if test="log.roleId != null and log.roleId != 0">
+				AND role_id = #{log.roleId}
+			</if>
+			<if test="log.genId != null and log.genId != 0">
+				AND gen_id = #{log.genId}
+			</if>
+			<if test="log.genResId != null and log.genResId != 0">
+				AND gen_res_id = #{log.genResId}
+			</if>
+			<if test="log.genName != null and log.genName != ''">
+				AND gen_name like concat('%', #{log.genName}, '%')
+			</if>
+			<if test="log.reason != null and log.reason != ''">
+				AND reason like concat('%', #{log.reason}, '%')
+			</if>
+			<if test="log.reasonId != null and log.reasonId != 0">
+				AND reason_id = #{log.reasonId}
+			</if>
+			<if test="log.optType != null and log.optType != 0">
+				AND opt_type = #{log.optType}
+			</if>
+			<if test="log.params.beginTime != null and log.params.beginTime != ''"><!-- 开始时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &gt;= date_format(#{log.params.beginTime},'%y%m%d%H%i%s')
+			</if>
+			<if test="log.params.endTime != null and log.params.endTime != ''"><!-- 结束时间检索 -->
+				AND date_format(first_create_time,'%y%m%d%H%i%s') &lt;= date_format(#{log.params.endTime},'%y%m%d%H%i%s')
+			</if>
+		</where>
+		<!-- 数据范围过滤 -->
+		${log.params.dataScope}
+	</select>
+
+	<select id="countTable" parameterType="String" resultType="String" >
+<!--		show tables like '%log_operation%'-->
+		SELECT table_name FROM information_schema.tables WHERE
+		table_schema=#{schemaName} AND table_name like '%role_general_log%'
+	</select>
+
+</mapper>

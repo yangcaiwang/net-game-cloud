@@ -131,7 +131,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -174,8 +174,8 @@
 </template>
 
 <script>
-import { listCommand, getCommand, delCommand, addCommand, updateCommand, pass } from "@/api/gameGm/command";
-import { listServerAll } from "@/api/gameGm/server";
+import {addCommand, delCommand, getCommand, listCommand, pass, updateCommand} from "@/api/gameGm/command";
+import {listServerAll} from "@/api/gameGm/server";
 
 export default {
   name: "Command",

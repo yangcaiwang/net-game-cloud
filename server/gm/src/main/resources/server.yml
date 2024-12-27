@@ -1,0 +1,13 @@
+node:
+  groupId: 0
+  weight: 100
+  serverId: "gm-1001"
+  host: "127.0.0.1"
+  port: 6002
+jetty:
+  port: 9002
+  httpMinThreads: 1
+  httpMaxThreads: 10
+  idleTimeout: 100
+  heartbeatTime: 30000
+  heartbeatTimeout: 60000

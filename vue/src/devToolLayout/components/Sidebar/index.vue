@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import {mapGetters, mapState} from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/assets/styles/variables.scss";
@@ -66,7 +66,7 @@ export default {
                     name: 'protoMessage',
                     meta: { title: '协议工具', icon: 'tool', affix: true }
                 }
-                
+
             ];
         },
     }

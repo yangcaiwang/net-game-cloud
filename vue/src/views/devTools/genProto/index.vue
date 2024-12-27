@@ -480,21 +480,20 @@
 
 <script>
 import {
-  // add,
-  // remove,
+  deleteProtocolFile,
+  deleteProtocolFileStruct,
+  genProtoFile,
+  getProtoFileAllStruct,
   listAllProto,
   listProtoFileStruct,
-  genProtoFile,
-  saveProtoFileDesc,
-  updateProtoFileDesc,
-  saveProtoFileStruct,
-  updateProtoFileStruct,
   listProtoStruct,
-  deleteProtocolFileStruct,
-  deleteProtocolFile,
   listProtoVersionInfo,
-  getProtoFileAllStruct,
+  saveProtoFileDesc,
+  saveProtoFileStruct,
+  updateProtoFileDesc,
+  updateProtoFileStruct,
 } from "@/api/devTools/devTools";
+
 export default {
   watch: {
     filterText(val) {

@@ -61,7 +61,7 @@
                 label= "更新&重启"
                 value="2"
               /> -->
-              
+
               </el-select>
             </el-form-item>
           </el-form>
@@ -73,16 +73,15 @@
           <div v-html="getResult()" :style="{'max-height': timeLineHeight + 'px' }" style="overflow-y:scroll;"></div>
         </el-main>
     </el-container>
-     
+
   </div>
 </template>
 
 <script>
 // import { listBroadcast, getBroadcast, delBroadcast, addBroadcast, updateBroadcast, pass } from "@/api/gameGm/broadcast";
 // import { listServerAll } from "@/api/gameGm/server";
-import {
-  commitOpt,
-} from "@/api/devTools/devTools";
+import {commitOpt,} from "@/api/devTools/devTools";
+
 export default {
   name: "UpdateCnf",
   mounted() {

@@ -397,11 +397,27 @@
 </template>
 
 <script>
-import { listServer, getServer, delServer, kitoutAll, addServer, updateServer, dataScope, changeServerStatus, changeServerShowOutStatus, changeServerTimeOpen, changeServerRegister, stopServer, startServer, changeServerConfig, deployServer } from "@/api/gameGm/server";
+import {
+  addServer,
+  changeServerConfig,
+  changeServerRegister,
+  changeServerShowOutStatus,
+  changeServerStatus,
+  changeServerTimeOpen,
+  dataScope,
+  delServer,
+  deployServer,
+  getServer,
+  kitoutAll,
+  listServer,
+  startServer,
+  stopServer,
+  updateServer
+} from "@/api/gameGm/server";
 // import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
 // import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/system/dept";
-import { listPlatformAll } from "@/api/gameGm/platform";
-import { getToken } from "@/utils/auth";
+import {listPlatformAll} from "@/api/gameGm/platform";
+import {getToken} from "@/utils/auth";
 
 
 export default {

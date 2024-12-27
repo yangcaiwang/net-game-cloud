@@ -115,7 +115,15 @@
 </template>
 
 <script>
-import { listPlatform, getPlatform, delPlatform, addPlatform, updatePlatform, changeWhiteListStatus, changeAutoRegisterSwitch } from "@/api/gameGm/platform";
+import {
+  addPlatform,
+  changeAutoRegisterSwitch,
+  changeWhiteListStatus,
+  delPlatform,
+  getPlatform,
+  listPlatform,
+  updatePlatform
+} from "@/api/gameGm/platform";
 
 export default {
   name: "Platform",

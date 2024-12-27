@@ -149,8 +149,8 @@
 </template>
 
 <script>
-import { listGangs, getGangsMember, modifyGangsNotice } from "@/api/gameGm/gangs";
-import { listServerAll } from "@/api/gameGm/server";
+import {getGangsMember, listGangs, modifyGangsNotice} from "@/api/gameGm/gangs";
+import {listServerAll} from "@/api/gameGm/server";
 
 // import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
 // import { treeselect as deptTreeselect, roleDeptTreeselect } from "@/api/system/dept";

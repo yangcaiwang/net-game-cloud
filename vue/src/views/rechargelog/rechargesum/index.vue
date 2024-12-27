@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import { getRechargeSum, getRechargeDetailList } from "@/api/gameGm/rechargeLog";
+import {getRechargeDetailList, getRechargeSum} from "@/api/gameGm/rechargeLog";
 
 export default {
   name: "RechargeLog",

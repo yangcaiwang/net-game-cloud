@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import DataDict from '@/utils/dict'
-import { getDicts as getDicts } from '@/api/system/dict/data'
+import {getDicts as getDicts} from '@/api/system/dict/data'
 
 function install() {
   Vue.use(DataDict, {

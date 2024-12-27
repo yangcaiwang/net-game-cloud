@@ -57,7 +57,8 @@
 </template>
 
 <script>
-import { unallocatedUserList, authUserSelectAll } from "@/api/system/role";
+import {authUserSelectAll, unallocatedUserList} from "@/api/system/role";
+
 export default {
   dicts: ['sys_normal_disable'],
   props: {

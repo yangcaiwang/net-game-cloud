@@ -204,7 +204,7 @@
 </template>
 
 <script>
-import { listRecharge } from "@/api/gameGm/rechargeLog";
+import {listRecharge} from "@/api/gameGm/rechargeLog";
 
 export default {
   name: "RechargeLog",

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ycw.gm.admin.mapper.GangsMapper">
+
+    <resultMap type="Gangs" id="GangsResult">
+        <id     property="gangsId"          column="id"               />
+        <result property="gangsAdminId"     column="leader"             />
+		<result property="gangsName"        column="name"             />
+		<result property="level"            column="level"             />
+		<result property="notice"           column="notice"              />
+		<result property="active"           column="active"              />
+		<result property="weekActive"       column="week_active"             />
+		<result property="dailyActive"      column="daily_active"             />
+		<result property="positionMap"      column="position_map"             />
+		<result property="members"          column="members"             />
+		<result property="createTime"       column="first_create_time"             />
+	</resultMap>
+
+    <sql id="selectGangsVo">
+        select id,leader,name,level,notice,active,week_active,daily_active,position_map,members,first_create_time from legion
+    </sql>
+
+   <select id="selectGangsList" parameterType="Gangs" resultMap="GangsResult">
+   	<include refid="selectGangsVo"/>
+	   <where>
+		   <if test="gangsId != null and gangsId != 0">
+			   AND id = #{gangsId}
+		   </if>
+		   <if test="gangsName != null and gangsName != ''">
+			   AND name like concat('%', #{gangsName}, '%')
+		   </if>
+	   </where>
+   		order by id
+   </select>
+
+	<select id="selectGangsById" parameterType="Long" resultMap="GangsResult">
+		<include refid="selectGangsVo"/>
+		where id = #{gangsId}
+	</select>
+
+   <select id="selectAllGangs" resultMap="GangsResult">
+   	<include refid="selectGangsVo"/>
+   </select>
+
+</mapper>

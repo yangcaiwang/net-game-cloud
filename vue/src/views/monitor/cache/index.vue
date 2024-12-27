@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { getCache } from "@/api/monitor/cache";
+import {getCache} from "@/api/monitor/cache";
 import echarts from "echarts";
 
 export default {
