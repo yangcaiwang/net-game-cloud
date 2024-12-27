@@ -10,7 +10,6 @@
     </parent>
     <groupId>com.game.node</groupId>
     <artifactId>game-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>game-server</name>
     <description>game</description>
     <properties>

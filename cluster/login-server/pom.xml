@@ -10,7 +10,6 @@
     </parent>
     <groupId>com.gm</groupId>
     <artifactId>login-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>gm-server</name>
     <description>gm-server</description>
     <properties>

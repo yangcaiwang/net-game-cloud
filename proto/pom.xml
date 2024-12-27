@@ -9,12 +9,9 @@
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <artifactId>proto</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>proto</name>
     <packaging>jar</packaging>
-
     <properties>
         <java.version>1.8.0</java.version>
     </properties>

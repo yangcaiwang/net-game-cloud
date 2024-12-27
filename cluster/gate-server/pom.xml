@@ -10,7 +10,6 @@
     </parent>
     <groupId>com.gate.node</groupId>
     <artifactId>gate-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>gate-server</name>
     <description>gate</description>
     <properties>

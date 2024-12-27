@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>battle-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>battle-server</name>
     <packaging>jar</packaging>
     <properties>

@@ -10,7 +10,6 @@
     </parent>
     <groupId>com.chat.node</groupId>
     <artifactId>chat-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>chat-server</name>
     <description>chat</description>
     <properties>

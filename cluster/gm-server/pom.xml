@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>gm-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>gm-server</name>
     <packaging>jar</packaging>
     <properties>
