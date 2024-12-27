@@ -5,16 +5,21 @@
     <parent>
         <groupId>com.ycw</groupId>
         <artifactId>net-game-core</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>com.chat.node</groupId>
     <artifactId>chat-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>chat-server</name>
     <description>chat</description>
-    <url>http://maven.apache.org</url>
     <properties>
         <java.version>1.8.0</java.version>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.ycw</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

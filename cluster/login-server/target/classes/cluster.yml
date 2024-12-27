@@ -1,8 +1,0 @@
-cluster:
-  groupId: 1
-  weight: 100
-  serverId: "gm-1001"
-  host: "127.0.0.1"
-  port: 8002
-grpc:
-  port: 7002
