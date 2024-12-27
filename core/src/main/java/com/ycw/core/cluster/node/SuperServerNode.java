@@ -9,7 +9,7 @@ import com.ycw.core.cluster.enums.ServerType;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public interface ServerSuperNode {
+public interface SuperServerNode {
 
     ServerType serverType();
 

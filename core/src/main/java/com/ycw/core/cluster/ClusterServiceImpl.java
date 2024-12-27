@@ -3,11 +3,9 @@ package com.ycw.core.cluster;
 import com.ycw.core.cluster.constant.ClusterConstant;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.node.AbstractServerNode;
-import com.ycw.core.cluster.node.ServerSuperNode;
+import com.ycw.core.cluster.node.ServerNode;
 import com.ycw.core.internal.cache.redission.RedissonClient;
 import com.ycw.core.internal.loader.service.AbstractService;
-import com.ycw.core.internal.loader.service.ServiceContext;
 import org.apache.commons.collections4.MapUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
@@ -123,8 +121,8 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
         }
 
         // 开启grpc客户端
-        AbstractServerNode abstractServerNode = ServiceContext.getInstance().get(ServerSuperNode.class);
-        abstractServerNode.startGrpcClient();
+        ServerNode serverNode = ServerNode.getInstance();
+        serverNode.startGrpcClient();
     }
 
     @Override

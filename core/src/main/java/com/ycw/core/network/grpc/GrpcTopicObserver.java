@@ -1,6 +1,7 @@
 package com.ycw.core.network.grpc;
 
 import com.ycw.core.cluster.ClusterService;
+import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.internal.cache.redission.event.TopicEvent;
 import com.ycw.core.internal.cache.redission.event.TopicMessage;
 import com.ycw.core.internal.event.AbstractEventObserver;
@@ -18,7 +19,7 @@ public class GrpcTopicObserver extends AbstractEventObserver {
         TopicMessage message = event.message;
         if (message instanceof GrpcTopicMessage) {
             GrpcTopicMessage grpcTopicMsg = (GrpcTopicMessage) message;
-            ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
+            ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
             clusterService.startGateGrpcClient((grpcTopicMsg).getGateServerEntity());
         }
     }

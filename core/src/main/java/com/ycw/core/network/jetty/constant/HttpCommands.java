@@ -17,7 +17,7 @@ public interface HttpCommands {
     /**
      * 发送心跳包
      */
-    String HEARTBEAT = "/heartbeatCommand.do";
+    String HEARTBEAT = "/HeartbeatCommand.do";
     /**
      * 检测帐号是否存在
      */

@@ -1,10 +1,11 @@
 package com.ycw.core.internal.heart.jetty;
 
 import com.ycw.core.cluster.ClusterService;
-import com.ycw.core.cluster.entity.AddressInfo;
+import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.ServerState;
 import com.ycw.core.cluster.enums.ServerType;
+import com.ycw.core.cluster.node.ServerNode;
 import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
@@ -39,17 +40,16 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
     public void sent() {
         threadSender = new TimerActorThread("jettyHeartbeat-threadSender", heartbeatTime, () -> {
             try {
-                ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
+                ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
                 ServerEntity serverEntity = clusterService.getServerEntity(ServerType.GM_SERVER);
                 if (serverEntity == null) {
                     return;
                 }
 
-                AddressInfo jettyServerAddr = serverEntity.getJettyServerAddr();
                 Map<String, String> paramMap = new HashMap<>();
-                paramMap.put("serverId", serverEntity.getServerId());
-                StringBuffer url = new StringBuffer();
-                url.append(HttpCommands.HTTP_PREFIX).append(jettyServerAddr.getHost()).append(":").append(jettyServerAddr.getPort()).append(HttpCommands.HEARTBEAT);
+                paramMap.put("serverId", ServerNode.getInstance().getServerId());
+                StringBuilder url = new StringBuilder();
+                url.append(HttpCommands.HTTP_PREFIX).append(serverEntity.getJettyServerAddr().getAddress()).append(HttpCommands.HEARTBEAT);
                 HttpClient.getInstance().sendGet(url.toString(), paramMap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -66,7 +66,7 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
                         String serverId = entry.getKey();
                         long lastHeartbeatTime = entry.getValue();
                         // 心跳超时 改变服务器状态
-                        ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
+                        ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
                         ServerEntity serverEntity = clusterService.getServerEntity(serverId);
                         if (isTimeOut(lastHeartbeatTime)) {
                             serverEntity.setServerState(ServerState.ERROR);

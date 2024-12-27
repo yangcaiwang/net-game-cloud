@@ -43,7 +43,7 @@
         <io.grpc.version>1.51.0</io.grpc.version>
         <pb.java.format.version>1.4</pb.java.format.version>
         <hessian.version>4.0.66</hessian.version>
-        <groovy.version>3.0.11</groovy.version>
+        <groovy.version>3.0.20</groovy.version>
         <fastjson.version>1.2.83</fastjson.version>
         <guava.version>32.1.0-jre</guava.version>
         <cglib.version>3.3.0</cglib.version>

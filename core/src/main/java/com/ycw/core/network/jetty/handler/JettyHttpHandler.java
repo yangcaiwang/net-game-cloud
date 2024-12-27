@@ -1,7 +1,7 @@
 package com.ycw.core.network.jetty.handler;
 
 import com.ycw.core.internal.loader.service.ServiceContext;
-import com.ycw.core.network.jetty.command.HttpSuperCommand;
+import com.ycw.core.network.jetty.command.SuperHttpCommand;
 import com.ycw.core.network.jetty.http.HttpCode;
 import com.ycw.core.network.jetty.http.HttpSession;
 import org.eclipse.jetty.server.Request;
@@ -39,14 +39,15 @@ public class JettyHttpHandler extends AbstractHandler {
             Map<String, String> params = new HashMap<>();
             String action = "";
             if (url.contains("do")) {
-                String[] actions = url.split("[.]");
-                action = actions[0];
+                String[] arr = url.split("/");
+                String[] actions = arr[arr.length - 1].split("[.]");
+                action = actions[0].trim();
                 analyticalParameters(params, baseRequest, request);
             } else {
                 jettyParam(params, request);
             }
-            log.info("action:" + action);
-            HttpSuperCommand service = ServiceContext.getInstance().get(action);
+            log.debug("action:" + action);
+            SuperHttpCommand service = ServiceContext.getInstance().get(action);
             HttpSession httpSession = new HttpSession(request, response, action, params);
             if (service != null) {
                 service.running(httpSession);

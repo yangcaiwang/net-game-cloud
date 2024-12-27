@@ -1,6 +1,7 @@
 package com.ycw.core.cluster.node;
 
 import com.ycw.core.cluster.ClusterService;
+import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.AddressInfo;
 import com.ycw.core.cluster.entity.DataSourceInfo;
 import com.ycw.core.cluster.entity.ServerEntity;
@@ -32,9 +33,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServerNode extends AbstractServerNode {
 
     public static <T extends AbstractServerNode> T valueOf(ServerType serverType) {
-        ServerNode serverComponent = new ServerNode();
-        serverComponent.setServerType(serverType);
-        return (T) serverComponent;
+        serverNode = new ServerNode();
+        serverNode.setServerType(serverType);
+        return (T) serverNode;
+    }
+
+    private static ServerNode serverNode;
+
+    public static ServerNode getInstance() {
+        return serverNode;
     }
 
     @Override
@@ -64,7 +71,7 @@ public class ServerNode extends AbstractServerNode {
 
 
                 // 将服务器实体写入注册中心(redission)
-                ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
+                ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
                 clusterService.saveServerEntity(serverEntity);
                 log.info("======================= [{}] server registered [{}] =======================", getServerId(), serverEntity.toString());
             }
@@ -114,7 +121,7 @@ public class ServerNode extends AbstractServerNode {
     public void startGrpcClient() {
         if (Begin.getInstance(Begin.GRPC_CLI).isBegin(this.serverType)) {
             try {
-                ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
+                ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
                 ServerEntity serverEntity = clusterService.getServerEntity(getServerId());
                 if (serverEntity == null) {
                     return;
@@ -143,7 +150,7 @@ public class ServerNode extends AbstractServerNode {
                     log.info("======================= [{}] grpc server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), grpcYml.getPort());
 
                     // 发布开启grpc客户端话题事件
-                    ClusterService clusterService = ServiceContext.getInstance().get(ClusterService.class);
+                    ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
                     ServerEntity gateServerEntity = clusterService.getGateServerEntity(nodeYml.getGroupId());
                     if (gateServerEntity == null) {
                         return;

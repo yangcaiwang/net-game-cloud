@@ -2,7 +2,7 @@
 package com.ycw.core.internal.loader.service;
 
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.node.ServerSuperNode;
+import com.ycw.core.cluster.node.ServerNode;
 import com.ycw.core.internal.db.entity.DBEntity;
 import com.ycw.core.internal.db.entity.IRepository;
 import com.ycw.core.internal.db.entity.IdentityCreator;
@@ -41,8 +41,7 @@ public interface IService {
      * @return String
      */
     default String getServerKeyId() {
-        AbstractService abstractService = ServiceContext.getInstance().get(ServerSuperNode.class);
-        return abstractService.getServerKeyId();
+        return ServerNode.getInstance().getServerId();
     }
 
     /**

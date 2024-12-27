@@ -12,9 +12,9 @@ import org.apache.commons.lang3.StringUtils;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class HeartbeatCommand extends AbsHttpCommand {
+public class HeartbeatCommand extends BaseHttpCommand {
     @Override
-    protected boolean execute(HttpSession httpSession) {
+    public boolean execute(HttpSession httpSession) {
         String serverId = httpSession.getParameters().get("serverId");
         if (StringUtils.isNotEmpty(serverId)) {
             JettyHttpServer.getInstance().getJettyHeartbeatProcess().getHeartbeatMap().put(serverId, System.currentTimeMillis());

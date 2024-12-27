@@ -143,7 +143,7 @@ public class EventBusesImpl {
         long end = System.currentTimeMillis();
         long timeUsed = end - begin;
         if (timeUsed > ((ActorThreadPoolExecutor) executor).slowly) {
-            log.warn("SLOWLY: recv {}, used {} ms,observers={}", event, timeUsed, listeners.size());
+            log.warn("SLOWLY: rec {}, used {} ms,observers={}", event, timeUsed, listeners.size());
         }
         EventObjectPool.collectEventObj(event);
     }

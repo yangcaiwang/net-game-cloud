@@ -6,7 +6,6 @@ import com.ycw.core.cluster.template.ServerYmlTemplate;
 import com.ycw.core.internal.base.BaseConfigUtil;
 import com.ycw.core.internal.db.entity.Repositories;
 import com.ycw.core.internal.loader.Scanner;
-import com.ycw.core.internal.loader.service.AbstractService;
 import com.ycw.core.network.netty.message.MessageProcess;
 import com.ycw.core.util.PrintManager;
 import com.ycw.core.util.SystemUtils;
@@ -25,10 +24,11 @@ import java.io.Reader;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public abstract class AbstractServerNode extends AbstractService implements ServerSuperNode {
+public abstract class AbstractServerNode implements SuperServerNode {
 
     public static final Logger log = LoggerFactory.getLogger(AbstractServerNode.class);
     protected ServerYmlTemplate serverYmlTemplate;
+
     protected ServerType serverType;
 
     protected abstract void startRedission();
@@ -128,7 +128,7 @@ public abstract class AbstractServerNode extends AbstractService implements Serv
     /**
      * 获取服务器id
      */
-    protected String getServerId() {
+    public String getServerId() {
         return serverYmlTemplate.getNode() == null ? "" : serverYmlTemplate.getNode().getServerId();
     }
 
