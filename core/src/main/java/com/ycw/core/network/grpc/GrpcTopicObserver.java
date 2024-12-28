@@ -5,6 +5,7 @@ import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.internal.cache.redission.event.TopicEvent;
 import com.ycw.core.internal.cache.redission.event.TopicMessage;
 import com.ycw.core.internal.event.AbstractEventObserver;
+import com.ycw.core.internal.event.annotation.EventSubscriber;
 import com.ycw.core.internal.loader.service.ServiceContext;
 
 /**
@@ -15,7 +16,8 @@ import com.ycw.core.internal.loader.service.ServiceContext;
  * @version <1.0>
  */
 public class GrpcTopicObserver extends AbstractEventObserver {
-    private void grpcClientEvent(TopicEvent<? extends TopicMessage> event) {
+    @EventSubscriber
+    private void rec(TopicEvent<? extends TopicMessage> event) {
         TopicMessage message = event.message;
         if (message instanceof GrpcTopicMessage) {
             GrpcTopicMessage grpcTopicMsg = (GrpcTopicMessage) message;

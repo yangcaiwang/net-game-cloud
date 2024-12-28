@@ -1,13 +1,14 @@
 node:
-  groupId: 0
-  weight: 100
+  groupId: 1
   serverId: "login-1001"
+  serverName: ""
   host: "127.0.0.1"
+  weight: 100
   port: 6003
 jetty:
   port: 9003
-  httpMinThreads: 1
+  httpMinThreads: 5
   httpMaxThreads: 10
   idleTimeout: 100
-  heartbeatTime: 30000
-  heartbeatTimeout: 60000
+  heartbeatTime: 5000
+  heartbeatTimeout: 0

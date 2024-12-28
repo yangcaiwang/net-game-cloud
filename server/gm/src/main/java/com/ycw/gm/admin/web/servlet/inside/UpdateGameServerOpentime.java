@@ -28,8 +28,8 @@ public class UpdateGameServerOpentime extends InsideServlet {
 		String pid = map.containsKey("pid") ? castToString(map.get("pid")) : "-1";
 		long workTime = castToLong(map.get("workTime"));
 		int activeType = map.containsKey("active") ? (castToBoolean(map.get("active")) ? 1 : 0) : 2;
-
-		serverService.updateServersOpenTime(pid, sid, workTime, activeType);
+//
+//		serverService.updateServersOpenTime(pid, sid, workTime, activeType);
 
 		if (!"-1".equals(sid) && sid != null) {
 			List<GmServer> gsrvs = gsrvs(pid, sid);

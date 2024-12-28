@@ -57,8 +57,9 @@ public class ServerNode extends AbstractServerNode {
                 // 构建服务器实体对象
                 ServerEntity serverEntity = new ServerEntity.Builder()
                         .serverId(nodeYml.getServerId())
-                        .serverType(this.serverType())
-                        .serverState(ServerState.REGISTER)
+                        .serverName(nodeYml.getServerName())
+                        .serverType(this.serverType().getValue())
+                        .serverState(ServerState.NORMAL.state)
                         .groupId(nodeYml.getGroupId())
                         .weight(nodeYml.getWeight())
                         .serverAddr(AddressInfo.valueOf(nodeYml.getHost(), nodeYml.getPort()))
@@ -67,8 +68,9 @@ public class ServerNode extends AbstractServerNode {
                         .nettyServerAddr(nettyYml == null ? AddressInfo.valueOf() : AddressInfo.valueOf(nodeYml.getHost(), nettyYml.getPort()))
                         .dbGameSourceInfo(dbGameYml == null ? DataSourceInfo.valueOf() : DataSourceInfo.valueOf(dbGameYml.getUrl(), dbGameYml.getUsername(), dbGameYml.getPassword()))
                         .dbLogSourceInfo(dbLogYml == null ? DataSourceInfo.valueOf() : DataSourceInfo.valueOf(dbLogYml.getUrl(), dbLogYml.getUsername(), dbLogYml.getPassword()))
+                        .openTime(nodeYml.getOpenTime())
+                        .registerTime(System.currentTimeMillis())
                         .build();
-
 
                 // 将服务器实体写入注册中心(redission)
                 ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);

@@ -20,6 +20,11 @@ public class AddressInfo implements Serializable {
      */
     private int port;
 
+    /**
+     * 端口
+     */
+    private String address;
+
     public static AddressInfo valueOf() {
         return new AddressInfo();
     }
@@ -28,6 +33,7 @@ public class AddressInfo implements Serializable {
         AddressInfo addressInfo = new AddressInfo();
         addressInfo.setHost(host);
         addressInfo.setPort(port);
+        addressInfo.setAddress(host + ":" + port);
         return addressInfo;
     }
 
@@ -48,7 +54,11 @@ public class AddressInfo implements Serializable {
     }
 
     public String getAddress() {
-        return host + ":" + port;
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
@@ -56,6 +66,7 @@ public class AddressInfo implements Serializable {
         return "AddressInfo{" +
                 "host='" + host + '\'' +
                 ", port=" + port +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

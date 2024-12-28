@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 优点
  * 1.增加代码可读性和拓展性：如果需要添加新的属性，只需要在Builder类中添加相应的方法，而不需要修改构造函数
  * 2.不可变对象和线程安全：一旦创建后其状态（属性）就不能被改变的对象。由于不可变对象的状态不能改变，它们天然就是线程安全的，因为不存在并发修改状态的问题。
- * 3.只提供 serverType,serverState,grpcClientAddr的set方法
+ * 3.只提供 serverType,serverState,grpcClientAddr,openTime的set方法
  *
  * @author <yangcaiwang>
  * @version <1.0>
@@ -25,14 +25,19 @@ public class ServerEntity implements Serializable {
     private String serverId;
 
     /**
+     * 服务器名称
+     */
+    private String serverName;
+
+    /**
      * 服务器类型 {@link ServerType}
      */
-    private ServerType serverType;
+    private int serverType;
 
     /**
      * 服务器状态 {@link ServerState}
      */
-    private ServerState serverState;
+    private int serverState;
 
     /**
      * 组id
@@ -79,9 +84,20 @@ public class ServerEntity implements Serializable {
      */
     private AddressInfo nettyServerAddr;
 
+    /**
+     * 服务器开服时间
+     */
+    private long openTime;
+
+    /**
+     * 服务器注册时间
+     */
+    private long registerTime;
+
     // 私有构造函数，防止外部直接构造
     public ServerEntity(Builder builder) {
         this.serverId = builder.serverId;
+        this.serverName = builder.serverName;
         this.serverType = builder.serverType;
         this.serverState = builder.serverState;
         this.groupId = builder.groupId;
@@ -93,13 +109,16 @@ public class ServerEntity implements Serializable {
         this.grpcClientAddr = builder.grpcClientAddr;
         this.jettyServerAddr = builder.jettyServerAddr;
         this.nettyServerAddr = builder.nettyServerAddr;
+        this.openTime = builder.openTime;
+        this.registerTime = builder.registerTime;
     }
 
     // 建造者内部类
     public static class Builder {
         private String serverId;
-        private ServerType serverType;
-        private ServerState serverState;
+        private String serverName;
+        private int serverType;
+        private int serverState;
         private int groupId;
         private int weight;
         private AddressInfo serverAddr;
@@ -109,6 +128,8 @@ public class ServerEntity implements Serializable {
         private ConcurrentHashMap<String, AddressInfo> grpcClientAddr = new ConcurrentHashMap<>();
         private AddressInfo jettyServerAddr;
         private AddressInfo nettyServerAddr;
+        private long openTime;
+        private long registerTime;
 
         // 建造者类的构造函数
         public Builder() {
@@ -120,12 +141,17 @@ public class ServerEntity implements Serializable {
             return this;
         }
 
-        public Builder serverType(ServerType serverType) {
+        public Builder serverName(String serverName) {
+            this.serverName = serverName;
+            return this;
+        }
+
+        public Builder serverType(int serverType) {
             this.serverType = serverType;
             return this;
         }
 
-        public Builder serverState(ServerState serverState) {
+        public Builder serverState(int serverState) {
             this.serverState = serverState;
             return this;
         }
@@ -175,6 +201,16 @@ public class ServerEntity implements Serializable {
             return this;
         }
 
+        public Builder openTime(long openTime) {
+            this.openTime = openTime;
+            return this;
+        }
+
+        public Builder registerTime(long registerTime) {
+            this.registerTime = registerTime;
+            return this;
+        }
+
         public ServerEntity build() {
             return new ServerEntity(this);
         }
@@ -184,11 +220,15 @@ public class ServerEntity implements Serializable {
         return serverId;
     }
 
-    public ServerType getServerType() {
+    public String getServerName() {
+        return serverName;
+    }
+
+    public int getServerType() {
         return serverType;
     }
 
-    public ServerState getServerState() {
+    public int getServerState() {
         return serverState;
     }
 
@@ -228,11 +268,19 @@ public class ServerEntity implements Serializable {
         return nettyServerAddr;
     }
 
-    public void setServerType(ServerType serverType) {
+    public long getOpenTime() {
+        return openTime;
+    }
+
+    public long getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setServerType(int serverType) {
         this.serverType = serverType;
     }
 
-    public void setServerState(ServerState serverState) {
+    public void setServerState(int serverState) {
         this.serverState = serverState;
     }
 
@@ -240,10 +288,15 @@ public class ServerEntity implements Serializable {
         this.grpcClientAddr = grpcClientAddr;
     }
 
+    public void setOpenTime(long openTime) {
+        this.openTime = openTime;
+    }
+
     @Override
     public String toString() {
         return "ServerEntity{" +
                 "serverId='" + serverId + '\'' +
+                ", serverName='" + serverName + '\'' +
                 ", serverType=" + serverType +
                 ", serverState=" + serverState +
                 ", groupId=" + groupId +
@@ -255,6 +308,8 @@ public class ServerEntity implements Serializable {
                 ", grpcClientAddr=" + grpcClientAddr +
                 ", jettyServerAddr=" + jettyServerAddr +
                 ", nettyServerAddr=" + nettyServerAddr +
+                ", openTime=" + openTime +
+                ", registerTime=" + registerTime +
                 '}';
     }
 }

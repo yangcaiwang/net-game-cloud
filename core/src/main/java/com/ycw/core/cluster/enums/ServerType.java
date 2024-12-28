@@ -8,12 +8,12 @@ package com.ycw.core.cluster.enums;
  * @version <1.0>
  */
 public enum ServerType {
-    BATTLE_SERVER(1, "battle"),
+    GM_SERVER(1, "gm"),
     CHAT_SERVER(2, "chat"),
-    GAME_SERVER(3, "game"),
+    LOGIN_SERVER(3, "login"),
     GATE_SERVER(4, "gate"),
-    GM_SERVER(5, "gm"),
-    LOGIN_SERVER(6, "login"),
+    GAME_SERVER(5, "game"),
+    BATTLE_SERVER(6, "battle"),
     ;
 
     private final int value;

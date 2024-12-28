@@ -8,7 +8,7 @@ npm config set prefix "C:\Program Files\nodejs\node_global"
 npm config set cache "C:\Program Files\nodejs\node_cache"
 
 # 进入项目目录
-cd gamer-ui
+cd vue
 # 安装依赖(windows下一定以管理员模式运行cmd)
 npm install
 

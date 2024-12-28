@@ -38,51 +38,57 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
 
     @Override
     public void sent() {
-        threadSender = new TimerActorThread("jettyHeartbeat-threadSender", heartbeatTime, () -> {
-            try {
-                ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
-                ServerEntity serverEntity = clusterService.getServerEntity(ServerType.GM_SERVER);
-                if (serverEntity == null) {
-                    return;
-                }
+        if (heartbeatTime > 0) {
+            threadSender = new TimerActorThread("jettyHeartbeat-threadSender", heartbeatTime, () -> {
+                try {
+                    ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
+                    ServerEntity serverEntity = clusterService.getServerEntity(ServerType.GM_SERVER);
+                    if (serverEntity == null) {
+                        return;
+                    }
 
-                Map<String, String> paramMap = new HashMap<>();
-                paramMap.put("serverId", ServerNode.getInstance().getServerId());
-                StringBuilder url = new StringBuilder();
-                url.append(HttpCommands.HTTP_PREFIX).append(serverEntity.getJettyServerAddr().getAddress()).append(HttpCommands.HEARTBEAT);
-                HttpClient.getInstance().sendGet(url.toString(), paramMap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+                    if (serverEntity.getServerState() == ServerState.NORMAL.state) {
+                        Map<String, String> paramMap = new HashMap<>();
+                        paramMap.put("serverId", ServerNode.getInstance().getServerId());
+                        StringBuilder url = new StringBuilder();
+                        url.append(HttpCommands.HTTP_PREFIX).append(serverEntity.getJettyServerAddr().getAddress()).append(HttpCommands.HEARTBEAT);
+                        HttpClient.getInstance().sendGet(url.toString(), paramMap);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override
     public void monitor() {
-        threadMonitor = new TimerActorThread("jettyHeartbeat-threadSender", heartbeatTime, () -> {
-            try {
-                if (MapUtils.isNotEmpty(heartbeatMap)) {
-                    for (Map.Entry<String, Long> entry : heartbeatMap.entrySet()) {
-                        String serverId = entry.getKey();
-                        long lastHeartbeatTime = entry.getValue();
-                        // 心跳超时 改变服务器状态
-                        ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
-                        ServerEntity serverEntity = clusterService.getServerEntity(serverId);
-                        if (isTimeOut(lastHeartbeatTime)) {
-                            serverEntity.setServerState(ServerState.ERROR);
-                            clusterService.saveServerEntity(serverEntity);
-                        } else {
-                            if (serverEntity.getServerState() == ServerState.ERROR) {
-                                serverEntity.setServerState(ServerState.NORMAL);
+        if (heartbeatTimeout > 0) {
+            threadMonitor = new TimerActorThread("jettyHeartbeat-threadSender", heartbeatTimeout, () -> {
+                try {
+                    if (MapUtils.isNotEmpty(heartbeatMap)) {
+                        for (Map.Entry<String, Long> entry : heartbeatMap.entrySet()) {
+                            String serverId = entry.getKey();
+                            long lastHeartbeatTime = entry.getValue();
+                            // 心跳超时 改变服务器状态
+                            ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
+                            ServerEntity serverEntity = clusterService.getServerEntity(serverId);
+                            if (isTimeOut(lastHeartbeatTime)) {
+                                serverEntity.setServerState(ServerState.ERROR.state);
                                 clusterService.saveServerEntity(serverEntity);
+                            } else {
+                                if (serverEntity.getServerState() == ServerState.ERROR.state) {
+                                    serverEntity.setServerState(ServerState.NORMAL.state);
+                                    clusterService.saveServerEntity(serverEntity);
+                                }
                             }
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+            });
+        }
     }
 
     @Override

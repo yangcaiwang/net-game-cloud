@@ -201,32 +201,6 @@ public class HttpClient {
         }
     }
 
-    public HttpResponse sendJson(String urlString, String jsonData, Map<String, String> propertys) throws IOException {
-        HttpURLConnection urlConnection = null;
-        URL url = new URL(urlString);
-        urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestMethod("POST");
-        urlConnection.setDoOutput(true);
-        urlConnection.setDoInput(true);
-        urlConnection.setUseCaches(false);
-        // 连接超时 设置为1秒
-        urlConnection.setConnectTimeout(3000);
-        // 读取超时 10秒
-        urlConnection.setReadTimeout(10000);
-        // 设置请求头
-        urlConnection.setRequestProperty("Content-Type", "application/json");
-        if (propertys != null) {// 设置请求头
-            for (String key : propertys.keySet()) {
-                urlConnection.setRequestProperty(key, propertys.get(key));
-            }
-        }
-        // 设置请求的参数
-        urlConnection.getOutputStream().write(jsonData.getBytes("UTF-8"));// utf-8编码
-        urlConnection.getOutputStream().flush();
-        urlConnection.getOutputStream().close();
-        return this.makeContent(urlString, urlConnection);
-    }
-
     public class HttpResponse {
         String urlString;
 

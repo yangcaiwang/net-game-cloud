@@ -11,8 +11,6 @@ import java.util.Map;
  * @version <1.0>
  */
 public enum ServerState {
-
-    REGISTER(0, false), //已进入注册中心
     WHITE(1, false), //白名单可设置进入
     NEW(2, true), //新服
     HOT(3, true), //火爆
@@ -20,8 +18,8 @@ public enum ServerState {
     FREE(5, true), //空闲
     GRAY(6, false), //灰度
     MAINTAIN(7, true), //维护中
-    NORMAL(8, true), //正常
-    ERROR(9, true),//掉线
+    NORMAL(8, true), // 正常
+    ERROR(9, true),// 异常
     ;
 
     public final int state;

@@ -1,17 +1,20 @@
 node:
   groupId: 1
-  weight: 100
   serverId: "gate-1001"
+  serverName: ""
+  weight: 100
   host: "127.0.0.1"
   port: 6000
 netty:
   port: 7000
   heartbeatTime: 5000
   heartbeatTimeout: 30000
+grpc:
+  heartbeatTime: 10000
+  heartbeatTimeout: 30000
 jetty:
-  port: 9000
-  httpMinThreads: 1
+  port: 9001
+  httpMinThreads: 5
   httpMaxThreads: 10
   idleTimeout: 100
-  heartbeatTime: 30000
-  heartbeatTimeout: 60000
+  heartbeatTime: 5000

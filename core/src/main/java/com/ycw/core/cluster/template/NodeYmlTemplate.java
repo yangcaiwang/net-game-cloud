@@ -14,6 +14,11 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
     private String serverId;
 
     /**
+     * 服务器名称
+     */
+    private String serverName;
+
+    /**
      * 组id
      */
     private int groupId;
@@ -23,12 +28,25 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
      */
     private int weight;
 
+    /**
+     * 开服时间
+     */
+    private long openTime;
+
     public String getServerId() {
         return serverId;
     }
 
     public void setServerId(String serverId) {
         this.serverId = serverId;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
     public int getGroupId() {
@@ -45,5 +63,13 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public long getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(long openTime) {
+        this.openTime = openTime;
     }
 }

@@ -19,7 +19,6 @@ import java.util.Map;
  * @version <1.0>
  */
 public class NettyHeartbeatProcess implements HeartbeatProcess {
-
     private long heartbeatTime;
     private long heartbeatTimeout;
     private TimerActorThread threadSender;
@@ -32,30 +31,34 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
 
     @Override
     public void sent() {
-        threadSender = new TimerActorThread("nettyHeartbeat-threadSender", heartbeatTime, () -> {
-            Map<Long, Channel> channelMap = MessageProcess.getInstance().getChannelMap();
-            if (MapUtils.isNotEmpty(channelMap)) {
-                for (Channel channel : channelMap.values()) {
-                    MessageProcess.getInstance().sent(channel, CommonProto.msg.newBuilder().setCmd(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE).build());
+        if (heartbeatTime > 0) {
+            threadSender = new TimerActorThread("nettyHeartbeat-threadSender", heartbeatTime, () -> {
+                Map<Long, Channel> channelMap = MessageProcess.getInstance().getChannelMap();
+                if (MapUtils.isNotEmpty(channelMap)) {
+                    for (Channel channel : channelMap.values()) {
+                        MessageProcess.getInstance().sent(channel, CommonProto.msg.newBuilder().setCmd(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE).build());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
     public void monitor() {
-        threadMonitor = new TimerActorThread("nettyHeartbeat-threadMonitor", heartbeatTime, () -> {
-            MessageProcess messageProcess = MessageProcess.getInstance();
-            Map<Long, Channel> channelMap = messageProcess.getChannelMap();
-            if (MapUtils.isNotEmpty(channelMap)) {
-                for (Channel channel : channelMap.values()) {
-                    long lastHeartBeatTime = messageProcess.getAttr(channel, MessageProcess.HEART_BEAT);
-                    if (isTimeOut(lastHeartBeatTime)) {
-                        MessageProcess.getInstance().kitOut(channel, IClient.OfflineCause.HEARTBEAT_TIMEOUT);
+        if (heartbeatTimeout > 0){
+            threadMonitor = new TimerActorThread("nettyHeartbeat-threadMonitor", heartbeatTimeout, () -> {
+                MessageProcess messageProcess = MessageProcess.getInstance();
+                Map<Long, Channel> channelMap = messageProcess.getChannelMap();
+                if (MapUtils.isNotEmpty(channelMap)) {
+                    for (Channel channel : channelMap.values()) {
+                        long lastHeartBeatTime = messageProcess.getAttr(channel, MessageProcess.HEART_BEAT);
+                        if (isTimeOut(lastHeartBeatTime)) {
+                            MessageProcess.getInstance().kitOut(channel, IClient.OfflineCause.HEARTBEAT_TIMEOUT);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

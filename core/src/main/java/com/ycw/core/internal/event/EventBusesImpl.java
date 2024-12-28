@@ -3,7 +3,6 @@ package com.ycw.core.internal.event;
 
 import com.google.common.collect.Maps;
 import com.ycw.core.internal.event.annotation.EventSubscriber;
-import com.ycw.core.internal.script.Scripts;
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
 import com.ycw.core.util.AnnotationUtil;
@@ -93,20 +92,20 @@ public class EventBusesImpl {
      */
     <T extends AbstractEventObserver, E extends AbstractEvent> void register(T observer) {
 
-        boolean isScript = Scripts.isScript(observer);
-        if (isScript)
-            log.info("add event observer  [{}] of script", observer);
+//        boolean isScript = Scripts.isScript(observer);
+//        if (isScript)
+        log.info("add event observer  [{}] of script", observer);
         Map<Class<E>, Method> methods = methods(observer);
         for (Entry<Class<E>, Method> entry : methods.entrySet()) {
             Class<E> eventClazz = entry.getKey();
             Method method = entry.getValue();
             Map<Method, AbstractEventObserver> listeners = events.computeIfAbsent(eventClazz, v -> Maps.newConcurrentMap());
-            if (isScript) {
-                listeners.forEach((m, o) -> {
-                    if (m.toGenericString().equals(method.toGenericString()))
-                        log.warn("script observer[{}.{}] replace old observer[{}.{}] = [{}]", observer.getClass().getName(), method.getName(), o.getClass().getName(), m.getName(), listeners.remove(m, o));
-                });
-            }
+//            if (isScript) {
+            listeners.forEach((m, o) -> {
+                if (m.toGenericString().equals(method.toGenericString()))
+                    log.warn("script observer[{}.{}] replace old observer[{}.{}] = [{}]", observer.getClass().getName(), method.getName(), o.getClass().getName(), m.getName(), listeners.remove(m, o));
+            });
+//            }
             listeners.putIfAbsent(method, observer);
             log.debug("注册事件消费者:subscriber=" + method + "observer=" + observer + ",event=" + eventClazz);
         }

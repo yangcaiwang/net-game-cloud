@@ -3,7 +3,6 @@ package com.ycw.gm.admin.web.controller.activity;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ycw.gm.admin.domain.ActivityOpen;
-import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.service.IActivityOpenService;
 import com.ycw.gm.admin.service.IServerService;
 import com.ycw.gm.common.annotation.Log;
@@ -11,10 +10,8 @@ import com.ycw.gm.common.core.controller.BaseController;
 import com.ycw.gm.common.core.domain.AjaxResult;
 import com.ycw.gm.common.core.page.TableDataInfo;
 import com.ycw.gm.common.enums.BusinessType;
-import com.ycw.gm.common.utils.ParamParseUtils;
 import com.ycw.gm.common.utils.StringUtils;
 import com.ycw.gm.common.utils.poi.ExcelUtil;
-import com.ycw.gm.framework.manager.AsyncManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 /**
@@ -183,35 +179,35 @@ public class ActivityOpenController extends BaseController
             jsonObject.put("forceEnd", 1);
         }
 
-        List<GmServer> list1 = null;
-        if (activityOpen1.getServerId() == null || "-1".equals(activityOpen1.getServerId())) {
-            list1 = serverService.selectServerAll();
-        } else {
-            String[] split = activityOpen1.getServerId().split(",");
-
-            Long[] list = Arrays.stream(split).map(Long::parseLong).toArray(Long[]::new);
-            list1 = serverService.selectServerByIds(list);
-        }
-
-        for (GmServer gmServer : list1) {
-            if (gmServer.getInPort() <= 0) {
-                continue;
-            }
-            String url = ParamParseUtils.makeURL(gmServer.getInHost(), gmServer.getInPort(), "script");
-            AsyncManager.me().execute(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        String result = ParamParseUtils.sendSyncTokenPost(url, jsonObject);
-                        if (!StringUtils.isEmpty(result)) {
-                            logger.error(result);
-                        }
-                    } catch (Exception e) {
-                        logger.error(e.toString());
-                    }
-                }
-            });
-        }
+//        List<ServerEntity> list1 = null;
+//        if (activityOpen1.getServerId() == null || "-1".equals(activityOpen1.getServerId())) {
+//            list1 = serverService.selectServerAll();
+//        } else {
+//            String[] split = activityOpen1.getServerId().split(",");
+//
+//            Long[] list = Arrays.stream(split).map(Long::parseLong).toArray(Long[]::new);
+//            list1 = serverService.selectServerByIds(list);
+//        }
+//
+//        for (GmServer gmServer : list1) {
+//            if (gmServer.getInPort() <= 0) {
+//                continue;
+//            }
+//            String url = ParamParseUtils.makeURL(gmServer.getInHost(), gmServer.getInPort(), "script");
+//            AsyncManager.me().execute(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        String result = ParamParseUtils.sendSyncTokenPost(url, jsonObject);
+//                        if (!StringUtils.isEmpty(result)) {
+//                            logger.error(result);
+//                        }
+//                    } catch (Exception e) {
+//                        logger.error(e.toString());
+//                    }
+//                }
+//            });
+//        }
 
         activityOpen.setUpdateBy(getUsername());
         return toAjax(activityOpenService.updateActivityOpen(activityOpen));

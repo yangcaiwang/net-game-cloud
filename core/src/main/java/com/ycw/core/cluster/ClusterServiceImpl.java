@@ -13,8 +13,7 @@ import org.redisson.api.RReadWriteLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <集群操作分布式缓存实现类>
@@ -26,6 +25,18 @@ import java.util.Map;
  */
 public class ClusterServiceImpl extends AbstractService implements ClusterService {
     public static final Logger log = LoggerFactory.getLogger(ClusterServiceImpl.class);
+
+    @Override
+    public List<ServerEntity> selectAllServerEntity() {
+        List<ServerEntity> serverEntityList = new ArrayList<>();
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        for (Map<String, ServerEntity> serverEntityMap : groupMap.values()) {
+            serverEntityList.addAll(serverEntityMap.values());
+        }
+
+        serverEntityList.sort(Comparator.comparing(ServerEntity::getGroupId).thenComparing(ServerEntity::getServerType));
+        return serverEntityList;
+    }
 
     @Override
     public void saveServerEntity(ServerEntity serverEntity) {
@@ -69,7 +80,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
         Map<String, ServerEntity> serverEntityMap = groupMap.get(0);
         if (MapUtils.isNotEmpty(serverEntityMap)) {
             for (ServerEntity serverEntity : serverEntityMap.values()) {
-                if (serverEntity.getServerType() == serverType) {
+                if (serverEntity.getServerType() == serverType.getValue()) {
                     return serverEntity;
                 }
             }
@@ -92,7 +103,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
 
         return serverEntityMap.values()
                 .stream()
-                .filter(serverEntity -> serverEntity.getServerType() == ServerType.GATE_SERVER)
+                .filter(serverEntity -> serverEntity.getServerType() == ServerType.GATE_SERVER.getValue())
                 .findFirst()
                 .orElse(null);
     }

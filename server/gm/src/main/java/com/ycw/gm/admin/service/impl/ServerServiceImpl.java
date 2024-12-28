@@ -1,22 +1,17 @@
 package com.ycw.gm.admin.service.impl;
 
-import cn.hutool.core.util.NumberUtil;
-import com.ycw.core.cluster.enums.ServerState;
+import com.ycw.core.cluster.ClusterService;
+import com.ycw.core.cluster.ClusterServiceImpl;
+import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.gm.admin.domain.GmPlatform;
+import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.gm.admin.domain.GmServer;
-import com.ycw.gm.admin.mapper.GmPlatformMapper;
 import com.ycw.gm.admin.mapper.GmServerMapper;
 import com.ycw.gm.admin.service.IServerService;
 import com.ycw.gm.common.constant.Constants;
-import com.ycw.gm.common.constant.UserConstants;
 import com.ycw.gm.common.core.redis.RedisCache;
-import com.ycw.gm.common.exception.ServiceException;
 import com.ycw.gm.common.utils.ExecuteShellUtil;
 import com.ycw.gm.common.utils.ParamParseUtils;
-import com.ycw.gm.common.utils.StringUtils;
-import com.ycw.gm.common.utils.bean.BeanValidators;
-import com.ycw.gm.common.utils.spring.SpringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Validator;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * 服务器 业务层处理
@@ -43,10 +40,6 @@ public class ServerServiceImpl implements IServerService {
     private GmServerMapper serverMapper;
 
     @Autowired
-    private GmPlatformMapper gmPlatformMapper;
-
-
-    @Autowired
     private RedisCache redisCache;
 
     @Autowired
@@ -58,24 +51,14 @@ public class ServerServiceImpl implements IServerService {
     private ScheduledFuture<?> scheduledFuture;
 
     /**
-     * 根据条件分页查询服务器数据
-     *
-     * @param server 服务器信息
-     * @return 服务器数据集合信息
-     */
-    @Override
-    public List<GmServer> selectServerList(GmServer server) {
-        return serverMapper.selectServerList(server);
-    }
-
-    /**
      * 查询所有服务器
      *
      * @return 服务器列表
      */
     @Override
-    public List<GmServer> selectServerAll() {
-        return SpringUtils.getAopProxy(this).selectServerList(new GmServer());
+    public List<ServerEntity> selectServerAll() {
+        ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
+        return clusterService.selectAllServerEntity();
     }
 
     /**
@@ -90,13 +73,13 @@ public class ServerServiceImpl implements IServerService {
     }
 
     @Override
-    public GmServer selectServerByServerIdAndPid(int platformId, int sid) {
-        String s = genServerKey(String.valueOf(platformId), String.valueOf(sid));
-        return selectServerById(Long.parseLong(s));
+    public List<GmServer> selectServerByIds(Long[] sids) {
+        return serverMapper.selectServerByIds(sids);
     }
 
-    private String getServerRedisKey(String pid, String serverId) {
-        return getServerRedisKey(genServerKey(pid, serverId));
+    @Override
+    public long countServer() {
+        return serverMapper.countServer();
     }
 
     private String genServerKey(String pid, String serverId) {
@@ -105,22 +88,6 @@ public class ServerServiceImpl implements IServerService {
 
     private String getServerRedisKey(String sid) {
         return Constants.SERVER_INFO + sid;
-    }
-
-    /**
-     * 新增保存服务器信息
-     *
-     * @param server 服务器信息
-     * @return 结果
-     */
-    @Override
-    @Transactional
-    public int insertServer(GmServer server) {
-        String s = genServerKey(String.valueOf(server.getPlatformId()), String.valueOf(server.getServerId()));
-        server.setServerKeyId(Long.parseLong(s));
-        updateRedisServer(server);
-        // 新增服务器信息
-        return serverMapper.insertServer(server);
     }
 
     /**
@@ -235,77 +202,6 @@ public class ServerServiceImpl implements IServerService {
         return serverMapper.deleteServerById(sid);
     }
 
-    /**
-     * 批量删除服务器信息
-     *
-     * @param sids 需要删除的服务器ID
-     * @return 结果
-     */
-    @Override
-    @Transactional
-    public int deleteServerByIds(Long[] sids) {
-        for (long sid : sids) {
-            GmServer server = serverMapper.selectServerById(sid);
-            if (server != null) {
-                redisCache.deleteObject(getServerRedisKey(String.valueOf(sid)));
-            }
-        }
-        return serverMapper.deleteServerByIds(sids);
-    }
-
-    @Override
-    public List<GmServer> selectServerByIds(Long[] sids) {
-        return serverMapper.selectServerByIds(sids);
-    }
-
-    @Override
-    public String checkServerUnique(GmServer server) {
-        Long roleId = StringUtils.isNull(server.getServerId()) ? -1L : server.getServerId();
-        GmServer info = serverMapper.selectServerById(server.getServerId());
-        if (StringUtils.isNotNull(info) && info.getServerId().longValue() != roleId.longValue()) {
-            return UserConstants.NOT_UNIQUE;
-        }
-        return UserConstants.UNIQUE;
-    }
-
-    @Override
-    public List<GmServer> getServerByIdField(int pid, int minSid, int maxSid) {
-        List<GmServer> list = new ArrayList<>();
-        Collection<String> keys = redisCache.keys(Constants.SERVER_INFO + "*");
-
-        for (String key : keys) {
-            GmServer cacheObject = redisCache.getCacheObject(key);
-            if (cacheObject != null && cacheObject.getPlatformId() == pid && cacheObject.getServerId() != null && cacheObject.getServerId() >= minSid && cacheObject.getServerId() <= maxSid) {
-                list.add(cacheObject);
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public GmServer getServerByIdFromRedis(int platformId, int serverId) {
-        String serverRedisKey = getServerRedisKey(String.valueOf(platformId), String.valueOf(serverId));
-        return redisCache.getCacheObject(serverRedisKey);
-    }
-
-    @Override
-    public int getVersionType(String version, int def) {
-        Map<String, Integer> cacheMap = redisCache.getCacheMap(Constants.VERSION_INFO);
-        return cacheMap.getOrDefault(version, def);
-    }
-
-    @Override
-    public void addVersion(String version, int versionType) {
-        Map<String, Integer> cacheMap = redisCache.getCacheMap(Constants.VERSION_INFO);
-        cacheMap.put(version, versionType);
-    }
-
-    @Override
-    public void delVersion(String version) {
-        Map<String, Integer> cacheMap = redisCache.getCacheMap(Constants.VERSION_INFO);
-        cacheMap.remove(version);
-    }
-
     @Override
     public boolean serverOpenByTime(GmServer server, int openType, boolean create) {
         String key = Constants.SERVER_OPEN_BY_TIME + server.getServerKeyId();
@@ -385,11 +281,11 @@ public class ServerServiceImpl implements IServerService {
     }
 
     private void changeStatus() {
-        List<GmServer> list = selectServerList(new GmServer());
-        for (GmServer gsrv : list) {
-            if (Integer.parseInt(gsrv.getServerStatus()) == 1) {
+        List<ServerEntity> list = selectServerAll();
+        for (ServerEntity serverEntity : list) {
+            if (serverEntity.getServerState() == 1) {
                 GmServer tmpServer = new GmServer();
-                tmpServer.setServerKeyId(gsrv.getServerKeyId());
+//                tmpServer.setServerKeyId(serverEntity.getServerKeyId());
                 tmpServer.setServerStatus(String.valueOf(2));
                 updateServerStatus(tmpServer);
             }
@@ -429,11 +325,6 @@ public class ServerServiceImpl implements IServerService {
     }
 
     @Override
-    public long countServer() {
-        return serverMapper.countServer();
-    }
-
-    @Override
     public String executeShell(String host, String... cmd) {
         try {
             return ExecuteShellUtil.execCmd(host, PropertyConfig.getString("inner.password", "123456"), cmd);
@@ -441,149 +332,5 @@ public class ServerServiceImpl implements IServerService {
             logger.error(e.getMessage(), e);
         }
         return null;
-    }
-
-    @Override
-    public List<GmServer> gsrvs(String pid, String sid) {
-        List<GmServer> gsrvs = new ArrayList<>();
-        if (sid.length() == 8 && NumberUtil.isNumber(sid)) {
-            gsrvs.add(selectServerById(Long.parseLong(sid)));
-            return gsrvs;
-        }
-        gsrvs.addAll(selectServerAll());
-        if (!pid.equals("-1")) {
-            String[] pids = pid.split("\\|");
-            if (pids.length > 0) {
-                List<Long> pList = new ArrayList<>();
-                Map<String, Object> options = new HashMap<>();
-                for (String platformId : pids) {
-                    pList.add(Long.parseLong(platformId));
-                }
-                gsrvs = gsrvs.stream().filter(v -> pList.contains(v.getPlatformId())).collect(Collectors.toList());
-            }
-        }
-        if (!sid.equals("-1")) {
-            String[] sids = sid.split("\\|");
-            if (sids.length > 0) {
-                for (String s : sids) {
-                    gsrvs.removeIf(v -> v.getServerId() != Integer.parseInt(s));
-                }
-            }
-        }
-        return gsrvs;
-    }
-
-    @Override
-    public void updateServersStatus(String pid, ServerState state, List<GmServer> servers, boolean newToHot) {
-        boolean isNew = state == ServerState.NEW;
-        if (isNew && newToHot) {
-            GmPlatform gmPlatform = null;
-            if (!servers.isEmpty()) {
-                GmServer server = servers.get(0);
-                if (server != null) {
-                    pid = String.valueOf(server.getPlatformId());
-                    gmPlatform = gmPlatformMapper.selectPlatformById(server.getPlatformId());
-                }
-            }
-
-            List<GmServer> gsrvs1 = gsrvs(pid, "-1");
-            for (GmServer gsrv : gsrvs1) {
-                if (Integer.parseInt(gsrv.getServerStatus()) == ServerState.NEW.state) {
-                    GmServer tmpServer = new GmServer();
-                    tmpServer.setServerKeyId(gsrv.getServerKeyId());
-                    tmpServer.setServerStatus(String.valueOf(ServerState.HOT.state));
-
-                    if (gmPlatform != null && Integer.valueOf(1).equals(gmPlatform.getAutoRegisterSwitch()) && !Strings.isEmpty(gsrv.getInHost())) {
-                        tmpServer.setRegisterSwitch(1);
-                        String url = ParamParseUtils.makeURL(gsrv.getInHost(), gsrv.getInPort(), "script");
-                        try {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("cmd", "ModifySysConfig");
-                            map.put("onlyOnce", "false");
-                            map.put("registerSwitch", tmpServer.getRegisterSwitch() == 0);
-                            ParamParseUtils.sendSyncTokenPost(url, map);
-                        } catch (Exception e) {
-                            logger.error(e.getMessage(), e);
-                        }
-                    }
-                    updateServerStatus(tmpServer);
-                }
-            }
-        }
-        for (GmServer gsrv : servers) {
-            GmServer tmpServer = new GmServer();
-            tmpServer.setServerKeyId(gsrv.getServerKeyId());
-            tmpServer.setServerStatus(String.valueOf(state.state));
-            if (isNew) {
-                tmpServer.setShowOut("1");
-                updateGameServerOpenTime(gsrv, gsrv.getOpenTime().getTime(), true);
-            }
-            updateServerStatus(tmpServer);
-        }
-    }
-
-    @Override
-    public void updateServersOpenTime(String pid, String sid, long openTime, int activeType) {
-        Date date = new Date();
-        if (String.valueOf(openTime).length() == 10) {
-            openTime = openTime * 1000;
-        }
-        date.setTime(openTime);
-        List<GmServer> gsrvs = gsrvs(pid, sid);
-        for (GmServer gsrv : gsrvs) {
-            GmServer tmpServer = new GmServer();
-            tmpServer.setServerKeyId(gsrv.getServerKeyId());
-            tmpServer.setOpenTime(date);
-            if (activeType <= 1) {
-                tmpServer.setRunStatus(String.valueOf(activeType));
-            }
-            updateServer(tmpServer);
-        }
-    }
-
-    @Override
-    public String importServer(List<GmServer> serverList, Boolean isUpdateSupport, String operName) {
-        if (StringUtils.isNull(serverList) || serverList.size() == 0) {
-            throw new ServiceException("导入用户数据不能为空！");
-        }
-        int successNum = 0;
-        int failureNum = 0;
-        StringBuilder successMsg = new StringBuilder();
-        StringBuilder failureMsg = new StringBuilder();
-        for (GmServer server : serverList) {
-            try {
-                // 验证是否存在这个用户
-                GmServer s = serverMapper.selectServerById(server.getServerKeyId());
-                if (StringUtils.isNull(s)) {
-                    BeanValidators.validateWithException(validator, server);
-                    server.setCreateBy(operName);
-                    this.insertServer(server);
-                    successNum++;
-                    successMsg.append("<br/>" + successNum + "、服务器： " + server.getServerName() + " 导入成功");
-                } else if (isUpdateSupport) {
-                    BeanValidators.validateWithException(validator, server);
-                    server.setUpdateBy(operName);
-                    this.updateServer(server);
-                    String serverName = StringUtils.isEmpty(server.getServerName()) ? s.getServerName() : server.getServerName();
-                    successNum++;
-                    successMsg.append("<br/>" + successNum + "、服务器 " + serverName + " 更新成功");
-                } else {
-                    failureNum++;
-                    failureMsg.append("<br/>" + failureNum + "、服务器 " + server.getServerName() + " 已存在");
-                }
-            } catch (Exception e) {
-                failureNum++;
-                String msg = "<br/>" + failureNum + "、服务器 " + server.getServerName() + " 导入失败：";
-                failureMsg.append(msg + e.getMessage());
-                logger.error(msg, e);
-            }
-        }
-        if (failureNum > 0) {
-            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new ServiceException(failureMsg.toString());
-        } else {
-            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
-        }
-        return successMsg.toString();
     }
 }

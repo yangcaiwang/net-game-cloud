@@ -18,6 +18,7 @@ public class HeartbeatCommand extends BaseHttpCommand {
         String serverId = httpSession.getParameters().get("serverId");
         if (StringUtils.isNotEmpty(serverId)) {
             JettyHttpServer.getInstance().getJettyHeartbeatProcess().getHeartbeatMap().put(serverId, System.currentTimeMillis());
+            httpSession.sendHttpResponseSuccess();
             return true;
         }
 

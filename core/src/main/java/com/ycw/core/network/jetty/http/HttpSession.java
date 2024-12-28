@@ -51,6 +51,20 @@ public class HttpSession {
             e.printStackTrace();
         }
     }
+    public void sendHttpResponseSuccess() {
+        try {
+            StringBuffer sb = new StringBuffer();
+            sb.append("{\"code\":");
+            sb.append(HttpCode.SUCCESS.getIndex() + ",");
+            sb.append("\"message\":");
+            sb.append("\"" + URLEncoder.encode(HttpCode.SUCCESS.getName(), "utf-8") + "\"}");
+            String s = sb.toString();
+            response.getWriter().write(s);
+            response.getWriter().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void sendHttpResponse(String message) {
         StringBuffer sb = new StringBuffer();

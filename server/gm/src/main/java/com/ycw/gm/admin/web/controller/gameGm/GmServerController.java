@@ -1,30 +1,28 @@
 package com.ycw.gm.admin.web.controller.gameGm;
 
-import com.ycw.core.cluster.enums.ServerState;
+import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.property.PropertyConfig;
 import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.service.IServerService;
 import com.ycw.gm.common.annotation.Log;
-import com.ycw.gm.common.constant.UserConstants;
 import com.ycw.gm.common.core.controller.BaseController;
 import com.ycw.gm.common.core.domain.AjaxResult;
 import com.ycw.gm.common.core.page.TableDataInfo;
 import com.ycw.gm.common.enums.BusinessType;
 import com.ycw.gm.common.utils.ParamParseUtils;
 import com.ycw.gm.common.utils.StringUtils;
-import com.ycw.gm.common.utils.poi.ExcelUtil;
 import com.ycw.gm.framework.datasource.DatabaseSourceKeyConst;
 import com.ycw.gm.framework.datasource.DynamicDataSource;
-import com.ycw.gm.framework.manager.AsyncManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 平台信息
@@ -41,59 +39,23 @@ public class GmServerController extends BaseController
     @Autowired
     private DynamicDataSource dataSource;
 
+    /**
+     * 查询服务器列表
+     */
     @PreAuthorize("@ss.hasPermi('gm:server:list')")
     @GetMapping("/list")
-    public TableDataInfo list(GmServer server)
+    public TableDataInfo list()
     {
         startPage();
-        List<GmServer> list = serverService.selectServerList(server);
+        List<ServerEntity> list = serverService.selectServerAll();
         return getDataTable(list);
     }
 
     @GetMapping("/all")
     public TableDataInfo getAll()
     {
-        List<GmServer> list = serverService.selectServerAll();
+        List<ServerEntity> list = serverService.selectServerAll();
         return getDataTable(list);
-    }
-
-    /**
-     * 根据服务器编号获取详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('gm:server:query')")
-    @GetMapping(value = "/{serverKeyId}")
-    public AjaxResult getInfo(@PathVariable Long serverKeyId)
-    {
-        return AjaxResult.success(serverService.selectServerById(serverKeyId));
-    }
-
-    @Log(title = "服务器管理", businessType = BusinessType.EXPORT)
-    @PreAuthorize("@ss.hasPermi('gm:server:export')")
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, GmServer server)
-    {
-        List<GmServer> list = serverService.selectServerList(server);
-        ExcelUtil<GmServer> util = new ExcelUtil<GmServer>(GmServer.class);
-        util.exportExcel(response, list, "服务器数据");
-    }
-
-    /**
-     * 新增服务器
-     */
-    @PreAuthorize("@ss.hasPermi('gm:server:add')")
-    @Log(title = "服务器管理", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@Validated @RequestBody GmServer server)
-    {
-        if (UserConstants.NOT_UNIQUE.equals(serverService.checkServerUnique(server)))
-        {
-            return AjaxResult.error("新增平台'" + server.getServerId() + "'失败，平台编号已存在");
-        }
-//        String serverKeyId = String.format("%d%d", server.getPlatformId(), server.getServerId());
-        server.setCreateBy(getUsername());
-//        server.setServerKeyId(Long.parseLong(serverKeyId));
-        return toAjax(serverService.insertServer(server));
-
     }
 
     /**
@@ -135,62 +97,6 @@ public class GmServerController extends BaseController
         return toAjax(serverService.updateServerStatus(server));
     }
 
-    /**
-     * 状态修改
-     */
-    @PreAuthorize("@ss.hasPermi('gm:server:edit')")
-    @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
-    @PutMapping("/changeAllServerStatus")
-    public AjaxResult changeAllServerStatus(@RequestBody GmServer server)
-    {
-        if (server.getServerStatus() == null) {
-            return AjaxResult.error("status not found value");
-        }
-        int state = Integer.parseInt(server.getServerStatus());
-        Long platformId = server.getPlatformId();
-        List<GmServer> list = serverService.selectServerAll();
-        boolean find = false;
-        for (GmServer gs : list) {
-            if (platformId != null && !platformId.equals(gs.getPlatformId())) {
-                continue;
-            }
-            if (gs.getServerStatus() != null) {
-                GmServer tmp = new GmServer();
-                tmp.setServerKeyId(gs.getServerKeyId());
-                tmp.setServerStatus(server.getServerStatus());
-                if (state == ServerState.MAINTAIN.state) {
-                    if (!ServerState.isMaintain(Integer.parseInt(gs.getServerStatus()))) {
-                        serverService.updateServerStatus(tmp);
-                    }
-                } else if (!ServerState.isMaintain(state)) {
-                    if (Integer.parseInt(gs.getServerStatus()) == ServerState.MAINTAIN.state) {
-                        serverService.updateServerStatus(tmp);
-                    }
-                }
-                find = true;
-            }
-        }
-        if (!find) {
-            return AjaxResult.error("没有可操作的服务器");
-        }
-        return AjaxResult.success();
-    }
-
-    /**
-     * 删除服务器
-     */
-    @PreAuthorize("@ss.hasPermi('gm:server:remove')")
-    @Log(title = "服务器管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{sids}")
-    public AjaxResult remove(@PathVariable Long[] sids)
-    {
-        for (Long keyId : sids) {
-            dataSource.removeDataSourceByKey(DatabaseSourceKeyConst.getLogKey(keyId));
-            dataSource.removeDataSourceByKey(DatabaseSourceKeyConst.getGameKey(keyId));
-        }
-        return toAjax(serverService.deleteServerByIds(sids));
-    }
-
     @PreAuthorize("@ss.hasPermi('gm:server:edit')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeServerTimeOpen")
@@ -212,30 +118,30 @@ public class GmServerController extends BaseController
     {
         Long platformId = gs.getPlatformId();
         if (serverIds == null || Arrays.asList(serverIds).contains("-1")) {
-            List<GmServer> list = serverService.selectServerAll();
+            List<ServerEntity> list = serverService.selectServerAll();
             if (list.isEmpty()) {
                 return AjaxResult.error("没有可操作的服务器");
             }
-            AsyncManager.me().execute(new TimerTask() {
-                @Override
-                public void run() {
-                    for (GmServer server : list) {
-                        if (platformId != null && !platformId.equals(server.getPlatformId())) {
-                            continue;
-                        }
-                        String url = ParamParseUtils.makeURL(server.getInHost(), server.getInPort(), "script");
-                        try {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("cmd", "OffLine");
-                            map.put("onlyOnce", "false");
-                            map.put("rid", "-1");
-                            ParamParseUtils.sendSyncTokenPost(url, map);
-                        } catch (Exception e) {
-                            logger.error(e.getMessage(), e);
-                        }
-                    }
-                }
-            });
+//            AsyncManager.me().execute(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    for (GmServer server : list) {
+//                        if (platformId != null && !platformId.equals(server.getPlatformId())) {
+//                            continue;
+//                        }
+//                        String url = ParamParseUtils.makeURL(server.getInHost(), server.getInPort(), "script");
+//                        try {
+//                            Map<String, Object> map = new HashMap<>();
+//                            map.put("cmd", "OffLine");
+//                            map.put("onlyOnce", "false");
+//                            map.put("rid", "-1");
+//                            ParamParseUtils.sendSyncTokenPost(url, map);
+//                        } catch (Exception e) {
+//                            logger.error(e.getMessage(), e);
+//                        }
+//                    }
+//                }
+//            });
 
         } else {
             for (String serverId : serverIds) {
@@ -269,21 +175,21 @@ public class GmServerController extends BaseController
     public AjaxResult stopServer(@PathVariable String[] serverIds, @RequestBody GmServer gs) {
         Long platformId = gs.getPlatformId();
         if (serverIds == null || Arrays.asList(serverIds).contains("-1")) {
-            List<GmServer> list = serverService.selectServerAll();
+            List<ServerEntity> list = serverService.selectServerAll();
             if (list.isEmpty()) {
                 return AjaxResult.error("没有可操作的服务器");
             }
-            AsyncManager.me().execute(new TimerTask() {
-                @Override
-                public void run() {
-                    for (GmServer gmServer : list) {
-                        if (platformId != null && !platformId.equals(gmServer.getPlatformId())) {
-                            continue;
-                        }
-                        serverService.stopServer(gmServer);
-                    }
-                }
-            });
+//            AsyncManager.me().execute(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    for (GmServer gmServer : list) {
+//                        if (platformId != null && !platformId.equals(gmServer.getPlatformId())) {
+//                            continue;
+//                        }
+//                        serverService.stopServer(gmServer);
+//                    }
+//                }
+//            });
         } else {
             for (String serverId : serverIds) {
                 GmServer server = serverService.selectServerById(Long.parseLong(serverId));
@@ -306,18 +212,18 @@ public class GmServerController extends BaseController
     public AjaxResult startServer(@PathVariable String[] serverIds, @RequestBody GmServer gs) {
         Long platformId = gs.getPlatformId();
         if (serverIds == null || Arrays.asList(serverIds).contains("-1")) {
-            List<GmServer> list = serverService.selectServerAll();
-            AsyncManager.me().execute(new TimerTask() {
-                @Override
-                public void run() {
-                    for (GmServer gmServer : list) {
-                        if (platformId != null && !platformId.equals(gmServer.getPlatformId())) {
-                            continue;
-                        }
-                        serverService.startServer(gmServer);
-                    }
-                }
-            });
+            List<ServerEntity> list = serverService.selectServerAll();
+//            AsyncManager.me().execute(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    for (GmServer gmServer : list) {
+//                        if (platformId != null && !platformId.equals(gmServer.getPlatformId())) {
+//                            continue;
+//                        }
+//                        serverService.startServer(gmServer);
+//                    }
+//                }
+//            });
         } else {
             for (String serverId : serverIds) {
                 GmServer server = serverService.selectServerById(Long.parseLong(serverId));
@@ -333,25 +239,6 @@ public class GmServerController extends BaseController
         }
 
         return AjaxResult.success();
-    }
-
-    @PostMapping("/importTemplate")
-    public void importTemplate(HttpServletResponse response)
-    {
-        ExcelUtil<GmServer> util = new ExcelUtil<GmServer>(GmServer.class);
-        util.importTemplateExcel(response, "服务器数据");
-    }
-
-    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @PreAuthorize("@ss.hasPermi('gm:server:import')")
-    @PostMapping("/importData")
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
-    {
-        ExcelUtil<GmServer> util = new ExcelUtil<GmServer>(GmServer.class);
-        List<GmServer> serverList = util.importExcel(file.getInputStream());
-        String operName = getUsername();
-        String message = serverService.importServer(serverList, updateSupport, operName);
-        return AjaxResult.success(message);
     }
 
     /**
@@ -498,7 +385,7 @@ public class GmServerController extends BaseController
     {
         GmServer server = new GmServer();
         server.setServerStatus("6");
-        List<GmServer> list = serverService.selectServerList(server);
+        List<ServerEntity> list = serverService.selectServerAll();
         return getDataTable(list);
     }
 

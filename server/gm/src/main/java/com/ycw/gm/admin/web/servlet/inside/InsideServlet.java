@@ -35,7 +35,8 @@ public abstract class InsideServlet {
 	 */
 	protected List<GmServer> gsrvs(String pid, String sid) {
 		IServerService bean = SpringUtils.getBean(IServerService.class);
-		return bean.gsrvs(pid, sid);
+//		return bean.gsrvs(pid, sid);
+		return null;
 	}
 
 	/**

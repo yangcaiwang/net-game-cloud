@@ -3,6 +3,8 @@ package com.ycw.core.cluster;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.ServerType;
 
+import java.util.List;
+
 /**
  * <集群操作分布式缓存接口>
  * <p>
@@ -11,6 +13,8 @@ import com.ycw.core.cluster.enums.ServerType;
  * @version <1.0>
  */
 public interface ClusterService {
+
+    List<ServerEntity> selectAllServerEntity();
 
     /**
      * 保存服务器数据
