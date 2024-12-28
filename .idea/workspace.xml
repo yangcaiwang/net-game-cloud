@@ -6,46 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/ClusterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/ClusterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/ClusterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/ClusterServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/entity/AddressInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/entity/AddressInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/entity/ServerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/entity/ServerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/enums/ServerState.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/enums/ServerState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/enums/ServerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/enums/ServerType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/NodeYmlTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/NodeYmlTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/cache/redis/RedisUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/event/EventBusesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/event/EventBusesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/jetty/JettyHeartbeatProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/jetty/JettyHeartbeatProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/netty/NettyHeartbeatProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/netty/NettyHeartbeatProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcTopicObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcTopicObserver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/HttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/command/HeartbeatCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/command/HeartbeatCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/http/HttpSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/http/HttpSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/battle/src/main/resources/redis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/battle/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/battle/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/chat/src/main/resources/redis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/chat/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/chat/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/game/src/main/resources/redis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/game/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/game/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gate/src/main/resources/redis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gate/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/gate/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/IServerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/IServerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/impl/ServerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/impl/ServerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/activity/ActivityOpenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/activity/ActivityOpenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmAddItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmAddItemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmBroadcastController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmBroadcastController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmMailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmMailController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmServerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/RechargeSumController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/RechargeSumController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/servlet/inside/InsideServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/servlet/inside/InsideServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/servlet/inside/UpdateGameServerOpentime.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/servlet/inside/UpdateGameServerOpentime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/servlet/inside/UpdateGameServerStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/servlet/inside/UpdateGameServerStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/login/src/main/resources/redis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/login/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/login/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/vue/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/views/gameGm/server/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/views/gameGm/server/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -377,7 +337,8 @@
       <workItem from="1735306971850" duration="18310000" />
       <workItem from="1735325323000" duration="11854000" />
       <workItem from="1735375345956" duration="4790000" />
-      <workItem from="1735388863493" duration="28219000" />
+      <workItem from="1735388863493" duration="28251000" />
+      <workItem from="1735417212907" duration="34000" />
     </task>
     <task id="LOCAL-00001" summary="微服务游戏架构">
       <option name="closed" value="true" />
@@ -443,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735338015815</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="优化">
+      <option name="closed" value="true" />
+      <created>1735417148126</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1735417148126</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
