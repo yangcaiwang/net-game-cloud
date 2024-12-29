@@ -8,7 +8,7 @@ grpc:
 jetty:
   heartbeatTime: 5000
   heartbeatTimeout: 0
-  port: 9003
+  port: 9005
 netty: null
 node:
   groupId: 1

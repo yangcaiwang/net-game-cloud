@@ -38,6 +38,7 @@ public enum Begin {
                 serverTypes.add(ServerType.GAME_SERVER);
                 break;
             case GRPC_SER:
+                serverTypes.add(ServerType.CHAT_SERVER);
                 serverTypes.add(ServerType.GAME_SERVER);
                 serverTypes.add(ServerType.BATTLE_SERVER);
                 break;

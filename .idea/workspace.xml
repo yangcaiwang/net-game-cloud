@@ -6,33 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/ClusterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/ClusterServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/AbstractServerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/AbstractServerNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNodeComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/AbstractYmlTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/BaseYmlTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/DbYmlTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/DbYmlTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/GrpcYmlTemplate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/JettyYmlTemplate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/NettyYmlTemplate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/NodeYmlTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/NodeYmlTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/ServerYmlTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/template/ServerYmlTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/jetty/JettyHeartbeatProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/jetty/JettyHeartbeatProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/loader/service/IService.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/loader/service/IService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/JettyHttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/JettyHttpServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/command/ModifyServerYmlCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/command/ModifyServerYmlCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/battle/src/main/java/com/ycw/battle/BattleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/battle/src/main/java/com/ycw/battle/BattleApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/battle/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/battle/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/chat/src/main/java/com.ycw.chat/ChatApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/chat/src/main/java/com.ycw.chat/ChatApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/chat/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/chat/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/game/src/main/java/com/ycw/game/GameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/game/src/main/java/com/ycw/game/GameApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/game/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/game/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gate/src/main/java/com/ycw/gate/GateApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gate/src/main/java/com/ycw/gate/GateApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gate/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/gate/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/GmApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/GmApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/impl/ServerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/impl/ServerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/resources/server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/login/src/main/java/com/ycw/login/LoginApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/login/src/main/java/com/ycw/login/LoginApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/login/src/main/resources/server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/server/login/src/main/resources/server.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/enums/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/enums/Begin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue/src/views/gameGm/server/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/views/gameGm/server/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +143,20 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.GateApp">
+  <component name="RunManager" selected="Application.BattleApp">
+    <configuration name="BattleApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ycw.battle.BattleApp" />
+      <module name="battle" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ycw.battle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ChatApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ycw.chat.ChatApp" />
       <module name="chat" />
@@ -221,19 +209,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GmApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="gm" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ycw.gm.admin.GmApp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ycw.gm.admin.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LoginApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="login" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ycw.login.LoginApp" />
@@ -253,19 +228,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.ChatApp" />
+      <item itemvalue="Application.BattleApp" />
       <item itemvalue="Application.GameApp" />
       <item itemvalue="Application.GateApp" />
       <item itemvalue="npm.dev" />
       <item itemvalue="Spring Boot.LoginApp" />
-      <item itemvalue="Spring Boot.GmApp" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.dev" />
-        <item itemvalue="Application.GateApp" />
-        <item itemvalue="Application.GameApp" />
-        <item itemvalue="Spring Boot.GmApp" />
+        <item itemvalue="Application.BattleApp" />
         <item itemvalue="Application.ChatApp" />
+        <item itemvalue="npm.dev" />
+        <item itemvalue="Application.GameApp" />
+        <item itemvalue="Application.GateApp" />
       </list>
     </recent_temporary>
   </component>
@@ -367,7 +342,7 @@
       <workItem from="1735388863493" duration="28251000" />
       <workItem from="1735417212907" duration="34000" />
       <workItem from="1735417757792" duration="12803000" />
-      <workItem from="1735475105617" duration="2510000" />
+      <workItem from="1735475105617" duration="3216000" />
     </task>
     <task id="LOCAL-00001" summary="微服务游戏架构">
       <option name="closed" value="true" />
@@ -457,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735430514489</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="优化">
+      <option name="closed" value="true" />
+      <created>1735477625762</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1735477625762</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

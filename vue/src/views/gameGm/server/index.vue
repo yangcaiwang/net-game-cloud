@@ -106,7 +106,7 @@
       <el-table-column label="状态" prop="serverState" align="center" width="50" :formatter="formatServerState"/>
       <el-table-column label="地址" prop="serverAddr.address" align="center" width="150"/>
       <el-table-column label="组" prop="groupId" align="center" width="100"/>
-      <el-table-column label="权重" prop="weight" align="center" width="50"/>
+      <el-table-column label="权重" prop="weight" align="center" width="100"/>
       <el-table-column label="Grpc客户端地址" align="center" width="150">
         <template slot-scope="scope">
           <el-popover
