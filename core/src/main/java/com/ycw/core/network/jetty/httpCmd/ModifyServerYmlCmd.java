@@ -1,4 +1,4 @@
-package com.ycw.core.network.jetty.command;
+package com.ycw.core.network.jetty.httpCmd;
 
 import com.ycw.core.cluster.node.ServerNodeComponent;
 import com.ycw.core.cluster.template.ServerYmlTemplate;
@@ -14,7 +14,7 @@ import com.ycw.core.util.SerializationUtils;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class ModifyServerYmlCommand extends BaseHttpCommand {
+public class ModifyServerYmlCmd extends BaseHttpCmd {
     @Override
     public boolean execute(HttpSession httpSession) {
         ServerYmlTemplate serverYmlTemplate = SerializationUtils.jsonToBean(httpSession.getParameters().get("serverYmlTemplate"), ServerYmlTemplate.class);

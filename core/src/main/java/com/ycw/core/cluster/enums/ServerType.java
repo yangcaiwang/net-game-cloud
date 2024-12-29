@@ -9,15 +9,14 @@ package com.ycw.core.cluster.enums;
  */
 public enum ServerType {
     GM_SERVER(1, "gm"),
-    CHAT_SERVER(2, "chat"),
-    LOGIN_SERVER(3, "login"),
-    GATE_SERVER(4, "gate"),
-    GAME_SERVER(5, "game"),
-    BATTLE_SERVER(6, "battle"),
+    LOGIN_SERVER(2, "login"),
+    GATE_SERVER(3, "gate"),
+    GAME_SERVER(4, "game"),
+    BATTLE_SERVER(5, "battle"),
     ;
 
-    private final int value;
-    private final String name;
+    public final int value;
+    public final String name;
 
     public int getValue() {
         return value;
@@ -34,11 +33,31 @@ public enum ServerType {
 
     public static ServerType getByValue(int value) {
         for (ServerType serverType : ServerType.values()) {
-            if (serverType.getValue() == value) {
+            if (serverType.value == value) {
                 return serverType;
             }
         }
 
         return null;
+    }
+
+    public static boolean isLoginServer(int value) {
+        return value == LOGIN_SERVER.value;
+    }
+
+    public static boolean isGmServer(int value) {
+        return value == GM_SERVER.value;
+    }
+
+    public static boolean isGateServer(int value) {
+        return value == GATE_SERVER.value;
+    }
+
+    public static boolean isGameServer(int value) {
+        return value == GAME_SERVER.value;
+    }
+
+    public static boolean isBattleServer(int value) {
+        return value == BATTLE_SERVER.value;
     }
 }

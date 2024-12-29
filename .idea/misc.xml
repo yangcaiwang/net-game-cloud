@@ -39,6 +39,7 @@
         <option value="$PROJECT_DIR$/game/pom.xml" />
         <option value="$PROJECT_DIR$/gate/pom.xml" />
         <option value="$PROJECT_DIR$/gm/pom.xml" />
+        <option value="$PROJECT_DIR$/server/chat/pom.xml" />
       </set>
     </option>
   </component>

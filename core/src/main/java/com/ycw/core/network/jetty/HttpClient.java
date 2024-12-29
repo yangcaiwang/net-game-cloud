@@ -1,5 +1,7 @@
 package com.ycw.core.network.jetty;
 
+import com.ycw.core.network.jetty.constant.HttpCmd;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,68 +35,54 @@ public class HttpClient {
     /**
      * 发送GET请求
      *
-     * @param urlString URL地址
-     * @return 响应对象
-     */
-    public HttpResponse sendGet(String urlString) throws IOException {
-        return this.send(urlString, "GET", null, null);
-    }
-
-    /**
-     * 发送GET请求
-     *
-     * @param urlString URL地址
-     * @param params    参数集合
-     * @return 响应对象
-     */
-    public HttpResponse sendGet(String urlString, Map<String, String> params) throws IOException {
-        return this.send(urlString, "GET", params, null);
-    }
-
-    /**
-     * 发送GET请求
-     *
-     * @param urlString  URL地址
+     * @param address    服务器地址
+     * @param httpCmd    http请求命令
      * @param params     参数集合
      * @param properties 请求属性
-     * @return 响应对象
+     * @return HttpResponse 响应对象
      */
-    public HttpResponse sendGet(String urlString, Map<String, String> params, Map<String, String> properties)
-            throws IOException {
+    public HttpResponse sendGet(String address, String httpCmd, Map<String, String> params, Map<String, String> properties) throws IOException {
+        StringBuilder url = new StringBuilder();
+        url.append(HttpCmd.HTTP_PREFIX).append(address).append(httpCmd);
+        return this.send(url.toString(), "GET", params, properties);
+    }
+
+    /**
+     * 发送GET请求
+     *
+     * @param urlString  url地址
+     * @param params     参数集合
+     * @param properties 请求属性
+     * @return HttpResponse 响应对象
+     */
+    public HttpResponse sendGet(String urlString, Map<String, String> params, Map<String, String> properties) throws IOException {
         return this.send(urlString, "GET", params, properties);
     }
 
     /**
      * 发送POST请求
      *
-     * @param urlString URL地址
-     * @return 响应对象
-     */
-    public HttpResponse sendPost(String urlString) throws IOException {
-        return this.send(urlString, "POST", null, null);
-    }
-
-    /**
-     * 发送POST请求
-     *
-     * @param urlString URL地址
-     * @param params    参数集合
-     * @return 响应对象
-     */
-    public HttpResponse sendPost(String urlString, Map<String, String> params) throws IOException {
-        return this.send(urlString, "POST", params, null);
-    }
-
-    /**
-     * 发送POST请求
-     *
-     * @param urlString  URL地址
+     * @param address    服务器地址
+     * @param httpCmd    http请求命令
      * @param params     参数集合
      * @param properties 请求属性
-     * @return 响应对象
+     * @return HttpResponse 响应对象
      */
-    public HttpResponse sendPost(String urlString, Map<String, String> params, Map<String, String> properties)
-            throws IOException {
+    public HttpResponse sendPost(String address, String httpCmd, Map<String, String> params, Map<String, String> properties) throws IOException {
+        StringBuilder url = new StringBuilder();
+        url.append(HttpCmd.HTTP_PREFIX).append(address).append(httpCmd);
+        return this.send(url.toString(), "POST", params, properties);
+    }
+
+    /**
+     * 发送POST请求
+     *
+     * @param urlString  url地址
+     * @param params     参数集合
+     * @param properties 请求属性
+     * @return HttpResponse 响应对象
+     */
+    public HttpResponse sendPost(String urlString, Map<String, String> params, Map<String, String> properties) throws IOException {
         return this.send(urlString, "POST", params, properties);
     }
 
@@ -105,7 +93,7 @@ public class HttpClient {
      * @return 响映对象
      */
     private HttpResponse send(String urlString, String method, Map<String, String> parameters,
-                              Map<String, String> propertys) throws IOException {
+                              Map<String, String> properties) throws IOException {
         HttpURLConnection urlConnection = null;
 
         if (method.equalsIgnoreCase("GET") && parameters != null) {
@@ -132,9 +120,9 @@ public class HttpClient {
         // 读取超时 5秒
         urlConnection.setReadTimeout(READ_TIME_OUT);
 
-        if (propertys != null)
-            for (String key : propertys.keySet()) {
-                urlConnection.addRequestProperty(key, propertys.get(key));
+        if (properties != null)
+            for (String key : properties.keySet()) {
+                urlConnection.addRequestProperty(key, properties.get(key));
             }
 
         if (method.equalsIgnoreCase("POST") && parameters != null) {
@@ -154,16 +142,16 @@ public class HttpClient {
      * 得到响应对象
      */
     private HttpResponse makeContent(String urlString, HttpURLConnection urlConnection) throws IOException {
-        HttpResponse httpResponser = new HttpResponse();
+        HttpResponse httpResponse = new HttpResponse();
         try {
             urlConnection.connect();
             InputStream in = urlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-            httpResponser.contentCollection = new Vector<String>();
+            httpResponse.contentCollection = new Vector<String>();
             StringBuffer temp = new StringBuffer();
             String line = bufferedReader.readLine();
             while (line != null) {
-                httpResponser.contentCollection.add(line);
+                httpResponse.contentCollection.add(line);
                 temp.append(line).append("\r\n");
                 line = bufferedReader.readLine();
             }
@@ -172,29 +160,29 @@ public class HttpClient {
             String ecod = urlConnection.getContentEncoding();
             if (ecod == null)
                 ecod = this.DEFAULT_CONTENT_ENCODING;
-            httpResponser.urlString = urlString;
-            httpResponser.go = urlConnection.getHeaderField("MyHeaderData");
-            httpResponser.defaultPort = urlConnection.getURL().getDefaultPort();
-            httpResponser.file = urlConnection.getURL().getFile();
-            httpResponser.host = urlConnection.getURL().getHost();
-            httpResponser.path = urlConnection.getURL().getPath();
-            httpResponser.port = urlConnection.getURL().getPort();
-            httpResponser.protocol = urlConnection.getURL().getProtocol();
-            httpResponser.query = urlConnection.getURL().getQuery();
-            httpResponser.ref = urlConnection.getURL().getRef();
-            httpResponser.userInfo = urlConnection.getURL().getUserInfo();
-            httpResponser.content = new String(temp.toString().getBytes());
-            httpResponser.contentEncoding = ecod;
-            httpResponser.code = urlConnection.getResponseCode();
-            httpResponser.message = urlConnection.getResponseMessage();
-            httpResponser.contentType = urlConnection.getContentType();
-            httpResponser.method = urlConnection.getRequestMethod();
-            httpResponser.connectTimeout = urlConnection.getConnectTimeout();
-            httpResponser.readTimeout = urlConnection.getReadTimeout();
+            httpResponse.urlString = urlString;
+            httpResponse.go = urlConnection.getHeaderField("MyHeaderData");
+            httpResponse.defaultPort = urlConnection.getURL().getDefaultPort();
+            httpResponse.file = urlConnection.getURL().getFile();
+            httpResponse.host = urlConnection.getURL().getHost();
+            httpResponse.path = urlConnection.getURL().getPath();
+            httpResponse.port = urlConnection.getURL().getPort();
+            httpResponse.protocol = urlConnection.getURL().getProtocol();
+            httpResponse.query = urlConnection.getURL().getQuery();
+            httpResponse.ref = urlConnection.getURL().getRef();
+            httpResponse.userInfo = urlConnection.getURL().getUserInfo();
+            httpResponse.content = new String(temp.toString().getBytes());
+            httpResponse.contentEncoding = ecod;
+            httpResponse.code = urlConnection.getResponseCode();
+            httpResponse.message = urlConnection.getResponseMessage();
+            httpResponse.contentType = urlConnection.getContentType();
+            httpResponse.method = urlConnection.getRequestMethod();
+            httpResponse.connectTimeout = urlConnection.getConnectTimeout();
+            httpResponse.readTimeout = urlConnection.getReadTimeout();
 
-            return httpResponser;
+            return httpResponse;
         } catch (IOException e) {
-            throw e;
+            throw new RuntimeException(e.getMessage(), e);
         } finally {
             if (urlConnection != null)
                 urlConnection.disconnect();

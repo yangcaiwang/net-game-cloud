@@ -3,7 +3,6 @@ package com.ycw.core.cluster;
 import com.ycw.core.cluster.constant.ClusterConstant;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.node.ServerNodeComponent;
 import com.ycw.core.internal.cache.redission.RedissonClient;
 import com.ycw.core.internal.loader.service.AbstractService;
 import org.apache.commons.collections4.MapUtils;
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <集群操作分布式缓存实现类>
@@ -27,7 +27,7 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
     public static final Logger log = LoggerFactory.getLogger(ClusterServiceImpl.class);
 
     @Override
-    public List<ServerEntity> selectAllServerEntity() {
+    public List<ServerEntity> getAllServerEntity() {
         List<ServerEntity> serverEntityList = new ArrayList<>();
         RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         for (Map<String, ServerEntity> serverEntityMap : groupMap.values()) {
@@ -35,6 +35,24 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
         }
 
         serverEntityList.sort(Comparator.comparing(ServerEntity::getGroupId).thenComparing(ServerEntity::getServerType));
+        return serverEntityList;
+    }
+
+    @Override
+    public List<ServerEntity> getAllGrpcServerEntityByGroup(int... groupIds) {
+        List<ServerEntity> serverEntityList = new ArrayList<>();
+
+        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
+        for (int groupId : groupIds) {
+            Map<String, ServerEntity> serverEntityMap = groupMap.get(groupId);
+            if (MapUtils.isNotEmpty(serverEntityMap)) {
+                serverEntityList.addAll(serverEntityMap.values()
+                        .stream()
+                        .filter(serverEntity -> !ServerType.isGateServer((serverEntity.getServerType())) && !ServerType.isLoginServer((serverEntity.getServerType())))
+                        .collect(Collectors.toList()));
+            }
+        }
+
         return serverEntityList;
     }
 
@@ -75,65 +93,41 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
     }
 
     @Override
-    public ServerEntity getServerEntity(ServerType serverType) {
+    public List<ServerEntity> getServerEntity(int groupId, ServerType serverType) {
+        List<ServerEntity> serverEntityList = new ArrayList<>();
         RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
-        Map<String, ServerEntity> serverEntityMap = groupMap.get(0);
+        Map<String, ServerEntity> serverEntityMap = groupMap.get(groupId);
         if (MapUtils.isNotEmpty(serverEntityMap)) {
             for (ServerEntity serverEntity : serverEntityMap.values()) {
-                if (serverEntity.getServerType() == serverType.getValue()) {
-                    return serverEntity;
+                if (serverEntity.getServerType() == serverType.value) {
+                    serverEntityList.add(serverEntity);
                 }
             }
         }
 
-        return null;
+        return serverEntityList;
     }
 
     @Override
-    public ServerEntity getGateServerEntity(int groupId) {
+    public List<ServerEntity> getGateServerEntity(int... groupIds) {
+        List<ServerEntity> serverEntityList = new ArrayList<>();
         RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
         if (MapUtils.isEmpty(groupMap)) {
             return null;
         }
 
-        Map<String, ServerEntity> serverEntityMap = groupMap.get(groupId);
-        if (MapUtils.isEmpty(serverEntityMap)) {
-            return null;
-        }
-
-        return serverEntityMap.values()
-                .stream()
-                .filter(serverEntity -> serverEntity.getServerType() == ServerType.GATE_SERVER.getValue())
-                .findFirst()
-                .orElse(null);
-    }
-
-    @Override
-    public void startGateGrpcClient(ServerEntity serverEntity) {
-        RMap<Integer, Map<String, ServerEntity>> groupMap = RedissonClient.getInstance().getRedisson().getMap(ClusterConstant.CLUSTER_GROUP);
-        if (MapUtils.isEmpty(groupMap)) {
-            return;
-        }
-
-        RReadWriteLock readWriteLock = groupMap.getReadWriteLock(1);
-        RLock rLock = readWriteLock.writeLock();
-        try {
-            Map<String, ServerEntity> serverEntityMap = groupMap.get(serverEntity.getGroupId());
+        for (int groupId : groupIds) {
+            Map<String, ServerEntity> serverEntityMap = groupMap.get(groupId);
             if (MapUtils.isEmpty(serverEntityMap)) {
-                return;
+                return null;
             }
-
-            serverEntityMap.put(serverEntity.getServerId(), serverEntity);
-            groupMap.put(serverEntity.getGroupId(), serverEntityMap);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        } finally {
-            rLock.unlock();
+            serverEntityList.addAll(serverEntityMap.values()
+                    .stream()
+                    .filter(serverEntity -> ServerType.isGateServer(serverEntity.getServerType()))
+                    .collect(Collectors.toList()));
         }
 
-        // 开启grpc客户端
-        ServerNodeComponent serverNodeComponent = ServerNodeComponent.getInstance();
-        serverNodeComponent.startGrpcClient();
+        return serverEntityList;
     }
 
     @Override

@@ -1,11 +1,18 @@
 package com.ycw.core.cluster.node;
 
+import com.ycw.core.cluster.ClusterService;
+import com.ycw.core.cluster.ClusterServiceImpl;
+import com.ycw.core.cluster.entity.ServerEntity;
+import com.ycw.core.cluster.enums.ServerState;
 import com.ycw.core.cluster.enums.ServerType;
 import com.ycw.core.cluster.property.PropertyConfig;
 import com.ycw.core.cluster.template.ServerYmlTemplate;
 import com.ycw.core.internal.base.BaseConfigUtil;
 import com.ycw.core.internal.db.entity.Repositories;
 import com.ycw.core.internal.loader.Scanner;
+import com.ycw.core.internal.loader.service.ServiceContext;
+import com.ycw.core.network.jetty.HttpClient;
+import com.ycw.core.network.jetty.http.HttpCode;
 import com.ycw.core.network.netty.message.MessageProcess;
 import com.ycw.core.util.PrintManager;
 import com.ycw.core.util.SystemUtils;
@@ -16,6 +23,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <服务器组件抽象类>
@@ -33,17 +43,17 @@ public abstract class AbstractServerNode implements SuperServerNode {
 
     protected abstract void startRedission();
 
-    protected abstract void startRegister();
+    protected abstract void registerRedission();
 
     protected abstract void startDatabase();
-
-    public abstract void startGrpcClient();
-
-    protected abstract void startGrpcServer();
 
     protected abstract void startJettyServer();
 
     protected abstract void startNettyServer();
+
+    protected abstract void startGrpcServer();
+
+    public abstract void connectGrpcServer();
 
     @Override
     public ServerType serverType() {
@@ -83,12 +93,12 @@ public abstract class AbstractServerNode implements SuperServerNode {
         try {
             long begin = System.currentTimeMillis();
             startRedission();
-            startRegister();
+            registerRedission();
             startDatabase();
-            startGrpcClient();
-            startGrpcServer();
             startJettyServer();
             startNettyServer();
+            startGrpcServer();
+            connectGrpcServer();
             long timeUsed = System.currentTimeMillis() - begin;
             PrintManager.showPrint(PropertyConfig.isDebug());
             log.info("======================= [{}] 启动完毕,耗时[{}]秒, pid=[{}] =======================", getServerId(), (timeUsed / 1000f), SystemUtils.getPid());
@@ -100,12 +110,46 @@ public abstract class AbstractServerNode implements SuperServerNode {
     @Override
     public void stop() {
         try {
-            int players = MessageProcess.getInstance().kitOutAll();
-            if (players != 0) {
-                log.info("======================= [{}] kit out [{}] player =======================", getServerId(), players);
+            // 更新服务器状态
+            ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
+            ServerEntity serverEntity = clusterService.getServerEntity(getServerId());
+            serverEntity.setServerState(ServerState.ERROR.state);
+            clusterService.saveServerEntity(serverEntity);
+
+            switch (this.serverType) {
+                case GATE_SERVER:
+                    // 踢掉本网关所有玩家连接
+                    int players = MessageProcess.getInstance().kitOutAll();
+                    if (players != 0) {
+                        log.info("======================= [{}] kit out [{}] player =======================", getServerId(), players);
+                    }
+
+                    // 通过Jetty发布保存本网关所有玩家数据事件
+                    List<ServerEntity> serverEntityList = clusterService.getServerEntity(serverEntity.getGroupId(), ServerType.GAME_SERVER);
+                    for (ServerEntity entity : serverEntityList) {
+                        if (ServerState.isError(entity.getServerState())) {
+                            continue;
+                        }
+
+                        Map<String, String> params = new HashMap<>();
+                        params.put("value", "allPlayer");
+                        HttpClient.HttpResponse httpResponse = HttpClient.getInstance().sendGet(entity.getJettyServerAddr().getAddress(), params, null);
+                        if (httpResponse.getCode() == HttpCode.SUCCESS.getIndex()) {
+                            log.info("======================= [{}] all player data saved =======================", entity.getServerId());
+                        }
+                    }
+                    break;
+                case GAME_SERVER:
+                    Repositories.flushAll();
+                    log.info("======================= [{}] all db data saved =======================", getServerId());
+                    break;
+
+                case GM_SERVER:
+                case LOGIN_SERVER:
+                case BATTLE_SERVER:
+                default:
             }
-            Repositories.flushAll();
-            log.info("======================= [{}] all db data updated =======================", getServerId());
+
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

@@ -6,22 +6,29 @@ import com.ycw.core.cluster.entity.AddressInfo;
 import com.ycw.core.cluster.entity.DataSourceInfo;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.Begin;
+import com.ycw.core.cluster.enums.ServerShowState;
 import com.ycw.core.cluster.enums.ServerState;
 import com.ycw.core.cluster.enums.ServerType;
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.core.cluster.template.*;
+import com.ycw.core.cluster.template.BaseYmlTemplate;
+import com.ycw.core.cluster.template.DbYmlTemplate;
+import com.ycw.core.cluster.template.NodeYmlTemplate;
 import com.ycw.core.internal.cache.redission.RedissonClient;
 import com.ycw.core.internal.cache.redission.constant.ConstTopic;
-import com.ycw.core.internal.cache.redission.event.TopicMessage;
 import com.ycw.core.internal.db.Mysql;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.network.grpc.GrpcManager;
-import com.ycw.core.network.grpc.GrpcTopicMessage;
+import com.ycw.core.network.jetty.HttpClient;
 import com.ycw.core.network.jetty.JettyHttpServer;
+import com.ycw.core.network.jetty.constant.HttpCmd;
 import com.ycw.core.network.jetty.handler.JettyHttpHandler;
 import com.ycw.core.network.netty.server.NettyServer;
+import com.ycw.core.util.SerializationUtils;
+import org.apache.commons.collections.CollectionUtils;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <服务器组件实现类>
@@ -45,7 +52,7 @@ public class ServerNodeComponent extends AbstractServerNode {
     }
 
     @Override
-    public void startRegister() {
+    public void registerRedission() {
         try {
             NodeYmlTemplate nodeYml = serverYmlTemplate.getNode(); // 解析node配置
             BaseYmlTemplate grpcYml = serverYmlTemplate.getGrpc();  // 解析grpc配置
@@ -58,12 +65,13 @@ public class ServerNodeComponent extends AbstractServerNode {
                 ServerEntity serverEntity = new ServerEntity.Builder()
                         .serverId(nodeYml.getServerId())
                         .serverName(nodeYml.getServerName())
-                        .serverType(this.serverType().getValue())
+                        .serverType(this.serverType().value)
                         .serverState(ServerState.NORMAL.state)
+                        .serverShowState(ServerType.isGameServer(this.serverType.value) ? ServerShowState.WHITE.state : ServerShowState.NONE.state)
                         .groupId(nodeYml.getGroupId())
                         .weight(nodeYml.getWeight())
                         .serverAddr(AddressInfo.valueOf(nodeYml.getHost(), nodeYml.getPort()))
-                        .grpcServerAddr(grpcYml == null ? AddressInfo.valueOf() : AddressInfo.valueOf(nodeYml.getHost(), grpcYml.getPort()))
+                        .grpcServerAddr(grpcYml == null ? AddressInfo.valueOf() : AddressInfo.valueOf(nodeYml.getHost(), grpcYml.getPort(), grpcYml.getHeartbeatTime(), grpcYml.getHeartbeatTimeout()))
                         .jettyServerAddr(jettyYml == null ? AddressInfo.valueOf() : AddressInfo.valueOf(nodeYml.getHost(), jettyYml.getPort()))
                         .nettyServerAddr(nettyYml == null ? AddressInfo.valueOf() : AddressInfo.valueOf(nodeYml.getHost(), nettyYml.getPort()))
                         .dbGameSourceInfo(dbGameYml == null ? DataSourceInfo.valueOf() : DataSourceInfo.valueOf(dbGameYml.getUrl(), dbGameYml.getUsername(), dbGameYml.getPassword()))
@@ -120,7 +128,7 @@ public class ServerNodeComponent extends AbstractServerNode {
     }
 
     @Override
-    public void startGrpcClient() {
+    public void connectGrpcServer() {
         if (Begin.getInstance(Begin.GRPC_CLI).isBegin(this.serverType)) {
             try {
                 ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
@@ -129,10 +137,20 @@ public class ServerNodeComponent extends AbstractServerNode {
                     return;
                 }
 
-                // 开启grpc客户端
+                // 连接当前组所有Grpc服务器
                 BaseYmlTemplate grpcYmlTemplate = serverYmlTemplate.getGrpc();
                 if (grpcYmlTemplate != null) {
-                    GrpcManager.getInstance().startGrpcClient(serverEntity, grpcYmlTemplate.getHeartbeatTime(), grpcYmlTemplate.getHeartbeatTimeout());
+                    List<ServerEntity> serverEntityList = clusterService.getAllGrpcServerEntityByGroup(serverEntity.getGroupId());
+                    for (ServerEntity entity : serverEntityList) {
+                        if (serverEntity.getConnectGrpcServerIds().contains(entity.getServerId()) || ServerState.isError(entity.getServerState())) {
+                            continue;
+                        }
+                        // 更新网关服务器Grpc服务器id列表
+                        serverEntity.getConnectGrpcServerIds().add(entity.getServerId());
+                        clusterService.saveServerEntity(serverEntity);
+                        // 连接Grpc服务器
+                        GrpcManager.getInstance().connectGrpcServer(entity);
+                    }
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -151,22 +169,25 @@ public class ServerNodeComponent extends AbstractServerNode {
                     GrpcManager.getInstance().startGrpcServer(grpcYml.getPort(), grpcYml.getHeartbeatTime(), grpcYml.getHeartbeatTimeout());
                     log.info("======================= [{}] grpc server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), grpcYml.getPort());
 
-                    // 发布开启grpc客户端话题事件
                     ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
-                    ServerEntity gateServerEntity = clusterService.getGateServerEntity(nodeYml.getGroupId());
-                    if (gateServerEntity == null) {
+                    List<ServerEntity> serverEntityList = clusterService.getGateServerEntity(nodeYml.getGroupId());
+                    if (CollectionUtils.isEmpty(serverEntityList)) {
                         return;
                     }
 
-                    // 如果不存在 则添加
-                    ConcurrentHashMap<String, AddressInfo> grpcClientAddr = gateServerEntity.getGrpcClientAddr();
-                    if (!grpcClientAddr.contains(nodeYml.getServerId())) {
-                        grpcClientAddr.put(nodeYml.getServerId(), AddressInfo.valueOf(nodeYml.getHost(), grpcYml.getPort()));
-                        clusterService.saveServerEntity(gateServerEntity);
+                    for (ServerEntity serverEntity : serverEntityList) {
+                        // 如果不存在 则添加
+                        if (serverEntity.getConnectGrpcServerIds().contains(nodeYml.getServerId()) || ServerState.isError(serverEntity.getServerState())) {
+                            continue;
+                        }
+                        // 更新网关服务器Grpc服务器id列表
+                        serverEntity.getConnectGrpcServerIds().add(nodeYml.getServerId());
+                        clusterService.saveServerEntity(serverEntity);
+                        // 通过Jetty发布连接当前组Grpc服务器事件
+                        Map<String, String> params = new HashMap<>();
+                        params.put("serverEntity", SerializationUtils.beanToJson(clusterService.getServerEntity(nodeYml.getServerId())));
+                        HttpClient.getInstance().sendGet(serverEntity.getServerAddr().getAddress(), HttpCmd.CONNECT_GRPC_SERVER_CMD, params, null);
                     }
-
-                    TopicMessage grpcTopicMsg = new GrpcTopicMessage(ConstTopic.TOPIC_GRPC_CLIENT, gateServerEntity);
-                    RedissonClient.getInstance().publishTopic(grpcTopicMsg);
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);

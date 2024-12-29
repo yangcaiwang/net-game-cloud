@@ -45,7 +45,7 @@ public class JettyHttpServer {
         jettyHeartbeatProcess = new JettyHeartbeatProcess(jettyYmlTemplate.getHeartbeatTime(), jettyYmlTemplate.getHeartbeatTimeout());
 
         // Gm服作为注册中心
-        if (serverType == ServerType.GM_SERVER) {
+        if (ServerType.isGmServer(ServerType.GM_SERVER.value)) {
             jettyHeartbeatProcess.monitor();
         } else {
             jettyHeartbeatProcess.sent();

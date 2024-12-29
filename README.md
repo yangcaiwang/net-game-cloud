@@ -17,7 +17,7 @@
 ~~~
 net-game-core
 ├── cluster    --集群
-│       └── chat-server      --聊天服
+│       └── battle-server    --战斗服
 │       └── game-server      --游戏服
 │       └── gate-server      --网关服
 │       └── gm-server        --Gm服

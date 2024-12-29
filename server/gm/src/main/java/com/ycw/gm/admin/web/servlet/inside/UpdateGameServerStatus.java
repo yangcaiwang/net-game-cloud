@@ -1,6 +1,5 @@
 package com.ycw.gm.admin.web.servlet.inside;
 
-import com.ycw.core.cluster.enums.ServerState;
 import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.service.IServerService;
 import com.ycw.gm.admin.web.servlet.inside.anno.FuncName;
@@ -33,7 +32,7 @@ public class UpdateGameServerStatus extends InsideServlet {
 		String pid = map.containsKey("pid") ? castToString(map.get("pid")) : "-1";
 
 		List<GmServer> gsrvs = gsrvs(pid, sid);
-		ServerState state = isOpen == 1 ? ServerState.NEW : ServerState.MAINTAIN;
+//		ServerState state = isOpen == 1 ? ServerState.NEW : ServerState.MAINTAIN;
 //		serverService.updateServersStatus(pid, state, gsrvs, PropertyConfig.getBooleanValue("update.server.hot", true));
 		return succ().toJSONString();
 	}

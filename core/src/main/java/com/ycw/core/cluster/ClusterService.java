@@ -13,8 +13,20 @@ import java.util.List;
  * @version <1.0>
  */
 public interface ClusterService {
+    /**
+     * 获取集群所有服务器列表
+     *
+     * @return {@link ServerEntity} 服务器列表
+     */
+    List<ServerEntity> getAllServerEntity();
 
-    List<ServerEntity> selectAllServerEntity();
+    /**
+     * 通过组id列表获取所有Grpc服务器列表(排除网关服和登录服)
+     *
+     * @param groupIds 组id列表
+     * @return {@link ServerEntity} 服务器列表
+     */
+    List<ServerEntity> getAllGrpcServerEntityByGroup(int... groupIds);
 
     /**
      * 保存服务器数据
@@ -36,22 +48,15 @@ public interface ClusterService {
      *
      * @return {@link ServerEntity} 服务器对象
      */
-    ServerEntity getServerEntity(ServerType serverType);
+    List<ServerEntity> getServerEntity(int groupId, ServerType serverType);
 
     /**
      * 通过组id获取网关对象
      *
-     * @param groupId 组id
-     * @return {@link ServerEntity} 服务器对象
+     * @param groupIds 组id列表
+     * @return {@link ServerEntity} 网关服务器列表
      */
-    ServerEntity getGateServerEntity(int groupId);
-
-    /**
-     * 通过网关对象开启网关客户端连接
-     *
-     * @param gateServerEntity 网关服务器对象
-     */
-    void startGateGrpcClient(ServerEntity gateServerEntity);
+    List<ServerEntity> getGateServerEntity(int... groupIds);
 
     /**
      * 分配服务器到指定组

@@ -1,10 +1,12 @@
 package com.ycw.core.cluster.entity;
 
+import com.ycw.core.cluster.enums.ServerShowState;
 import com.ycw.core.cluster.enums.ServerState;
 import com.ycw.core.cluster.enums.ServerType;
 
 import java.io.Serializable;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <服务器实体类>
@@ -35,9 +37,14 @@ public class ServerEntity implements Serializable {
     private int serverType;
 
     /**
-     * 服务器状态 {@link ServerState}
+     * 内部服务器状态 {@link ServerState}
      */
     private int serverState;
+
+    /**
+     * 客户端显示服务器状态 {@link ServerShowState}
+     */
+    private int serverShowState;
 
     /**
      * 组id
@@ -70,9 +77,9 @@ public class ServerEntity implements Serializable {
     private AddressInfo grpcServerAddr;
 
     /**
-     * grpc客户端地址<目标serverId,目标grpcServerAddr></>
+     * grpc客户端连接服务器列表
      */
-    private ConcurrentHashMap<String, AddressInfo> grpcClientAddr = new ConcurrentHashMap<>();
+    private List<String> connectGrpcServerIds = new ArrayList<>();
 
     /**
      * Jetty服务端地址
@@ -100,13 +107,14 @@ public class ServerEntity implements Serializable {
         this.serverName = builder.serverName;
         this.serverType = builder.serverType;
         this.serverState = builder.serverState;
+        this.serverShowState = builder.serverShowState;
         this.groupId = builder.groupId;
         this.weight = builder.weight;
         this.serverAddr = builder.serverAddr;
         this.dbGameSourceInfo = builder.dbGameSourceInfo;
         this.dbLogSourceInfo = builder.dbLogSourceInfo;
         this.grpcServerAddr = builder.grpcServerAddr;
-        this.grpcClientAddr = builder.grpcClientAddr;
+        this.connectGrpcServerIds = builder.connectGrpcServerIds;
         this.jettyServerAddr = builder.jettyServerAddr;
         this.nettyServerAddr = builder.nettyServerAddr;
         this.openTime = builder.openTime;
@@ -119,13 +127,14 @@ public class ServerEntity implements Serializable {
         private String serverName;
         private int serverType;
         private int serverState;
+        private int serverShowState;
         private int groupId;
         private int weight;
         private AddressInfo serverAddr;
         private DataSourceInfo dbGameSourceInfo;
         private DataSourceInfo dbLogSourceInfo;
         private AddressInfo grpcServerAddr;
-        private ConcurrentHashMap<String, AddressInfo> grpcClientAddr = new ConcurrentHashMap<>();
+        private List<String> connectGrpcServerIds = new ArrayList<>();
         private AddressInfo jettyServerAddr;
         private AddressInfo nettyServerAddr;
         private long openTime;
@@ -153,6 +162,10 @@ public class ServerEntity implements Serializable {
 
         public Builder serverState(int serverState) {
             this.serverState = serverState;
+            return this;
+        }
+        public Builder serverShowState(int serverShowState) {
+            this.serverShowState = serverShowState;
             return this;
         }
 
@@ -186,8 +199,8 @@ public class ServerEntity implements Serializable {
             return this;
         }
 
-        public Builder grpcClientAddr(ConcurrentHashMap<String, AddressInfo> grpcClientAddr) {
-            this.grpcClientAddr = grpcClientAddr;
+        public Builder connectGrpcServerIds(List<String> connectGrpcServerIds) {
+            this.connectGrpcServerIds = connectGrpcServerIds;
             return this;
         }
 
@@ -248,6 +261,14 @@ public class ServerEntity implements Serializable {
         this.serverState = serverState;
     }
 
+    public int getServerShowState() {
+        return serverShowState;
+    }
+
+    public void setServerShowState(int serverShowState) {
+        this.serverShowState = serverShowState;
+    }
+
     public int getGroupId() {
         return groupId;
     }
@@ -296,12 +317,12 @@ public class ServerEntity implements Serializable {
         this.grpcServerAddr = grpcServerAddr;
     }
 
-    public ConcurrentHashMap<String, AddressInfo> getGrpcClientAddr() {
-        return grpcClientAddr;
+    public List<String> getConnectGrpcServerIds() {
+        return connectGrpcServerIds;
     }
 
-    public void setGrpcClientAddr(ConcurrentHashMap<String, AddressInfo> grpcClientAddr) {
-        this.grpcClientAddr = grpcClientAddr;
+    public void setConnectGrpcServerIds(List<String> connectGrpcServerIds) {
+        this.connectGrpcServerIds = connectGrpcServerIds;
     }
 
     public AddressInfo getJettyServerAddr() {
@@ -343,13 +364,14 @@ public class ServerEntity implements Serializable {
                 ", serverName='" + serverName + '\'' +
                 ", serverType=" + serverType +
                 ", serverState=" + serverState +
+                ", serverShowState=" + serverShowState +
                 ", groupId=" + groupId +
                 ", weight=" + weight +
                 ", serverAddr=" + serverAddr +
                 ", dbGameSourceInfo=" + dbGameSourceInfo +
                 ", dbLogSourceInfo=" + dbLogSourceInfo +
                 ", grpcServerAddr=" + grpcServerAddr +
-                ", grpcClientAddr=" + grpcClientAddr +
+                ", connectGrpcServerIds=" + connectGrpcServerIds +
                 ", jettyServerAddr=" + jettyServerAddr +
                 ", nettyServerAddr=" + nettyServerAddr +
                 ", openTime=" + openTime +

@@ -15,7 +15,6 @@
 
     <modules>
         <module>battle</module>
-        <module>chat</module>
         <module>game</module>
         <module>gate</module>
         <module>gm</module>

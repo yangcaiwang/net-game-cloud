@@ -32,15 +32,6 @@ import java.lang.reflect.Type;
  */
 public class SerializationUtils {
 
-    /**
-     * 自定义序列化接口
-     *
-     * @author lijishun
-     */
-    public static interface MySerializable extends java.io.Externalizable {
-
-    }
-
     /************************************************** fastjson ***************************************************/
 
     private static final SerializerFeature[] FEATURES = new SerializerFeature[]{SerializerFeature.WriteClassName, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteEnumUsingToString};

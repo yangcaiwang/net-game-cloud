@@ -9,13 +9,11 @@ import com.ycw.proto.CommonProto;
 import com.ycw.proto.RouteServiceGrpc;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
-import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,28 +46,21 @@ public class GrpcManager {
     }
 
     /**
-     * 开启grpc客户端
+     * 连接grpc服务器
      *
      * @param serverEntity 服务器对象
      */
-    public void startGrpcClient(ServerEntity serverEntity, long keepAliveTime, long keepAliveTimeout) {
-        ConcurrentHashMap<String, AddressInfo> grpcClientAddr = serverEntity.getGrpcClientAddr();
-        if (MapUtils.isEmpty(grpcClientAddr)) {
-            return;
-        }
-        for (Map.Entry<String, AddressInfo> entry : grpcClientAddr.entrySet()) {
-            String targetServerId = entry.getKey();
-            AddressInfo targetAddressInfo = entry.getValue();
-            if (grpcClientMap.containsKey(targetServerId)) {
-                GrpcClient client = grpcClientMap.get(targetServerId);
-                if (client.getChannel().getState(true) != ConnectivityState.READY) {
-                    client.start(serverEntity.getServerId(), targetAddressInfo);
-                }
-            } else {
-                GrpcClient grpcClient = new GrpcClient(keepAliveTime, keepAliveTimeout);
-                grpcClient.start(serverEntity.getServerId(), targetAddressInfo);
-                grpcClientMap.put(targetServerId, grpcClient);
+    public void connectGrpcServer(ServerEntity serverEntity) {
+        String targetServerId = serverEntity.getServerId();
+        if (grpcClientMap.containsKey(serverEntity.getServerId())) {
+            GrpcClient client = grpcClientMap.get(targetServerId);
+            if (client.getChannel().getState(true) != ConnectivityState.READY) {
+                client.start(serverEntity.getServerId(), serverEntity.getGrpcServerAddr());
             }
+        } else {
+            GrpcClient grpcClient = new GrpcClient();
+            grpcClient.start(serverEntity.getServerId(), serverEntity.getGrpcServerAddr());
+            grpcClientMap.put(targetServerId, grpcClient);
         }
     }
 
@@ -147,19 +138,12 @@ public class GrpcManager {
      * @author yangcaiwang
      */
     public class GrpcClient {
-        private long heartbeatTime;
-        private long heartbeatTimeout;
         private ManagedChannel channel;
 
         /**
          * 双向流模式
          */
         private StreamObserver<CommonProto.RouteRequest> routeRequestStreamObserver;
-
-        public GrpcClient(long heartbeatTime, long heartbeatTimeout) {
-            this.heartbeatTime = heartbeatTime;
-            this.heartbeatTimeout = heartbeatTimeout;
-        }
 
         /**
          * 启动客户端
@@ -174,8 +158,8 @@ public class GrpcManager {
                         .forAddress(addressInfo.getHost(), addressInfo.getPort())
                         .usePlaintext()
                         .keepAliveWithoutCalls(true)
-                        .keepAliveTime(heartbeatTime, TimeUnit.MILLISECONDS)
-                        .keepAliveTimeout(heartbeatTimeout, TimeUnit.MILLISECONDS)
+                        .keepAliveTime(addressInfo.getHeartbeatTime(), TimeUnit.MILLISECONDS)
+                        .keepAliveTimeout(addressInfo.getHeartbeatTimeout(), TimeUnit.MILLISECONDS)
                         .build();
                 logger.info("======================= [{}] grpc client connected ip:{} port:{} =======================", serverId, addressInfo.getHost(), addressInfo.getPort());
                 Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));

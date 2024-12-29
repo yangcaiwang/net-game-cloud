@@ -1,7 +1,7 @@
 package com.ycw.core.network.jetty.handler;
 
 import com.ycw.core.internal.loader.service.ServiceContext;
-import com.ycw.core.network.jetty.command.SuperHttpCommand;
+import com.ycw.core.network.jetty.httpCmd.SuperHttpCmd;
 import com.ycw.core.network.jetty.http.HttpCode;
 import com.ycw.core.network.jetty.http.HttpSession;
 import org.eclipse.jetty.server.Request;
@@ -47,7 +47,7 @@ public class JettyHttpHandler extends AbstractHandler {
                 jettyParam(params, request);
             }
             log.debug("action:" + action);
-            SuperHttpCommand service = ServiceContext.getInstance().get(action);
+            SuperHttpCmd service = ServiceContext.getInstance().get(action);
             HttpSession httpSession = new HttpSession(request, response, action, params);
             if (service != null) {
                 service.running(httpSession);

@@ -1,4 +1,4 @@
-package com.ycw.core.network.jetty.command;
+package com.ycw.core.network.jetty.httpCmd;
 
 import com.ycw.core.internal.loader.service.AbstractService;
 import com.ycw.core.network.jetty.http.HttpCode;
@@ -11,7 +11,7 @@ import com.ycw.core.network.jetty.http.HttpSession;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class BaseHttpCommand extends AbstractService implements SuperHttpCommand {
+public class BaseHttpCmd extends AbstractService implements SuperHttpCmd {
     @Override
     public void running(HttpSession httpSession) {
         if (execute(httpSession)) {

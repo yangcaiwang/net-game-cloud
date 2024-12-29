@@ -10,7 +10,6 @@
         <module name="battle" />
         <module name="core" />
         <module name="game" />
-        <module name="chat" />
         <module name="gm" />
         <module name="proto" />
         <module name="gate" />
@@ -20,6 +19,7 @@
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
       <module name="center" target="1.8" />
+      <module name="chat" target="1.8" />
       <module name="cluster" target="1.8" />
       <module name="demo" target="1.8" />
       <module name="kafka" target="1.8" />

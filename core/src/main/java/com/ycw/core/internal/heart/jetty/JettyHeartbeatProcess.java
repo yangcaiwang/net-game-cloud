@@ -10,7 +10,7 @@ import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
 import com.ycw.core.network.jetty.HttpClient;
-import com.ycw.core.network.jetty.constant.HttpCommands;
+import com.ycw.core.network.jetty.constant.HttpCmd;
 import org.apache.commons.collections.MapUtils;
 
 import java.io.IOException;
@@ -42,17 +42,15 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
             threadSender = new TimerActorThread("jettyHeartbeat-threadSender", heartbeatTime, () -> {
                 try {
                     ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
-                    ServerEntity serverEntity = clusterService.getServerEntity(ServerType.GM_SERVER);
+                    ServerEntity serverEntity = clusterService.getServerEntity(0, ServerType.GM_SERVER).get(0);
                     if (serverEntity == null) {
                         return;
                     }
 
-                    if (serverEntity.getServerState() == ServerState.NORMAL.state) {
+                    if (ServerState.isNormal(serverEntity.getServerState())) {
                         Map<String, String> paramMap = new HashMap<>();
                         paramMap.put("serverId", ServerNodeComponent.getInstance().getServerId());
-                        StringBuilder url = new StringBuilder();
-                        url.append(HttpCommands.HTTP_PREFIX).append(serverEntity.getJettyServerAddr().getAddress()).append(HttpCommands.HEARTBEAT);
-                        HttpClient.getInstance().sendGet(url.toString(), paramMap);
+                        HttpClient.getInstance().sendGet(serverEntity.getJettyServerAddr().getAddress(), HttpCmd.HEARTBEAT_CMD, paramMap, null);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -77,7 +75,7 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
                                 serverEntity.setServerState(ServerState.ERROR.state);
                                 clusterService.saveServerEntity(serverEntity);
                             } else {
-                                if (serverEntity.getServerState() == ServerState.ERROR.state) {
+                                if (ServerState.isError(serverEntity.getServerState())) {
                                     serverEntity.setServerState(ServerState.NORMAL.state);
                                     clusterService.saveServerEntity(serverEntity);
                                 }

@@ -103,24 +103,56 @@
       <el-table-column label="唯一标识" prop="serverId" align="center" width="100"/>
       <el-table-column label="名称" prop="serverName" :show-overflow-tooltip="true" width="50"/>
       <el-table-column label="类型" prop="serverType" align="center" width="100" :formatter="formatServerType"/>
-      <el-table-column label="状态" prop="serverState" align="center" width="50" :formatter="formatServerState"/>
+      <el-table-column label="内部状态" prop="serverState" align="center" width="100" :formatter="formatServerState"/>
+      <el-table-column label="客户端显示" prop="serverShowState" align="center" width="100"
+                       :formatter="formatServerShowState"/>
       <el-table-column label="地址" prop="serverAddr.address" align="center" width="150"/>
       <el-table-column label="组" prop="groupId" align="center" width="100"/>
       <el-table-column label="权重" prop="weight" align="center" width="100"/>
-      <el-table-column label="Grpc客户端地址" align="center" width="150">
+      <el-table-column label="连接Grpc服务器列表" align="center" width="150">
         <template slot-scope="scope">
           <el-popover
             placement="top-start"
             width="500"
             trigger="hover"
-            :content="scope.row.grpcClientAddr">
-            <el-button size="mini" slot="reference">详情</el-button>
+            :content="scope.row.connectGrpcServerIds">
+            <el-button size="mini" slot="reference" v-if="scope.row.connectGrpcServerIds.length > 0 ">详情</el-button>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="Grpc服务端地址" prop="grpcServerAddr.address" align="center" width="150"/>
-      <el-table-column label="Jetty服务端地址" prop="jettyServerAddr.address" align="center" width="150"/>
-      <el-table-column label="Netty服务端地址" prop="nettyServerAddr.address" align="center" width="150"/>
+      <el-table-column label="Grpc服务端信息" align="center" width="150">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            width="500"
+            trigger="hover"
+            :content="scope.row.grpcServerAddr">
+            <el-button size="mini" slot="reference" v-if="scope.row.grpcServerAddr.address !== null">详情</el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column label="Jetty服务端信息" align="center" width="150">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            width="500"
+            trigger="hover"
+            :content="scope.row.jettyServerAddr">
+            <el-button size="mini" slot="reference" v-if="scope.row.jettyServerAddr.address !== null">详情</el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column label="Netty服务端信息" align="center" width="150">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            width="500"
+            trigger="hover"
+            :content="scope.row.nettyServerAddr">
+            <el-button size="mini" slot="reference" v-if="scope.row.nettyServerAddr.address !== null">详情</el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column label="开服时间" align="center" prop="openTime" width="160">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.openTime) }}</span>
@@ -418,6 +450,20 @@ export default {
       let status;
       switch (cellValue) {
         case 1:
+          status = "正常"
+          break;
+        case 2:
+          status = "异常"
+          break;
+        default:
+          status = "状态错误"
+      }
+      return status;
+    },
+    formatServerShowState(row, column, cellValue) {
+      let status;
+      switch (cellValue) {
+        case 1:
           status = "白名单"
           break;
         case 2:
@@ -438,18 +484,11 @@ export default {
         case 7:
           status = "维护中"
           break;
-        case 8:
-          status = "正常"
-          break;
-        case 9:
-          status = "异常"
-          break;
         default:
-          status = "状态错误"
+          status = ""
       }
       return status;
     },
-
     formatServerType(row, column, cellValue) {
       let type = 0;
       switch (cellValue) {
@@ -457,18 +496,15 @@ export default {
           type = "Gm服"
           break;
         case 2:
-          type = "聊天服"
-          break;
-        case 3:
           type = "登录服"
           break;
-        case 4:
+        case 3:
           type = "网关服"
           break;
-        case 5:
+        case 4:
           type = "游戏服"
           break;
-        case 6:
+        case 5:
           type = "战斗服"
           break;
         default:
