@@ -30,27 +30,27 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class ServerNode extends AbstractServerNode {
+public class ServerNodeComponent extends AbstractServerNode {
 
     public static <T extends AbstractServerNode> T valueOf(ServerType serverType) {
-        serverNode = new ServerNode();
-        serverNode.setServerType(serverType);
-        return (T) serverNode;
+        serverNodeComponent = new ServerNodeComponent();
+        serverNodeComponent.setServerType(serverType);
+        return (T) serverNodeComponent;
     }
 
-    private static ServerNode serverNode;
+    private static ServerNodeComponent serverNodeComponent;
 
-    public static ServerNode getInstance() {
-        return serverNode;
+    public static ServerNodeComponent getInstance() {
+        return serverNodeComponent;
     }
 
     @Override
     public void startRegister() {
         try {
             NodeYmlTemplate nodeYml = serverYmlTemplate.getNode(); // 解析node配置
-            GrpcYmlTemplate grpcYml = serverYmlTemplate.getGrpc();  // 解析grpc配置
-            JettyYmlTemplate jettyYml = serverYmlTemplate.getJetty(); // 解析jetty配置
-            NettyYmlTemplate nettyYml = serverYmlTemplate.getNetty(); // 解析netty配置
+            BaseYmlTemplate grpcYml = serverYmlTemplate.getGrpc();  // 解析grpc配置
+            BaseYmlTemplate jettyYml = serverYmlTemplate.getJetty(); // 解析jetty配置
+            BaseYmlTemplate nettyYml = serverYmlTemplate.getNetty(); // 解析netty配置
             DbYmlTemplate dbGameYml = serverYmlTemplate.getDbGame(); // 解析dbGame配置
             DbYmlTemplate dbLogYml = serverYmlTemplate.getDbLog();// 解析dbLog配置
             if (nodeYml != null) {
@@ -130,7 +130,7 @@ public class ServerNode extends AbstractServerNode {
                 }
 
                 // 开启grpc客户端
-                GrpcYmlTemplate grpcYmlTemplate = serverYmlTemplate.getGrpc();
+                BaseYmlTemplate grpcYmlTemplate = serverYmlTemplate.getGrpc();
                 if (grpcYmlTemplate != null) {
                     GrpcManager.getInstance().startGrpcClient(serverEntity, grpcYmlTemplate.getHeartbeatTime(), grpcYmlTemplate.getHeartbeatTimeout());
                 }
@@ -145,7 +145,7 @@ public class ServerNode extends AbstractServerNode {
         if (Begin.getInstance(Begin.GRPC_SER).isBegin(this.serverType)) {
             try {
                 NodeYmlTemplate nodeYml = serverYmlTemplate.getNode();
-                GrpcYmlTemplate grpcYml = serverYmlTemplate.getGrpc();
+                BaseYmlTemplate grpcYml = serverYmlTemplate.getGrpc();
                 if (grpcYml != null) {
                     // 开启grpc服务端
                     GrpcManager.getInstance().startGrpcServer(grpcYml.getPort(), grpcYml.getHeartbeatTime(), grpcYml.getHeartbeatTimeout());
@@ -179,7 +179,7 @@ public class ServerNode extends AbstractServerNode {
         if (Begin.getInstance(Begin.NETTY).isBegin(this.serverType)) {
             try {
                 NodeYmlTemplate nodeYml = serverYmlTemplate.getNode();
-                NettyYmlTemplate nettyYml = serverYmlTemplate.getNetty();
+                BaseYmlTemplate nettyYml = serverYmlTemplate.getNetty();
                 if (nettyYml != null) {
                     NettyServer.getInstance().start(nodeYml.getHost(), nettyYml.getPort(), nettyYml.getHeartbeatTime(), nettyYml.getHeartbeatTimeout());
                     log.info("======================= [{}] netty server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), nettyYml.getPort());
@@ -195,7 +195,7 @@ public class ServerNode extends AbstractServerNode {
         if (Begin.getInstance(Begin.JETTY).isBegin(this.serverType)) {
             try {
                 NodeYmlTemplate nodeYml = serverYmlTemplate.getNode();
-                JettyYmlTemplate jettyYml = serverYmlTemplate.getJetty();
+                BaseYmlTemplate jettyYml = serverYmlTemplate.getJetty();
                 if (jettyYml != null) {
                     JettyHttpServer.getInstance().start(new JettyHttpHandler(), jettyYml, this.serverType);
                     log.info("======================= [{}] jetty server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), jettyYml.getPort());

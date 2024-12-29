@@ -11,9 +11,9 @@ import java.io.Serializable;
  */
 public class ServerYmlTemplate implements Serializable {
     private NodeYmlTemplate node;
-    private GrpcYmlTemplate grpc;
-    private JettyYmlTemplate jetty;
-    private NettyYmlTemplate netty;
+    private BaseYmlTemplate grpc;
+    private BaseYmlTemplate jetty;
+    private BaseYmlTemplate netty;
     private DbYmlTemplate dbGame;
     private DbYmlTemplate dbLog;
 
@@ -25,27 +25,27 @@ public class ServerYmlTemplate implements Serializable {
         this.node = node;
     }
 
-    public GrpcYmlTemplate getGrpc() {
+    public BaseYmlTemplate getGrpc() {
         return grpc;
     }
 
-    public void setGrpc(GrpcYmlTemplate grpc) {
+    public void setGrpc(BaseYmlTemplate grpc) {
         this.grpc = grpc;
     }
 
-    public JettyYmlTemplate getJetty() {
+    public BaseYmlTemplate getJetty() {
         return jetty;
     }
 
-    public void setJetty(JettyYmlTemplate jetty) {
+    public void setJetty(BaseYmlTemplate jetty) {
         this.jetty = jetty;
     }
 
-    public NettyYmlTemplate getNetty() {
+    public BaseYmlTemplate getNetty() {
         return netty;
     }
 
-    public void setNetty(NettyYmlTemplate netty) {
+    public void setNetty(BaseYmlTemplate netty) {
         this.netty = netty;
     }
 

@@ -117,15 +117,15 @@ public class ServerServiceImpl implements IServerService {
                 serverEntity.setGroupId(node.getGroupId());
                 serverEntity.setOpenTime(node.getOpenTime());
 
-                GrpcYmlTemplate grpc = serverYmlTemplate.getGrpc();
+                BaseYmlTemplate grpc = serverYmlTemplate.getGrpc();
                 if (grpc != null) {
                     serverEntity.getGrpcServerAddr().setPort(grpc.getPort());
                 }
-                JettyYmlTemplate jetty = serverYmlTemplate.getJetty();
+                BaseYmlTemplate jetty = serverYmlTemplate.getJetty();
                 if (jetty != null) {
                     serverEntity.getJettyServerAddr().setPort(jetty.getPort());
                 }
-                NettyYmlTemplate netty = serverYmlTemplate.getNetty();
+                BaseYmlTemplate netty = serverYmlTemplate.getNetty();
                 if (netty != null) {
                    serverEntity.getNettyServerAddr().setPort(netty.getPort());
                 }

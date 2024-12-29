@@ -5,7 +5,7 @@ import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.ServerState;
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.node.ServerNode;
+import com.ycw.core.cluster.node.ServerNodeComponent;
 import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
@@ -49,7 +49,7 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
 
                     if (serverEntity.getServerState() == ServerState.NORMAL.state) {
                         Map<String, String> paramMap = new HashMap<>();
-                        paramMap.put("serverId", ServerNode.getInstance().getServerId());
+                        paramMap.put("serverId", ServerNodeComponent.getInstance().getServerId());
                         StringBuilder url = new StringBuilder();
                         url.append(HttpCommands.HTTP_PREFIX).append(serverEntity.getJettyServerAddr().getAddress()).append(HttpCommands.HEARTBEAT);
                         HttpClient.getInstance().sendGet(url.toString(), paramMap);

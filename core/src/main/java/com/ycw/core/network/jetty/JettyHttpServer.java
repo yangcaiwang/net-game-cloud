@@ -1,7 +1,7 @@
 package com.ycw.core.network.jetty;
 
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.template.JettyYmlTemplate;
+import com.ycw.core.cluster.template.BaseYmlTemplate;
 import com.ycw.core.internal.heart.jetty.JettyHeartbeatProcess;
 import com.ycw.core.network.jetty.handler.JettyHttpHandler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -33,12 +33,12 @@ public class JettyHttpServer {
         return jettyHttpServer;
     }
 
-    public void start(JettyHttpHandler jettyHttpHandler, JettyYmlTemplate jettyYmlTemplate, ServerType serverType) throws Exception {
-        jettyServer = new Server(getQueuedThreadPool(jettyYmlTemplate.getHttpMinThreads(), jettyYmlTemplate.getHttpMaxThreads(), jettyYmlTemplate.getIdleTimeout()));
+    public void start(JettyHttpHandler jettyHttpHandler, BaseYmlTemplate jettyYmlTemplate, ServerType serverType) throws Exception {
+        jettyServer = new Server(getQueuedThreadPool());
         jettyServer.setDumpAfterStart(false);
         jettyServer.setDumpBeforeStop(false);
         jettyServer.setStopAtShutdown(false);
-        jettyServer.addConnector(httpConnector(jettyYmlTemplate.getPort(), jettyYmlTemplate.getIdleTimeout()));
+        jettyServer.addConnector(httpConnector(jettyYmlTemplate.getPort()));
         jettyServer.setHandler(jettyHttpHandler);
         jettyServer.start();
 
@@ -54,19 +54,18 @@ public class JettyHttpServer {
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
 
-    private QueuedThreadPool getQueuedThreadPool(int httpMinTreads, int httpMaxThreads, int idleTimeout) {
+    private QueuedThreadPool getQueuedThreadPool() {
         QueuedThreadPool threadPool = new QueuedThreadPool();
-        threadPool.setMinThreads(httpMinTreads);
-        threadPool.setMaxThreads(httpMaxThreads);
-        threadPool.setIdleTimeout(idleTimeout);
+        threadPool.setMinThreads(10);
+        threadPool.setMaxThreads(100);
+        threadPool.setIdleTimeout(60000);
         return threadPool;
     }
 
-    private ServerConnector httpConnector(int port, int idleTimeout) {
-        // 接受连接线程 与 连接事件处理线程都设置为1
-        ServerConnector connector = new ServerConnector(jettyServer, 1, 2, new HttpConnectionFactory(getHttpConfig(port)));
+    private ServerConnector httpConnector(int port) {
+        ServerConnector connector = new ServerConnector(jettyServer, new HttpConnectionFactory(getHttpConfig(port)));
         connector.setPort(port);
-        connector.setIdleTimeout(idleTimeout);
+        connector.setIdleTimeout(60000);
         return connector;
     }
 

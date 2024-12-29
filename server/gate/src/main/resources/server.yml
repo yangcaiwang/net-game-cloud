@@ -8,10 +8,7 @@ grpc:
 jetty:
   heartbeatTime: 5000
   heartbeatTimeout: 0
-  httpMaxThreads: 10
-  httpMinThreads: 5
-  idleTimeout: 100
-  port: 9000
+  port: 9001
 netty:
   heartbeatTime: 5000
   heartbeatTimeout: 30000

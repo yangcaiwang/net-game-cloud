@@ -7,7 +7,7 @@ package com.ycw.core.cluster.template;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class NodeYmlTemplate extends AbstractYmlTemplate {
+public class NodeYmlTemplate {
 
     /**
      * 服务器id
@@ -18,6 +18,11 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
      * 机器ip
      */
     private String host;
+
+    /**
+     * 端口号
+     */
+    private int port;
 
     /**
      * 服务器名称
@@ -53,6 +58,14 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public String getServerName() {
@@ -92,6 +105,7 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
         return "NodeYmlTemplate{" +
                 "serverId='" + serverId + '\'' +
                 ", host='" + host + '\'' +
+                ", port=" + port +
                 ", serverName='" + serverName + '\'' +
                 ", groupId=" + groupId +
                 ", weight=" + weight +

@@ -1,7 +1,7 @@
 package com.ycw.gm.admin;
 
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.node.ServerNode;
+import com.ycw.core.cluster.node.ServerNodeComponent;
 import com.ycw.core.cluster.node.SuperServerNode;
 import com.ycw.gm.common.utils.ssl.RSAUtils;
 import org.mybatis.spring.annotation.MapperScan;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class GmApp {
     public static void main(String[] args) {
         SpringApplication.run(GmApp.class, args);
-        SuperServerNode superServerNode = ServerNode.valueOf(ServerType.GM_SERVER);
+        SuperServerNode superServerNode = ServerNodeComponent.valueOf(ServerType.GM_SERVER);
         superServerNode.init();
         superServerNode.start();
         // 停服钩子

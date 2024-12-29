@@ -3,7 +3,7 @@ package com.ycw.core.cluster;
 import com.ycw.core.cluster.constant.ClusterConstant;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.enums.ServerType;
-import com.ycw.core.cluster.node.ServerNode;
+import com.ycw.core.cluster.node.ServerNodeComponent;
 import com.ycw.core.internal.cache.redission.RedissonClient;
 import com.ycw.core.internal.loader.service.AbstractService;
 import org.apache.commons.collections4.MapUtils;
@@ -132,8 +132,8 @@ public class ClusterServiceImpl extends AbstractService implements ClusterServic
         }
 
         // 开启grpc客户端
-        ServerNode serverNode = ServerNode.getInstance();
-        serverNode.startGrpcClient();
+        ServerNodeComponent serverNodeComponent = ServerNodeComponent.getInstance();
+        serverNodeComponent.startGrpcClient();
     }
 
     @Override

@@ -7,7 +7,7 @@ package com.ycw.core.cluster.template;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class DbYmlTemplate extends AbstractYmlTemplate {
+public class DbYmlTemplate extends BaseYmlTemplate {
     private String name;
     private boolean auto;
     private String username;

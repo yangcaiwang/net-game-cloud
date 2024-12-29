@@ -1,13 +1,20 @@
 package com.ycw.core.cluster.template;
 
+import java.io.Serializable;
+
 /**
- * <netty解析yml模版类>
+ * <解析yml模版抽象类>
  * <p>
  *
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class NettyYmlTemplate extends AbstractYmlTemplate {
+public class BaseYmlTemplate implements Serializable {
+
+    /**
+     * 端口号
+     */
+    private int port;
 
     /**
      * 心跳时间
@@ -18,6 +25,14 @@ public class NettyYmlTemplate extends AbstractYmlTemplate {
      * 心跳超时时间
      */
     private long heartbeatTimeout;
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 
     public long getHeartbeatTime() {
         return heartbeatTime;
@@ -34,6 +49,4 @@ public class NettyYmlTemplate extends AbstractYmlTemplate {
     public void setHeartbeatTimeout(long heartbeatTimeout) {
         this.heartbeatTimeout = heartbeatTimeout;
     }
-
-
 }
