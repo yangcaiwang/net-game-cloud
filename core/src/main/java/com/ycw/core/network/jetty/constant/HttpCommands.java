@@ -18,6 +18,11 @@ public interface HttpCommands {
      * 发送心跳包
      */
     String HEARTBEAT = "/HeartbeatCommand.do";
+
+    /**
+     * 更新目标服务器yml配置
+     */
+    String MODIFY_SERVER_YML = "/ModifyServerYmlCommand.do";
     /**
      * 检测帐号是否存在
      */

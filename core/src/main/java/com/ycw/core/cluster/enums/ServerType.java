@@ -31,4 +31,14 @@ public enum ServerType {
         this.value = value;
         this.name = name;
     }
+
+    public static ServerType getByValue(int value) {
+        for (ServerType serverType : ServerType.values()) {
+            if (serverType.getValue() == value) {
+                return serverType;
+            }
+        }
+
+        return null;
+    }
 }

@@ -27,7 +27,7 @@ import java.io.Reader;
 public abstract class AbstractServerNode implements SuperServerNode {
 
     public static final Logger log = LoggerFactory.getLogger(AbstractServerNode.class);
-    protected ServerYmlTemplate serverYmlTemplate;
+    public ServerYmlTemplate serverYmlTemplate;
 
     protected ServerType serverType;
 
@@ -57,6 +57,7 @@ public abstract class AbstractServerNode implements SuperServerNode {
             this.serverYmlTemplate = PropertyConfig.loadYml(PropertyConfig.getAbsolutePath("server.yml", serverType), ServerYmlTemplate.class);
             log.info("======================= [{}] 初始化服务器配置完毕 =======================", getServerId());
 
+            PropertyConfig.modifyServerYml(ServerNode.getInstance().serverYmlTemplate, this.serverType);
             // (2)初始化游戏配置
             PropertyConfig.load(PropertyConfig.getAbsolutePath("server.properties", serverType));
             log.info("======================= [{}] 初始化游戏配置完毕 =======================", getServerId());

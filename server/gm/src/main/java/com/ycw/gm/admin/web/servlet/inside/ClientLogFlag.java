@@ -38,7 +38,7 @@ public class ClientLogFlag extends InsideServlet {
             newServer.setSort(gmServer.getSort());
             newServer.setServerKeyId(gmServer.getServerKeyId());
             newServer.setClientLog("1".equals(clientLog) ? "1" : "0");
-            serverService.updateServer(newServer);
+//            serverService.updateServer(newServer);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return fail(1, e.getMessage()).toString();

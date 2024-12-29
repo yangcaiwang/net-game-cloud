@@ -1,17 +1,23 @@
-node:
-  groupId: 1
-  serverId: "battle-1001"
-  serverName: ""
-  weight: 100
-  host: "127.0.0.1"
-  port: 6006
+!!com.ycw.core.cluster.template.ServerYmlTemplate
+dbGame: null
+dbLog: null
 grpc:
-  port: 8003
   heartbeatTime: 10000
   heartbeatTimeout: 30000
+  port: 8003
 jetty:
-  port: 9003
-  httpMinThreads: 5
-  httpMaxThreads: 10
-  idleTimeout: 100
   heartbeatTime: 5000
+  heartbeatTimeout: 0
+  httpMaxThreads: 10
+  httpMinThreads: 5
+  idleTimeout: 100
+  port: 9003
+netty: null
+node:
+  groupId: 1
+  host: 127.0.0.1
+  openTime: 0
+  port: 6006
+  serverId: battle-1001
+  serverName: null
+  weight: 100

@@ -8,10 +8,16 @@ package com.ycw.core.cluster.template;
  * @version <1.0>
  */
 public class NodeYmlTemplate extends AbstractYmlTemplate {
+
     /**
      * 服务器id
      */
     private String serverId;
+
+    /**
+     * 机器ip
+     */
+    private String host;
 
     /**
      * 服务器名称
@@ -39,6 +45,14 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
 
     public void setServerId(String serverId) {
         this.serverId = serverId;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public String getServerName() {
@@ -71,5 +85,17 @@ public class NodeYmlTemplate extends AbstractYmlTemplate {
 
     public void setOpenTime(long openTime) {
         this.openTime = openTime;
+    }
+
+    @Override
+    public String toString() {
+        return "NodeYmlTemplate{" +
+                "serverId='" + serverId + '\'' +
+                ", host='" + host + '\'' +
+                ", serverName='" + serverName + '\'' +
+                ", groupId=" + groupId +
+                ", weight=" + weight +
+                ", openTime=" + openTime +
+                '}';
     }
 }

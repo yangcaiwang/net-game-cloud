@@ -4,7 +4,11 @@ import com.ycw.core.cluster.ClusterService;
 import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.property.PropertyConfig;
+import com.ycw.core.cluster.template.*;
 import com.ycw.core.internal.loader.service.ServiceContext;
+import com.ycw.core.network.jetty.HttpClient;
+import com.ycw.core.network.jetty.constant.HttpCommands;
+import com.ycw.core.network.jetty.http.HttpCode;
 import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.mapper.GmServerMapper;
 import com.ycw.gm.admin.service.IServerService;
@@ -12,6 +16,7 @@ import com.ycw.gm.common.constant.Constants;
 import com.ycw.gm.common.core.redis.RedisCache;
 import com.ycw.gm.common.utils.ExecuteShellUtil;
 import com.ycw.gm.common.utils.ParamParseUtils;
+import com.ycw.gm.common.utils.SerializationUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,85 +98,53 @@ public class ServerServiceImpl implements IServerService {
     /**
      * 修改保存服务器信息
      *
-     * @param server 服务器信息
+     * @param t 服务器信息
      * @return 结果
      */
     @Override
     @Transactional
-    public int updateServer(GmServer server) {
-        updateRedisServer(server);
-        // 服务器服务器信息
-        return serverMapper.updateServer(server);
-    }
+    public int updateServer(ServerYmlTemplate serverYmlTemplate) {
 
-    private void updateRedisServer(GmServer server) {
-        String serverRedisKey = getServerRedisKey(String.valueOf(server.getServerKeyId()));
-        GmServer gmServer = redisCache.getCacheObject(serverRedisKey);
-        boolean change = false;
-        if (gmServer == null) {
-            gmServer = selectServerById(server.getServerKeyId());
-            if (gmServer == null) {
-                gmServer = server;
+        ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
+        StringBuilder url = new StringBuilder();
+        Map<String, String> paramMap = new HashMap<>();
+        try {
+            NodeYmlTemplate node = serverYmlTemplate.getNode();
+            if (node != null) {
+                ServerEntity serverEntity = clusterService.getServerEntity(node.getServerId());
+                serverEntity.setServerName(node.getServerName());
+                serverEntity.setWeight(node.getWeight());
+                serverEntity.setGroupId(node.getGroupId());
+                serverEntity.setOpenTime(node.getOpenTime());
+
+                GrpcYmlTemplate grpc = serverYmlTemplate.getGrpc();
+                if (grpc != null) {
+                    serverEntity.getGrpcServerAddr().setPort(grpc.getPort());
+                }
+                JettyYmlTemplate jetty = serverYmlTemplate.getJetty();
+                if (jetty != null) {
+                    serverEntity.getJettyServerAddr().setPort(jetty.getPort());
+                }
+                NettyYmlTemplate netty = serverYmlTemplate.getNetty();
+                if (netty != null) {
+                   serverEntity.getNettyServerAddr().setPort(netty.getPort());
+                }
+                // 更新配置中心
+                clusterService.saveServerEntity(serverEntity);
+                // 更新目标服务器的serverYml
+                paramMap.put("serverYmlTemplate", SerializationUtils.beanToJson(serverYmlTemplate));
+                url.append(HttpCommands.HTTP_PREFIX).append(serverEntity.getJettyServerAddr().getAddress()).append(HttpCommands.MODIFY_SERVER_YML);
+                HttpClient.HttpResponse httpResponse = HttpClient.getInstance().sendGet(url.toString(), paramMap);
+                if (httpResponse != null && httpResponse.getCode() == HttpCode.SUCCESS.getIndex()) {
+                    return 1;
+                }
             }
-            change = true;
-        }
-        if (server.getServerStatus() != null) {
-            gmServer.setServerStatus(server.getServerStatus());
-            change = true;
-        }
-        if (server.getServerId() != null) {
-            gmServer.setServerId(server.getServerId());
-            change = true;
-        }
-        if (server.getServerType() != null) {
-            gmServer.setServerType(server.getServerType());
-            change = true;
-        }
-        if (server.getInPort() != null) {
-            gmServer.setInPort(server.getInPort());
-            change = true;
-        }
-        if (server.getPlatformId() != null) {
-            gmServer.setPlatformId(server.getPlatformId());
-            change = true;
-        }
-        if (server.getInHost() != null) {
-            gmServer.setInHost(server.getInHost());
-            change = true;
-        }
-        if (server.getClientPort() != null) {
-            gmServer.setClientPort(server.getClientPort());
-            change = true;
-        }
-        if (server.getOutHost() != null) {
-            gmServer.setOutHost(server.getOutHost());
-            change = true;
-        }
-        if (server.getSort() != null) {
-            gmServer.setSort(server.getSort());
-            change = true;
-        }
-        if (server.getOpenTime() != null) {
-            gmServer.setOpenTime(server.getOpenTime());
-            change = true;
-            serverOpenByTime(server, 1, false);
-        }
-        if (server.getServerName() != null) {
-            gmServer.setServerName(server.getServerName());
-            change = true;
-        }
-        if (server.getShowOut() != null) {
-            gmServer.setShowOut(server.getShowOut());
-            change = true;
-        }
-        if (server.getClientLog() != null) {
-            gmServer.setClientLog(server.getClientLog());
-            change = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
 
-        if (change) {
-            redisCache.setCacheObject(serverRedisKey, gmServer);
-        }
+        return 0;
     }
 
     /**
@@ -182,7 +155,6 @@ public class ServerServiceImpl implements IServerService {
      */
     @Override
     public int updateServerStatus(GmServer server) {
-        updateRedisServer(server);
         return serverMapper.updateServer(server);
     }
 
@@ -249,7 +221,7 @@ public class ServerServiceImpl implements IServerService {
                             tmpServer.setServerKeyId(server.getServerKeyId());
                             tmpServer.setServerStatus("1");
                             tmpServer.setShowOut("1");
-                            updateServer(tmpServer);
+//                            updateServer(tmpServer);
 
                             updateGameServerOpenTime(server, cacheObject, true);
                             logger.info("open server:{} {} success", server.getServerKeyId(), server.getServerName());

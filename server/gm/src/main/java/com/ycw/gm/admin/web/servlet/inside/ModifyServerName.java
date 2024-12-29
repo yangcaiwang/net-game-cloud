@@ -35,7 +35,7 @@ public class ModifyServerName extends InsideServlet {
 			GmServer server = new GmServer();
 			server.setServerKeyId(gsrv.getServerKeyId());
 			server.setServerName(sName);
-			serverService.updateServer(server);
+//			serverService.updateServer(server);
 		}
 
 		return succ().toJSONString();

@@ -2,6 +2,8 @@ package com.ycw.core.cluster.property;
 
 import com.google.common.collect.Maps;
 import com.ycw.core.cluster.enums.ServerType;
+import com.ycw.core.cluster.template.NodeYmlTemplate;
+import com.ycw.core.cluster.template.ServerYmlTemplate;
 import com.ycw.core.internal.event.EventBusesImpl;
 import com.ycw.core.util.*;
 import org.apache.commons.lang3.Validate;
@@ -9,8 +11,11 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.nodes.Tag;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -243,26 +248,24 @@ public class PropertyConfig {
         return null;
     }
 
-//    public static void modifyClusterYml(String clusterYmlPath, String key, int value) {
-//        try {
-//            DumperOptions options = new DumperOptions();
-//            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-//            Yaml yaml = new Yaml(options);
-//            Map<String, Object> ymlMap = loadYml(clusterYmlPath, key);
-//            Map<String, Object> clusterMap = (Map<String, Object>) ymlMap.get(ClusterConstant.CLUSTER_PREFIX);
-//            if (MapUtils.isEmpty(clusterMap)) {
-//                return;
-//            }
-//            // 更新新的值
-//            clusterMap.put(key, value);
-//            //        获取的是 java运行时候的classes里的文件地址
-////            clusterYmlPath.replace("/target/classes/", "/src/main/resources/").replaceAll("/", "\\\\");
-//            yaml.dump(ymlMap, new FileWriter(clusterYmlPath));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            log.error("修改cluster.yml失败! key={},value={}", key, value);
-//        }
-//    }
+    public static void modifyServerYml(ServerYmlTemplate serverYmlTemplate, ServerType serverType) {
+        try {
+            String absolutePath = PropertyConfig.getAbsolutePath("server.yml", serverType);
+
+            DumperOptions options = new DumperOptions();
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+
+            Representer representer = new Representer();
+            representer.addClassTag(NodeYmlTemplate.class, Tag.MAP);
+
+            Yaml yaml = new Yaml(representer, options);
+            yaml.dump(serverYmlTemplate, new FileWriter(absolutePath));
+            log.error("更新server.yml成功! [{}]", serverYmlTemplate);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("修改server.yml失败! [{}]", serverYmlTemplate);
+        }
+    }
 
     static public String getPathname(String key) {
         return getPathname(key, null);

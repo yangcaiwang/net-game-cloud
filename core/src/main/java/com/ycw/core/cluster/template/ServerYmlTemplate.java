@@ -64,4 +64,16 @@ public class ServerYmlTemplate implements Serializable {
     public void setDbLog(DbYmlTemplate dbLog) {
         this.dbLog = dbLog;
     }
+
+    @Override
+    public String toString() {
+        return "ServerYmlTemplate{" +
+                "node=" + node +
+                ", grpc=" + grpc +
+                ", jetty=" + jetty +
+                ", netty=" + netty +
+                ", dbGame=" + dbGame +
+                ", dbLog=" + dbLog +
+                '}';
+    }
 }

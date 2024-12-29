@@ -8,6 +8,17 @@ package com.ycw.core.cluster.template;
  * @version <1.0>
  */
 public class JettyYmlTemplate extends AbstractYmlTemplate {
+
+    /**
+     * 心跳时间
+     */
+    private long heartbeatTime;
+
+    /**
+     * 心跳超时时间
+     */
+    private long heartbeatTimeout;
+
     /**
      * 最小线程数
      */
@@ -22,6 +33,22 @@ public class JettyYmlTemplate extends AbstractYmlTemplate {
      * 空闲时间
      */
     private int idleTimeout;
+
+    public long getHeartbeatTime() {
+        return heartbeatTime;
+    }
+
+    public void setHeartbeatTime(long heartbeatTime) {
+        this.heartbeatTime = heartbeatTime;
+    }
+
+    public long getHeartbeatTimeout() {
+        return heartbeatTimeout;
+    }
+
+    public void setHeartbeatTimeout(long heartbeatTimeout) {
+        this.heartbeatTimeout = heartbeatTimeout;
+    }
 
     public int getHttpMinThreads() {
         return httpMinThreads;
@@ -45,5 +72,16 @@ public class JettyYmlTemplate extends AbstractYmlTemplate {
 
     public void setIdleTimeout(int idleTimeout) {
         this.idleTimeout = idleTimeout;
+    }
+
+    @Override
+    public String toString() {
+        return "JettyYmlTemplate{" +
+                "heartbeatTime=" + heartbeatTime +
+                ", heartbeatTimeout=" + heartbeatTimeout +
+                ", httpMinThreads=" + httpMinThreads +
+                ", httpMaxThreads=" + httpMaxThreads +
+                ", idleTimeout=" + idleTimeout +
+                '}';
     }
 }

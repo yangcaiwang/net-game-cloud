@@ -1,17 +1,23 @@
-node:
-  groupId: 0
-  serverId: "chat-1001"
-  serverName: ""
-  weight: 100
-  host: "127.0.0.1"
-  port: 6004
+!!com.ycw.core.cluster.template.ServerYmlTemplate
+dbGame: null
+dbLog: null
 grpc:
-  port: 8002
   heartbeatTime: 10000
   heartbeatTimeout: 30000
+  port: 8002
 jetty:
-  port: 9004
-  httpMinThreads: 5
-  httpMaxThreads: 10
-  idleTimeout: 100
   heartbeatTime: 5000
+  heartbeatTimeout: 0
+  httpMaxThreads: 10
+  httpMinThreads: 5
+  idleTimeout: 100
+  port: 9004
+netty: null
+node:
+  groupId: 0
+  host: 127.0.0.1
+  openTime: 0
+  port: 6004
+  serverId: chat-1001
+  serverName: null
+  weight: 100

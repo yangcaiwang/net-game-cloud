@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 优点
  * 1.增加代码可读性和拓展性：如果需要添加新的属性，只需要在Builder类中添加相应的方法，而不需要修改构造函数
  * 2.不可变对象和线程安全：一旦创建后其状态（属性）就不能被改变的对象。由于不可变对象的状态不能改变，它们天然就是线程安全的，因为不存在并发修改状态的问题。
- * 3.只提供 serverType,serverState,grpcClientAddr,openTime的set方法
+ * 3.只提供部分属性的set方法
  *
  * @author <yangcaiwang>
  * @version <1.0>
@@ -220,76 +220,120 @@ public class ServerEntity implements Serializable {
         return serverId;
     }
 
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
+    }
+
     public String getServerName() {
         return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
     public int getServerType() {
         return serverType;
     }
 
-    public int getServerState() {
-        return serverState;
-    }
-
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public AddressInfo getServerAddr() {
-        return serverAddr;
-    }
-
-    public DataSourceInfo getDbGameSourceInfo() {
-        return dbGameSourceInfo;
-    }
-
-    public DataSourceInfo getDbLogSourceInfo() {
-        return dbLogSourceInfo;
-    }
-
-    public AddressInfo getGrpcServerAddr() {
-        return grpcServerAddr;
-    }
-
-    public ConcurrentHashMap<String, AddressInfo> getGrpcClientAddr() {
-        return grpcClientAddr;
-    }
-
-    public AddressInfo getJettyServerAddr() {
-        return jettyServerAddr;
-    }
-
-    public AddressInfo getNettyServerAddr() {
-        return nettyServerAddr;
-    }
-
-    public long getOpenTime() {
-        return openTime;
-    }
-
-    public long getRegisterTime() {
-        return registerTime;
-    }
-
     public void setServerType(int serverType) {
         this.serverType = serverType;
+    }
+
+    public int getServerState() {
+        return serverState;
     }
 
     public void setServerState(int serverState) {
         this.serverState = serverState;
     }
 
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public AddressInfo getServerAddr() {
+        return serverAddr;
+    }
+
+    public void setServerAddr(AddressInfo serverAddr) {
+        this.serverAddr = serverAddr;
+    }
+
+    public DataSourceInfo getDbGameSourceInfo() {
+        return dbGameSourceInfo;
+    }
+
+    public void setDbGameSourceInfo(DataSourceInfo dbGameSourceInfo) {
+        this.dbGameSourceInfo = dbGameSourceInfo;
+    }
+
+    public DataSourceInfo getDbLogSourceInfo() {
+        return dbLogSourceInfo;
+    }
+
+    public void setDbLogSourceInfo(DataSourceInfo dbLogSourceInfo) {
+        this.dbLogSourceInfo = dbLogSourceInfo;
+    }
+
+    public AddressInfo getGrpcServerAddr() {
+        return grpcServerAddr;
+    }
+
+    public void setGrpcServerAddr(AddressInfo grpcServerAddr) {
+        this.grpcServerAddr = grpcServerAddr;
+    }
+
+    public ConcurrentHashMap<String, AddressInfo> getGrpcClientAddr() {
+        return grpcClientAddr;
+    }
+
     public void setGrpcClientAddr(ConcurrentHashMap<String, AddressInfo> grpcClientAddr) {
         this.grpcClientAddr = grpcClientAddr;
     }
 
+    public AddressInfo getJettyServerAddr() {
+        return jettyServerAddr;
+    }
+
+    public void setJettyServerAddr(AddressInfo jettyServerAddr) {
+        this.jettyServerAddr = jettyServerAddr;
+    }
+
+    public AddressInfo getNettyServerAddr() {
+        return nettyServerAddr;
+    }
+
+    public void setNettyServerAddr(AddressInfo nettyServerAddr) {
+        this.nettyServerAddr = nettyServerAddr;
+    }
+
+    public long getOpenTime() {
+        return openTime;
+    }
+
     public void setOpenTime(long openTime) {
         this.openTime = openTime;
+    }
+
+    public long getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(long registerTime) {
+        this.registerTime = registerTime;
     }
 
     @Override

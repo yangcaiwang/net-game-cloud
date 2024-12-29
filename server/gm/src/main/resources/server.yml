@@ -1,13 +1,16 @@
+!!com.ycw.core.cluster.template.ServerYmlTemplate
 node:
   groupId: 0
-  serverId: "gm-1001"
-  serverName: ""
-  weight: 100
-  host: "127.0.0.1"
+  host: 127.0.0.1
+  openTime: 0
   port: 6002
+  serverId: gm-1001
+  serverName:
+  weight: 1000
 jetty:
-  port: 9000
-  httpMinThreads: 5
-  httpMaxThreads: 10
-  idleTimeout: 1000
+  heartbeatTime: 0
   heartbeatTimeout: 10000
+  httpMaxThreads: 10
+  httpMinThreads: 5
+  idleTimeout: 1000
+  port: 9000

@@ -1,7 +1,11 @@
 package com.ycw.gm.admin.web.controller.gameGm;
 
+import com.ycw.core.cluster.ClusterService;
+import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.property.PropertyConfig;
+import com.ycw.core.cluster.template.*;
+import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.service.IServerService;
 import com.ycw.gm.common.annotation.Log;
@@ -11,7 +15,6 @@ import com.ycw.gm.common.core.page.TableDataInfo;
 import com.ycw.gm.common.enums.BusinessType;
 import com.ycw.gm.common.utils.ParamParseUtils;
 import com.ycw.gm.common.utils.StringUtils;
-import com.ycw.gm.framework.datasource.DatabaseSourceKeyConst;
 import com.ycw.gm.framework.datasource.DynamicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,8 +34,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/gameGm/server")
-public class GmServerController extends BaseController
-{
+public class GmServerController extends BaseController {
     @Autowired
     private IServerService serverService;
 
@@ -44,16 +46,14 @@ public class GmServerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('gm:server:list')")
     @GetMapping("/list")
-    public TableDataInfo list()
-    {
+    public TableDataInfo list() {
         startPage();
         List<ServerEntity> list = serverService.selectServerAll();
         return getDataTable(list);
     }
 
     @GetMapping("/all")
-    public TableDataInfo getAll()
-    {
+    public TableDataInfo getAll() {
         List<ServerEntity> list = serverService.selectServerAll();
         return getDataTable(list);
     }
@@ -64,25 +64,16 @@ public class GmServerController extends BaseController
     @PreAuthorize("@ss.hasPermi('gm:server:edit')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody GmServer server)
-    {
-        GmServer server1 = serverService.selectServerById(server.getServerKeyId());
-        if (server1 == null) {
-            return AjaxResult.error("修改服务器'" + server.getServerName() + "'失败，请联系管理员");
+    public AjaxResult edit(@Validated @RequestBody ServerYmlTemplate serverYmlTemplate) {
+        ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
+        ServerEntity serverEntity = clusterService.getServerEntity(serverYmlTemplate.getNode().getServerId());
+        if (serverEntity == null) {
+            return AjaxResult.error("修改服务器'" + serverEntity.getServerId() + "'失败，请联系管理员");
         }
-        server.setUpdateBy(getUsername());
-
-        if (server.getDbUrl() != null && !server.getDbUrl().equals(server1.getDbUrl())) {
-            dataSource.removeDataSourceByKey(DatabaseSourceKeyConst.getGameKey(server.getServerKeyId()));
-        }
-        if (server.getDbLogUrl() != null && !server.getDbLogUrl().equals(server1.getDbLogUrl())) {
-            dataSource.removeDataSourceByKey(DatabaseSourceKeyConst.getLogKey(server.getServerKeyId()));
-        }
-        if (serverService.updateServer(server) > 0)
-        {
+        if (serverService.updateServer(serverYmlTemplate) > 0) {
             return AjaxResult.success();
         }
-        return AjaxResult.error("修改服务器'" + server.getServerName() + "'失败，请联系管理员");
+        return AjaxResult.error("修改服务器'" + serverEntity.getServerId() + "'失败，请联系管理员");
     }
 
     /**
@@ -91,8 +82,7 @@ public class GmServerController extends BaseController
     @PreAuthorize("@ss.hasPermi('gm:server:edit')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeServerStatus")
-    public AjaxResult changeStatus(@RequestBody GmServer server)
-    {
+    public AjaxResult changeStatus(@RequestBody GmServer server) {
         server.setUpdateBy(getUsername());
         return toAjax(serverService.updateServerStatus(server));
     }
@@ -114,8 +104,7 @@ public class GmServerController extends BaseController
     @PreAuthorize("@ss.hasPermi('gm:server:kitout')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PostMapping("/kitout/{serverIds}")
-    public AjaxResult kitOutAll(@PathVariable String[] serverIds, @RequestBody GmServer gs)
-    {
+    public AjaxResult kitOutAll(@PathVariable String[] serverIds, @RequestBody GmServer gs) {
         Long platformId = gs.getPlatformId();
         if (serverIds == null || Arrays.asList(serverIds).contains("-1")) {
             List<ServerEntity> list = serverService.selectServerAll();
@@ -247,8 +236,7 @@ public class GmServerController extends BaseController
     @PreAuthorize("@ss.hasPermi('gm:server:edit')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeServerRegister")
-    public AjaxResult changeServerRegister(@RequestBody GmServer server)
-    {
+    public AjaxResult changeServerRegister(@RequestBody GmServer server) {
         GmServer server1 = serverService.selectServerById(server.getServerKeyId());
         if (server1 == null) {
             return AjaxResult.error("server not exist");
@@ -273,8 +261,7 @@ public class GmServerController extends BaseController
     @PreAuthorize("@ss.hasPermi('gm:server:edit')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PostMapping("/changeServerConfig/{serverIds}")
-    public AjaxResult changeServerConfig(@PathVariable String[] serverIds)
-    {
+    public AjaxResult changeServerConfig(@PathVariable String[] serverIds) {
         int count = 0;
         for (String serverId : serverIds) {
             GmServer server1 = serverService.selectServerById(Long.parseLong(serverId));
@@ -335,8 +322,7 @@ public class GmServerController extends BaseController
     @PreAuthorize("@ss.hasPermi('gm:server:edit')")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PostMapping("/deployServer/{serverIds}")
-    public AjaxResult deployServer(@PathVariable String[] serverIds)
-    {
+    public AjaxResult deployServer(@PathVariable String[] serverIds) {
         int count = 0;
         for (String serverId : serverIds) {
             GmServer server1 = serverService.selectServerById(Long.parseLong(serverId));
@@ -381,8 +367,7 @@ public class GmServerController extends BaseController
 
     @PreAuthorize("@ss.hasPermi('gm:server:merge')")
     @GetMapping("/mergelist")
-    public TableDataInfo listMerge()
-    {
+    public TableDataInfo listMerge() {
         GmServer server = new GmServer();
         server.setServerStatus("6");
         List<ServerEntity> list = serverService.selectServerAll();
@@ -394,8 +379,7 @@ public class GmServerController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('gm:server:merge')")
     @PostMapping(value = "merge/{mainServerId}/{subServers}")
-    public AjaxResult getInfo(@PathVariable("mainServerId") Long mainServerId, @PathVariable("subServers") String[] subServers)
-    {
+    public AjaxResult getInfo(@PathVariable("mainServerId") Long mainServerId, @PathVariable("subServers") String[] subServers) {
         System.err.println("合服:" + mainServerId);
         return AjaxResult.success();
     }
