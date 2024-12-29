@@ -185,7 +185,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.GameApp">
+  <component name="RunManager" selected="Spring Boot.GmApp">
     <configuration name="BattleApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ycw.battle.BattleApp" />
       <module name="battle" />
@@ -272,10 +272,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GameApp" />
-        <item itemvalue="Application.GateApp" />
-        <item itemvalue="Application.BattleApp" />
         <item itemvalue="npm.dev" />
+        <item itemvalue="Application.BattleApp" />
+        <item itemvalue="Application.GateApp" />
+        <item itemvalue="Application.GameApp" />
       </list>
     </recent_temporary>
   </component>
