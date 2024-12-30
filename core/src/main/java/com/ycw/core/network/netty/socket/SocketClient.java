@@ -1,7 +1,8 @@
 package com.ycw.core.network.netty.socket;
 
 import com.ycw.core.network.netty.handler.SocketClientHandler;
-import com.ycw.core.network.netty.message.*;
+import com.ycw.core.network.netty.message.MessageDecoder;
+import com.ycw.core.network.netty.message.MessageEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class SocketClient {
     private static final Logger log = LoggerFactory.getLogger(SocketClient.class);
     private EventLoopGroup workerGroup = null;
-    private ChannelFuture channelFuture = null;
+    public ChannelFuture channelFuture = null;
     private static SocketClient socketClient = new SocketClient();
 
     public static SocketClient getInstance() {
@@ -51,13 +52,8 @@ public class SocketClient {
             channelFuture = b.connect(host, port).sync();
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
             log.info("======================= [] websocket client started ip:{} port:{} =======================", host, port);
-            // 首包
-            IMessage iMessage = new SocketMessage();
-            iMessage.buildIMessage(0, new byte[]{}, 1, "game-1001");
-            sent(iMessage);
 
             // TODO 后端模仿客户端自测接口
-//            NettyClient.sent(MsgManager.buildMsg(1, CommonProto.msg.newBuilder().setAny(MsgManager.messageToAny(CommonProto.MiniItem.newBuilder().build())).build()));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -75,9 +71,5 @@ public class SocketClient {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-    }
-
-    public void sent(IMessage msg) {
-        channelFuture.channel().writeAndFlush(msg);
     }
 }

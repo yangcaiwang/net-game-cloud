@@ -41,7 +41,7 @@ public class SocketChannelManage {
     }
 
     /**
-     * 玩家和所属通道映射
+     * 玩家和所属channel通道映射
      */
     private Map<Long, Channel> channelMap = new ConcurrentHashMap<>();
 
@@ -123,7 +123,7 @@ public class SocketChannelManage {
      *
      * @param channel 玩家连接的管道
      * @param key     键
-     * @return T {@link T}
+     * @return {@link T}
      */
     public <T> T getAttr(Channel channel, String key) {
         Attribute<T> attribute = channel.attr(AttributeKey.valueOf(key));
@@ -178,7 +178,7 @@ public class SocketChannelManage {
     /**
      * 获取所有服在线玩家id集合
      *
-     * @return List {@link List}
+     * @return {@link List}
      */
     public List<Long> getAllOnline() {
         return new ArrayList<>(channelMap.keySet());
@@ -188,7 +188,7 @@ public class SocketChannelManage {
      * 获取某服在线玩家id集合
      *
      * @param serverId 服务器id
-     * @return List {@link List}
+     * @return {@link List}
      */
     public List<Long> getOnlineByServerId(String serverId) {
         return channelMap.entrySet()
@@ -198,9 +198,9 @@ public class SocketChannelManage {
                 .collect(Collectors.toList());
     }
 
-    public void initChannelAttr(Channel channel, IMessage msg) {
+    public void bindChannelAttr(Channel channel, IMessage msg) {
         long playerId = msg.getPlayerId();
-        setAttr(channel, SocketChannelManage.SERVER_IP, msg.getPlayerId());
+        setAttr(channel, SocketChannelManage.SERVER_IP, msg.getServerId());
         setAttr(channel, SocketChannelManage.PLAYER_ID, playerId);
         setAttr(channel, SocketChannelManage.HEART_BEAT, System.currentTimeMillis());
         channelMap.putIfAbsent(playerId, channel);
@@ -210,16 +210,16 @@ public class SocketChannelManage {
      * 检查玩家通道作用域，是否发了首包
      *
      * @param channel 玩家通道
-     * @return boolean {@link Boolean}
+     * @return {@link Boolean}
      */
-    public boolean checkChannel(Channel channel) {
+    public boolean checkBindChannel(Channel channel) {
         return channel.hasAttr(AttributeKey.valueOf(SocketChannelManage.SERVER_IP)) && channel.hasAttr(AttributeKey.valueOf(SocketChannelManage.PLAYER_ID));
     }
 
     /**
      * 统计所有服在线人数量
      *
-     * @return List {@link List}
+     * @return {@link List}
      */
     public int onlineSize() {
         return getAllOnline().size();
@@ -229,7 +229,7 @@ public class SocketChannelManage {
      * 获取某服的在线玩家数量
      *
      * @param serverId 服务器id
-     * @return Integer {@link Integer}
+     * @return {@link Integer}
      */
     public int onlineSizeByServerId(String serverId) {
         return getOnlineByServerId(serverId).size();
@@ -240,7 +240,7 @@ public class SocketChannelManage {
      *
      * @param channel 玩家连接的管道
      */
-    public void removeSession(Channel channel) {
+    public void removeChannel(Channel channel) {
         if (!channel.hasAttr(AttributeKey.valueOf(PLAYER_ID))) {
             channel.close();
         } else {

@@ -41,14 +41,14 @@ public class SocketServerHandler extends SimpleChannelInboundHandler<Object> {
         log.info("receive [{}]'s message [{}]", ctx, msgPacket);
         if (msgPacket instanceof IMessage) {
             IMessage msg = (IMessage) msgPacket;
-            // 首包必须是cmd==0并且携带玩家id和服务器id 用于缓存attr
-            if (msg.getCmd() == ProtocolProto.ProtocolCmd.FIRST_PACKET_CMD_VALUE && msg.getPlayerId() != 0 && StringUtils.isNotEmpty(msg.getServerId())) {
-                SocketChannelManage.getInstance().initChannelAttr(ctx.channel(), msg);
+            // 首包必须是cmd==1001001并且携带玩家id和服务器id 用于绑定玩家channel通道
+            if (msg.getCmd() == ProtocolProto.ProtocolCmd.FIRST_CMD_VALUE && msg.getPlayerId() != 0 && StringUtils.isNotEmpty(msg.getServerId())) {
+                SocketChannelManage.getInstance().bindChannelAttr(ctx.channel(), msg);
                 return;
             }
 
-            if (!SocketChannelManage.getInstance().checkChannel(ctx.channel())) {
-                SocketChannelManage.getInstance().removeSession(ctx.channel());
+            if (!SocketChannelManage.getInstance().checkBindChannel(ctx.channel())) {
+                SocketChannelManage.getInstance().removeChannel(ctx.channel());
                 return;
             }
 
@@ -69,7 +69,7 @@ public class SocketServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        SocketChannelManage.getInstance().removeSession(ctx.channel());
+        SocketChannelManage.getInstance().removeChannel(ctx.channel());
     }
 
     @Override

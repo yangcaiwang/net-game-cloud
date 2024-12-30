@@ -22,7 +22,6 @@ public class GrpcRouter extends RouteServiceGrpc.RouteServiceImplBase {
         return new StreamObserver<CommonProto.RouteRequest>() {
             @Override
             public void onNext(CommonProto.RouteRequest routeRequest) {
-
                 routeProtobufMsgListener.process(ControllerHandler.actorExecutor, routeRequest.getMsg().toByteArray());
             }
 
