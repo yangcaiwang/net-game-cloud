@@ -1,4 +1,4 @@
-package com.ycw.core.network.netty.coder;
+package com.ycw.core.network.netty.message;
 
 import com.ycw.core.util.CollectionUtils;
 import com.ycw.proto.CommonProto;
@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class NettyPacketEncoder extends MessageToByteEncoder<Object> {
+public class MessageEncoder extends MessageToByteEncoder<Object> {
     transient protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override

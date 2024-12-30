@@ -1,4 +1,4 @@
-package com.ycw.core.network.netty.client;
+package com.ycw.core.network.netty.handler;
 
 import com.ycw.proto.CommonProto;
 import io.netty.channel.ChannelHandler;
@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * @version <1.0>
  */
 @ChannelHandler.Sharable
-public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
-    private static final Logger log = LoggerFactory.getLogger(NettyClientHandler.class);
+public class WebsocketClientHandler extends SimpleChannelInboundHandler<Object> {
+    private static final Logger log = LoggerFactory.getLogger(WebsocketClientHandler.class);
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) throws Exception {

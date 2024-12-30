@@ -1,17 +1,17 @@
-package com.ycw.core.network.netty.handler;
+package com.ycw.core.network.netty.method;
 
 import com.google.protobuf.Message;
 
 import java.lang.reflect.Method;
 
 /**
- * <方法处理器实现类>
+ * <业务处理器实现类>
  * <p>
  *
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class MethodHandler {
+public class WebsocketCmdParams {
     private int reqCmd;
     private int resCmd;
     private String comment;

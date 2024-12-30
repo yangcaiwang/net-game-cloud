@@ -1,6 +1,6 @@
 package com.ycw.core.network.jetty;
 
-import com.ycw.core.network.jetty.constant.HttpCmd;
+import com.ycw.core.network.jetty.constant.HttpConstant;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class HttpClient {
      */
     public HttpResponse sendGet(String address, String httpCmd, Map<String, String> params, Map<String, String> properties) throws IOException {
         StringBuilder url = new StringBuilder();
-        url.append(HttpCmd.HTTP_PREFIX).append(address).append(httpCmd);
+        url.append(HttpConstant.HTTP_PREFIX).append(address).append(httpCmd);
         return this.send(url.toString(), "GET", params, properties);
     }
 
@@ -70,7 +70,7 @@ public class HttpClient {
      */
     public HttpResponse sendPost(String address, String httpCmd, Map<String, String> params, Map<String, String> properties) throws IOException {
         StringBuilder url = new StringBuilder();
-        url.append(HttpCmd.HTTP_PREFIX).append(address).append(httpCmd);
+        url.append(HttpConstant.HTTP_PREFIX).append(address).append(httpCmd);
         return this.send(url.toString(), "POST", params, properties);
     }
 

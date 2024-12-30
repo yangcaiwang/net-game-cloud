@@ -1,6 +1,5 @@
-package com.ycw.core.network.netty.coder;
+package com.ycw.core.network.netty.message;
 
-import com.ycw.core.network.netty.message.MessageProcess;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,7 +17,7 @@ import java.util.List;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class NettyPacketDecoder extends ByteToMessageDecoder {
+public class MessageDecoder extends ByteToMessageDecoder {
 
     transient protected final Logger log = LoggerFactory.getLogger(getClass());
 

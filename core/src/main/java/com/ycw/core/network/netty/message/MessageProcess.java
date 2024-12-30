@@ -7,7 +7,6 @@ import com.google.protobuf.Message;
 import com.ycw.core.cluster.property.PropertyConfig;
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
-import com.ycw.core.network.netty.common.IClient;
 import com.ycw.proto.CommonProto;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
@@ -249,7 +248,7 @@ public class MessageProcess {
      * @param cmd      报文号
      * @param message  proto消息体
      */
-    public void kitOut(IClient.OfflineCause cause, long playerId, int cmd, Message message) {
+    public void kitOut(NettyConstant.OfflineCause cause, long playerId, int cmd, Message message) {
         Channel channel = channelMap.get(playerId);
         if (channel != null) {
             // 设置离线原因
@@ -265,10 +264,10 @@ public class MessageProcess {
      * @param channel 玩家连接的管道
      * @param cause   下线原因
      */
-    public void kitOut(Channel channel, IClient.OfflineCause cause) {
+    public void kitOut(Channel channel, NettyConstant.OfflineCause cause) {
         // 返回离线原因
         setAttr(channel, OFFLINE_CAUSE_OFF, cause);
-        sent(channel, IClient.OffLineCmd.NORMAL.value, null);
+        sent(channel, NettyConstant.OffLineCmd.NORMAL.value, null);
         channel.close();
     }
 
@@ -279,7 +278,7 @@ public class MessageProcess {
         AtomicInteger players = new AtomicInteger();
         if (MapUtils.isNotEmpty(channelMap)) {
             for (Channel channel : channelMap.values()) {
-                kitOut(channel, IClient.OfflineCause.STOP_SERVER);
+                kitOut(channel, NettyConstant.OfflineCause.STOP_SERVER);
                 players.decrementAndGet();
             }
         }

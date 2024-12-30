@@ -1,7 +1,8 @@
-package com.ycw.core.network.netty.client;
+package com.ycw.core.network.netty;
 
-import com.ycw.core.network.netty.coder.NettyPacketDecoder;
-import com.ycw.core.network.netty.coder.NettyPacketEncoder;
+import com.ycw.core.network.netty.handler.WebsocketClientHandler;
+import com.ycw.core.network.netty.message.MessageDecoder;
+import com.ycw.core.network.netty.message.MessageEncoder;
 import com.ycw.core.network.netty.message.MessageProcess;
 import com.ycw.proto.CommonProto;
 import io.netty.bootstrap.Bootstrap;
@@ -23,14 +24,14 @@ import org.slf4j.LoggerFactory;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class NettyClient {
-    private static final Logger log = LoggerFactory.getLogger(NettyClient.class);
+public class WebsocketClient {
+    private static final Logger log = LoggerFactory.getLogger(WebsocketClient.class);
     private EventLoopGroup workerGroup = null;
     private ChannelFuture channelFuture = null;
-    private static NettyClient nettyClient = new NettyClient();
+    private static WebsocketClient websocketClient = new WebsocketClient();
 
-    private static NettyClient getInstance() {
-        return nettyClient;
+    private static WebsocketClient getInstance() {
+        return websocketClient;
     }
 
     public void start(String host, int port) throws Exception {
@@ -45,9 +46,9 @@ public class NettyClient {
                 public void initChannel(SocketChannel ch) throws Exception {
                     //处理websocket请求的编解码器
                     ch.pipeline().addLast(new IdleStateHandler(7200, 0, 0));
-                    ch.pipeline().addLast("decoder", new NettyPacketDecoder());
-                    ch.pipeline().addLast("encoder", new NettyPacketEncoder());
-                    ch.pipeline().addLast("handler", new NettyClientHandler());
+                    ch.pipeline().addLast("decoder", new MessageDecoder());
+                    ch.pipeline().addLast("encoder", new MessageEncoder());
+                    ch.pipeline().addLast("handler", new WebsocketClientHandler());
                 }
             });
             channelFuture = b.connect(host, port).sync();

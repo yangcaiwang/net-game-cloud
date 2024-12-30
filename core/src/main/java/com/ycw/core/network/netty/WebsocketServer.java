@@ -1,17 +1,20 @@
-package com.ycw.core.network.netty.server;
+package com.ycw.core.network.netty;
 
 import com.ycw.core.internal.heart.netty.NettyHeartbeatProcess;
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
-import com.ycw.core.network.netty.coder.NettyPacketDecoder;
-import com.ycw.core.network.netty.coder.NettyPacketEncoder;
+import com.ycw.core.network.netty.handler.WebsocketServerHandler;
+import com.ycw.core.network.netty.message.MessageDecoder;
+import com.ycw.core.network.netty.message.MessageEncoder;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.buffer.UnpooledByteBufAllocator;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.slf4j.Logger;
@@ -24,45 +27,55 @@ import org.slf4j.LoggerFactory;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class NettyServer {
-    private static final Logger logger = LoggerFactory.getLogger(NettyServer.class);
+public class WebsocketServer {
+    private static final Logger logger = LoggerFactory.getLogger(WebsocketServer.class);
 
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
     private ActorThreadPoolExecutor executor = new ActorThreadPoolExecutor("netty-server-thread", Runtime.getRuntime().availableProcessors() * 2);
-    private NettyServerHandler nettyServerHandler = new NettyServerHandler(new NettyServerProtobufHandler(), executor);
+    private WebsocketServerHandler websocketServerHandler = new WebsocketServerHandler(executor);
     private NettyHeartbeatProcess nettyHeartbeatProcess;
     private ChannelFuture channelFuture;
-    private static NettyServer nettyServer = new NettyServer();
+    private static WebsocketServer websocketServer = new WebsocketServer();
 
-    public static NettyServer getInstance() {
-        return nettyServer;
+    public static WebsocketServer getInstance() {
+        return websocketServer;
     }
 
-    public void start(String host, int port, long heartbeatTime, long heartbeatTimeout) {
+    public void start(String host, int port, long heartbeatTime, long heartbeatTimeout) throws Exception {
         bossGroup = new NioEventLoopGroup(1, new DefaultThreadFactory("HNettyBoss"));
         workerGroup = new NioEventLoopGroup(16, new DefaultThreadFactory("HNettyWorker"));
+
         try {
             // 服务端辅助启动类，用以降低服务端的开发复杂度
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     // 实例化ServerSocketChannel
-                    .channel(NioServerSocketChannel.class)
+                    .channel(NioServerSocketChannel.class).
                     // 设置ServerSocketChannel的TCP参数
-                    .option(ChannelOption.SO_BACKLOG, 1024)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .childOption(ChannelOption.SO_REUSEADDR, true)
-                    .childOption(ChannelOption.TCP_NODELAY, true)
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                            option(ChannelOption.ALLOCATOR, UnpooledByteBufAllocator.DEFAULT).
+                    option(ChannelOption.SO_BACKLOG, 1024).
+                    option(ChannelOption.SO_REUSEADDR, true).
+                    childOption(ChannelOption.TCP_NODELAY, false).
+                    childOption(ChannelOption.SO_KEEPALIVE, true).
+                    childOption(ChannelOption.SO_REUSEADDR, true).
+                    childOption(ChannelOption.SO_LINGER, 0).
+                    childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline pipeline = ch.pipeline();
+                            pipeline.addLast(new HttpServerCodec());
+                            pipeline.addLast("chunked-handler", new ChunkedWriteHandler());
+                            pipeline.addLast(new HttpObjectAggregator(65535));
+                            pipeline.addLast(new WebSocketServerProtocolHandler("/ycw", null, true));
+                            pipeline.addLast(new IdleStateHandler(7200, -1, -1));
                             // handler
-                            ch.pipeline().addLast(new IdleStateHandler(7200, 0, 0));
-                            ch.pipeline().addLast("decoder", new NettyPacketDecoder());
-                            ch.pipeline().addLast("encoder", new NettyPacketEncoder());
-                            ch.pipeline().addLast(nettyServerHandler);
+                            ch.pipeline().addLast("decoder", new MessageDecoder());
+                            ch.pipeline().addLast("encoder", new MessageEncoder());
+                            ch.pipeline().addLast(websocketServerHandler);
                         }
                     });
+
             channelFuture = bootstrap.bind(host, port).sync();
 
             // 开启心跳机制

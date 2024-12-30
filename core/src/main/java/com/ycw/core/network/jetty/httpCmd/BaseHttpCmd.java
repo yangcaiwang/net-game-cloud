@@ -5,7 +5,7 @@ import com.ycw.core.network.jetty.http.HttpCode;
 import com.ycw.core.network.jetty.http.HttpSession;
 
 /**
- * <http命令抽象类>
+ * <http指令抽象类>
  * <p>
  *
  * @author <yangcaiwang>

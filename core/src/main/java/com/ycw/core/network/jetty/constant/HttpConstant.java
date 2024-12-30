@@ -1,13 +1,13 @@
 package com.ycw.core.network.jetty.constant;
 
 /**
- * <http命令通用常量>
+ * <http指令通用常量>
  * <p>
  *
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public interface HttpCmd {
+public interface HttpConstant {
 
     /**
      * http请求前缀

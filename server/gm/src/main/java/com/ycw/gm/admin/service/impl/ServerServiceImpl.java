@@ -4,10 +4,12 @@ import com.ycw.core.cluster.ClusterService;
 import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.core.cluster.template.*;
+import com.ycw.core.cluster.template.BaseYmlTemplate;
+import com.ycw.core.cluster.template.NodeYmlTemplate;
+import com.ycw.core.cluster.template.ServerYmlTemplate;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.network.jetty.HttpClient;
-import com.ycw.core.network.jetty.constant.HttpCmd;
+import com.ycw.core.network.jetty.constant.HttpConstant;
 import com.ycw.core.network.jetty.http.HttpCode;
 import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.mapper.GmServerMapper;
@@ -133,7 +135,7 @@ public class ServerServiceImpl implements IServerService {
                 clusterService.saveServerEntity(serverEntity);
                 // 更新目标服务器的serverYml
                 paramMap.put("serverYmlTemplate", SerializationUtils.beanToJson(serverYmlTemplate));
-                HttpClient.HttpResponse httpResponse = HttpClient.getInstance().sendGet(serverEntity.getJettyServerAddr().getAddress(), HttpCmd.MODIFY_SERVER_YML_CMD, paramMap,null);
+                HttpClient.HttpResponse httpResponse = HttpClient.getInstance().sendGet(serverEntity.getJettyServerAddr().getAddress(), HttpConstant.MODIFY_SERVER_YML_CMD, paramMap,null);
                 if (httpResponse != null && httpResponse.getCode() == HttpCode.SUCCESS.getIndex()) {
                     return 1;
                 }

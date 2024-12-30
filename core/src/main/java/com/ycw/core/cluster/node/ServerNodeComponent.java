@@ -20,9 +20,9 @@ import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.network.grpc.GrpcManager;
 import com.ycw.core.network.jetty.HttpClient;
 import com.ycw.core.network.jetty.JettyHttpServer;
-import com.ycw.core.network.jetty.constant.HttpCmd;
+import com.ycw.core.network.jetty.constant.HttpConstant;
 import com.ycw.core.network.jetty.handler.JettyHttpHandler;
-import com.ycw.core.network.netty.server.NettyServer;
+import com.ycw.core.network.netty.WebsocketServer;
 import com.ycw.core.util.SerializationUtils;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -186,7 +186,7 @@ public class ServerNodeComponent extends AbstractServerNode {
                         // 通过Jetty发布连接当前组Grpc服务器事件
                         Map<String, String> params = new HashMap<>();
                         params.put("serverEntity", SerializationUtils.beanToJson(clusterService.getServerEntity(nodeYml.getServerId())));
-                        HttpClient.getInstance().sendGet(serverEntity.getServerAddr().getAddress(), HttpCmd.CONNECT_GRPC_SERVER_CMD, params, null);
+                        HttpClient.getInstance().sendGet(serverEntity.getServerAddr().getAddress(), HttpConstant.CONNECT_GRPC_SERVER_CMD, params, null);
                     }
                 }
             } catch (Exception e) {
@@ -202,7 +202,7 @@ public class ServerNodeComponent extends AbstractServerNode {
                 NodeYmlTemplate nodeYml = serverYmlTemplate.getNode();
                 BaseYmlTemplate nettyYml = serverYmlTemplate.getNetty();
                 if (nettyYml != null) {
-                    NettyServer.getInstance().start(nodeYml.getHost(), nettyYml.getPort(), nettyYml.getHeartbeatTime(), nettyYml.getHeartbeatTimeout());
+                    WebsocketServer.getInstance().start(nodeYml.getHost(), nettyYml.getPort(), nettyYml.getHeartbeatTime(), nettyYml.getHeartbeatTimeout());
                     log.info("======================= [{}] netty server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), nettyYml.getPort());
                 }
             } catch (Exception e) {

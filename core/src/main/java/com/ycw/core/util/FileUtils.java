@@ -23,6 +23,20 @@ import java.util.Objects;
  */
 public class FileUtils {
 
+	public static String readFileToString(String pathname) {
+		Validate.isTrue(!StringUtils.isEmpty(pathname));
+		return readFileToString(pathname, StringUtils.CHARSET_NAME);
+	}
+
+	public static String readFileToString(String pathname, String charset) {
+		try {
+			Validate.isTrue(!StringUtils.isEmpty(pathname));
+			return org.apache.commons.io.FileUtils.readFileToString(new File(pathname), charset);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	/**
 	 * key-value格式文件配置,=号分隔,#是行注释
 	 * 

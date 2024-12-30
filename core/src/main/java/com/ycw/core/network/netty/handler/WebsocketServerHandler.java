@@ -1,8 +1,6 @@
-package com.ycw.core.network.netty.server;
+package com.ycw.core.network.netty.handler;
 
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.core.network.netty.common.IClient;
-import com.ycw.core.network.netty.listener.MessageSuperListener;
 import com.ycw.core.network.netty.message.MessageProcess;
 import com.ycw.proto.CommonProto;
 import com.ycw.proto.ProtocolProto;
@@ -24,17 +22,17 @@ import java.util.concurrent.Executor;
  * @version <1.0>
  */
 @ChannelHandler.Sharable
-public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
+public class WebsocketServerHandler extends SimpleChannelInboundHandler<Object> {
 
-    private static final Logger log = LoggerFactory.getLogger(NettyServerHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(WebsocketServerHandler.class);
 
     private final Executor handlerExecutor;
-    private final MessageSuperListener listener;
 
-    public NettyServerHandler(MessageSuperListener listener, Executor handlerExecutor) {
+    private final RouterListener routerListener = new RouterHandler();
+
+    public WebsocketServerHandler(Executor handlerExecutor) {
         super();
         this.handlerExecutor = handlerExecutor;
-        this.listener = listener;
     }
 
     @Override
@@ -58,7 +56,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
                 MessageProcess.getInstance().setAttr(ctx.channel(), MessageProcess.HEART_BEAT, System.currentTimeMillis());
             }
 
-            listener.handle(ctx, handlerExecutor, msg);
+            routerListener.handle(ctx, handlerExecutor, msg);
         }
     }
 
@@ -84,6 +82,6 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
             log.error(cause.getMessage(), cause);
         }
 
-        this.listener.onChannelClose(ctx.channel(), ioClose ? IClient.OfflineCause.MANUAL : IClient.OfflineCause.EXCEPTION);
+        this.routerListener.onChannelClose(ctx.channel(), ioClose ? NettyConstant.OfflineCause.MANUAL : NettyConstant.OfflineCause.EXCEPTION);
     }
 }

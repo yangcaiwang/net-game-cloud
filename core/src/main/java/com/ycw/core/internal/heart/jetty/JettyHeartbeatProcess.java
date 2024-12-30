@@ -10,7 +10,7 @@ import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
 import com.ycw.core.network.jetty.HttpClient;
-import com.ycw.core.network.jetty.constant.HttpCmd;
+import com.ycw.core.network.jetty.constant.HttpConstant;
 import org.apache.commons.collections.MapUtils;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class JettyHeartbeatProcess implements HeartbeatProcess {
                     if (ServerState.isNormal(serverEntity.getServerState())) {
                         Map<String, String> paramMap = new HashMap<>();
                         paramMap.put("serverId", ServerNodeComponent.getInstance().getServerId());
-                        HttpClient.getInstance().sendGet(serverEntity.getJettyServerAddr().getAddress(), HttpCmd.HEARTBEAT_CMD, paramMap, null);
+                        HttpClient.getInstance().sendGet(serverEntity.getJettyServerAddr().getAddress(), HttpConstant.HEARTBEAT_CMD, paramMap, null);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

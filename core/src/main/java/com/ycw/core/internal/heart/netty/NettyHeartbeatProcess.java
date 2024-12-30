@@ -2,7 +2,6 @@ package com.ycw.core.internal.heart.netty;
 
 import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
-import com.ycw.core.network.netty.common.IClient;
 import com.ycw.core.network.netty.message.MessageProcess;
 import com.ycw.proto.CommonProto;
 import com.ycw.proto.ProtocolProto;
@@ -53,7 +52,7 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
                     for (Channel channel : channelMap.values()) {
                         long lastHeartBeatTime = messageProcess.getAttr(channel, MessageProcess.HEART_BEAT);
                         if (isTimeOut(lastHeartBeatTime)) {
-                            MessageProcess.getInstance().kitOut(channel, IClient.OfflineCause.HEARTBEAT_TIMEOUT);
+                            MessageProcess.getInstance().kitOut(channel, NettyConstant.OfflineCause.HEARTBEAT_TIMEOUT);
                         }
                     }
                 }

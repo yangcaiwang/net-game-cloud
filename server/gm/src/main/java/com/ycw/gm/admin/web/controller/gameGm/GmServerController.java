@@ -4,7 +4,7 @@ import com.ycw.core.cluster.ClusterService;
 import com.ycw.core.cluster.ClusterServiceImpl;
 import com.ycw.core.cluster.entity.ServerEntity;
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.core.cluster.template.*;
+import com.ycw.core.cluster.template.ServerYmlTemplate;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.gm.admin.domain.GmServer;
 import com.ycw.gm.admin.service.IServerService;
