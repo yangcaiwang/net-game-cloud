@@ -7,6 +7,8 @@ public interface IMessage {
 
     long getPlayerId();
 
+    void setPlayerId(long playerId);
+
     /**
      * 构建消息体
      *

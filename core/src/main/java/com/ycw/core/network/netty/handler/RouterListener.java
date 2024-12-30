@@ -9,6 +9,8 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.util.concurrent.Executor;
 
+import static com.ycw.core.network.netty.message.SocketChannelManage.PLAYER_ID;
+
 /**
  * <路由器异步监听器接口>
  * <p>
@@ -31,6 +33,7 @@ public interface RouterListener {
             executor.execute(new AbstractLinkedTask() {
                 @Override
                 protected void exec() {
+                    msg.setPlayerId(SocketChannelManage.getInstance().getAttr(ctx.channel(), PLAYER_ID));
                     listener.exec(ctx.channel(), msg);
                 }
 

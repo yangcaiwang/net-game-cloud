@@ -44,7 +44,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
             iMessage.buildIMessage(cmd, bytes);
             list.add(iMessage);
 
-            in.resetReaderIndex();
+//            in.resetReaderIndex();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             in.clear();
