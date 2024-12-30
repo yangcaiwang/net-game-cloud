@@ -1,6 +1,6 @@
-package com.ycw.core.network.netty;
+package com.ycw.core.network.netty.socket;
 
-import com.ycw.core.network.netty.handler.WebsocketClientHandler;
+import com.ycw.core.network.netty.handler.SocketClientHandler;
 import com.ycw.core.network.netty.message.*;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -21,14 +21,14 @@ import org.slf4j.LoggerFactory;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class WebsocketClient {
-    private static final Logger log = LoggerFactory.getLogger(WebsocketClient.class);
+public class SocketClient {
+    private static final Logger log = LoggerFactory.getLogger(SocketClient.class);
     private EventLoopGroup workerGroup = null;
     private ChannelFuture channelFuture = null;
-    private static WebsocketClient websocketClient = new WebsocketClient();
+    private static SocketClient socketClient = new SocketClient();
 
-    private static WebsocketClient getInstance() {
-        return websocketClient;
+    public static SocketClient getInstance() {
+        return socketClient;
     }
 
     public void start(String host, int port) throws Exception {
@@ -45,15 +45,15 @@ public class WebsocketClient {
                     ch.pipeline().addLast(new IdleStateHandler(7200, 0, 0));
                     ch.pipeline().addLast("decoder", new MessageDecoder());
                     ch.pipeline().addLast("encoder", new MessageEncoder());
-                    ch.pipeline().addLast("handler", new WebsocketClientHandler());
+                    ch.pipeline().addLast("handler", new SocketClientHandler());
                 }
             });
             channelFuture = b.connect(host, port).sync();
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
             log.info("======================= [] websocket client started ip:{} port:{} =======================", host, port);
             // 首包
-            IMessage iMessage = new ProtoMessage();
-            iMessage.buildIMessage(0, 1, "game-1001", new byte[]{});
+            IMessage iMessage = new SocketMessage();
+            iMessage.buildIMessage(0, new byte[]{}, 1, "game-1001");
             sent(iMessage);
 
             // TODO 后端模仿客户端自测接口

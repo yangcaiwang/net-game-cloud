@@ -5,36 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="优化">
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/IMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/ProtoMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/AbstractServerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/AbstractServerNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNodeComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNodeComponent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/netty/NettyHeartbeatProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/netty/NettyHeartbeatProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/RouteServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/RouteServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/RouteServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcRouter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/event/ConnectGrpcServerEventObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/event/ConnectGrpcServerEventObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/socket/SocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/socket/SocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/annotation/WebSocketCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/annotation/SocketCmd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketControllerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/SocketClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/SocketControllerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/SocketServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/IMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/IMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/PlayerChannelManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/PlayerChannelManage.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/SocketChannelManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/ProtoMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/SocketMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/method/WebsocketCmdContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/socket/SocketCmdContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/method/WebsocketCmdParams.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/socket/SocketCmdParams.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/util/ConsoleUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/util/ConsoleUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/CommonProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/ErrorProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/PlayerProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/ProtocolProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/RouteServiceGrpc.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/CommonProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/ErrorProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/PlayerProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/ProtocolProto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/RouteServiceGrpc.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/src/main/proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/src/main/proto/common.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/game/src/main/java/com/ycw/game/GameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/game/src/main/java/com/ycw/game/GameApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +165,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GmApp">
+  <component name="RunManager" selected="Application.GameApp">
     <configuration name="BattleApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ycw.battle.BattleApp" />
       <module name="battle" />
@@ -257,10 +252,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GameApp" />
+        <item itemvalue="Application.GateApp" />
         <item itemvalue="npm.dev" />
         <item itemvalue="Application.BattleApp" />
-        <item itemvalue="Application.GateApp" />
-        <item itemvalue="Application.GameApp" />
       </list>
     </recent_temporary>
   </component>
@@ -366,7 +361,7 @@
       <workItem from="1735506262982" duration="7000" />
       <workItem from="1735506473958" duration="14000" />
       <workItem from="1735506751152" duration="14114000" />
-      <workItem from="1735552145409" duration="8378000" />
+      <workItem from="1735552145409" duration="12743000" />
     </task>
     <task id="LOCAL-00001" summary="微服务游戏架构">
       <option name="closed" value="true" />
@@ -504,7 +499,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735521414159</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="优化">
+      <option name="closed" value="true" />
+      <created>1735560537484</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1735560537484</updated>
+    </task>
+    <task id="LOCAL-00019" summary="优化">
+      <option name="closed" value="true" />
+      <created>1735560758346</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1735560758346</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -590,6 +601,26 @@
           <url>file://$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/db/Mysql.java</url>
           <line>472</line>
           <option name="timeStamp" value="209" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/SocketControllerHandler.java</url>
+          <line>83</line>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/SocketServerHandler.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageEncoder.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageDecoder.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="218" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -17,12 +17,12 @@ import com.ycw.core.internal.cache.redission.RedissonClient;
 import com.ycw.core.internal.cache.redission.constant.ConstTopic;
 import com.ycw.core.internal.db.Mysql;
 import com.ycw.core.internal.loader.service.ServiceContext;
-import com.ycw.core.network.grpc.GrpcManager;
+import com.ycw.core.network.grpc.GrpcManage;
 import com.ycw.core.network.jetty.HttpClient;
 import com.ycw.core.network.jetty.JettyHttpServer;
 import com.ycw.core.network.jetty.constant.HttpConstant;
 import com.ycw.core.network.jetty.handler.JettyHttpHandler;
-import com.ycw.core.network.netty.WebsocketServer;
+import com.ycw.core.network.netty.socket.SocketServer;
 import com.ycw.core.util.SerializationUtils;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -149,7 +149,7 @@ public class ServerNodeComponent extends AbstractServerNode {
                         serverEntity.getConnectGrpcServerIds().add(entity.getServerId());
                         clusterService.saveServerEntity(serverEntity);
                         // 连接Grpc服务器
-                        GrpcManager.getInstance().connectGrpcServer(entity);
+                        GrpcManage.getInstance().connectGrpcServer(entity);
                     }
                 }
             } catch (Exception e) {
@@ -166,7 +166,7 @@ public class ServerNodeComponent extends AbstractServerNode {
                 BaseYmlTemplate grpcYml = serverYmlTemplate.getGrpc();
                 if (grpcYml != null) {
                     // 开启grpc服务端
-                    GrpcManager.getInstance().startGrpcServer(grpcYml.getPort(), grpcYml.getHeartbeatTime(), grpcYml.getHeartbeatTimeout());
+                    GrpcManage.getInstance().startGrpcServer(grpcYml.getPort(), grpcYml.getHeartbeatTime(), grpcYml.getHeartbeatTimeout());
                     log.info("======================= [{}] grpc server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), grpcYml.getPort());
 
                     ClusterService clusterService = ServiceContext.getInstance().get(ClusterServiceImpl.class);
@@ -202,7 +202,7 @@ public class ServerNodeComponent extends AbstractServerNode {
                 NodeYmlTemplate nodeYml = serverYmlTemplate.getNode();
                 BaseYmlTemplate nettyYml = serverYmlTemplate.getNetty();
                 if (nettyYml != null) {
-                    WebsocketServer.getInstance().start(nodeYml.getHost(), nettyYml.getPort(), nettyYml.getHeartbeatTime(), nettyYml.getHeartbeatTimeout());
+                    SocketServer.getInstance().start(nodeYml.getHost(), nettyYml.getPort(), nettyYml.getHeartbeatTime(), nettyYml.getHeartbeatTimeout());
                     log.info("======================= [{}] netty server started ip:{} port:{} =======================", getServerId(), nodeYml.getHost(), nettyYml.getPort());
                 }
             } catch (Exception e) {

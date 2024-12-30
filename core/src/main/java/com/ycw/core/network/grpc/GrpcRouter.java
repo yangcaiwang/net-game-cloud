@@ -13,7 +13,7 @@ import io.grpc.stub.StreamObserver;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class RouteServiceImpl extends RouteServiceGrpc.RouteServiceImplBase {
+public class GrpcRouter extends RouteServiceGrpc.RouteServiceImplBase {
     private final ControllerHandler routeProtobufMsgListener = new ControllerHandler();
     public static StreamObserver<CommonProto.RouteResponse> routeResponseObserver;
 

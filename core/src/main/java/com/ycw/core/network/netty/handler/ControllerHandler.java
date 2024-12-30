@@ -1,11 +1,11 @@
 package com.ycw.core.network.netty.handler;
 
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
-import com.ycw.core.network.grpc.GrpcManager;
+import com.ycw.core.network.grpc.GrpcManage;
 import com.ycw.core.network.netty.message.IMessage;
-import com.ycw.core.network.netty.message.ProtoMessage;
-import com.ycw.core.network.netty.method.WebsocketCmdContext;
-import com.ycw.core.network.netty.method.WebsocketCmdParams;
+import com.ycw.core.network.netty.message.SocketMessage;
+import com.ycw.core.network.netty.socket.SocketCmdContext;
+import com.ycw.core.network.netty.socket.SocketCmdParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,21 +24,21 @@ public class ControllerHandler implements ControllerListener {
 
     @Override
     public void exec(IMessage msg) {
-        WebsocketCmdParams websocketCmdParams = WebsocketCmdContext.getInstance().getMethodHandler(msg.getCmd());
-        if (websocketCmdParams == null) {
+        SocketCmdParams socketCmdParams = SocketCmdContext.getInstance().getMethodHandler(msg.getCmd());
+        if (socketCmdParams == null) {
             log.error("not found cmd:{} {} methodHandler", msg.getCmd(), msg);
             return;
         }
 
-        WebsocketControllerHandler handlerMethodClass = WebsocketCmdContext.getInstance().getHandlerMethodClass(websocketCmdParams.getMethod().getDeclaringClass().getSimpleName());
+        SocketControllerHandler handlerMethodClass = SocketCmdContext.getInstance().getHandlerMethodClass(socketCmdParams.getMethod().getDeclaringClass().getSimpleName());
         if (handlerMethodClass == null) {
             log.error("not found cmd:{} handle class", msg.getCmd());
             return;
         }
 
-        IMessage resp = handlerMethodClass.process(websocketCmdParams, msg);
+        IMessage resp = handlerMethodClass.process(socketCmdParams, msg);
         if (resp != null) {
-            GrpcManager.getInstance().sentRouter((ProtoMessage) resp);
+            GrpcManage.getInstance().sentRouter((SocketMessage) resp);
         }
     }
 }

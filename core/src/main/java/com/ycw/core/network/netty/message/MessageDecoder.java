@@ -29,6 +29,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
             if (in.readableBytes() < 8) {
                 return;
             }
+            int length = in.readableBytes();
 
             // 读取消息号
             int cmd = in.readInt();
@@ -48,12 +49,11 @@ public class MessageDecoder extends ByteToMessageDecoder {
                 serverId = new String(serverIdArr, StandardCharsets.UTF_8);
             }
 
-            // 读取data字节数组
-            byte[] dataArr = new byte[in.readableBytes() - b == 0 ? 0 : new byte[b].length];
-            in.readBytes(dataArr);
-
-            IMessage iMessage = new ProtoMessage();
-            iMessage.buildIMessage(cmd, playerId, serverId, dataArr);
+            // 读取proto消息体的字节数组
+            byte[] bytes = new byte[Math.max(length - b, 0)];
+            in.readBytes(bytes);
+            IMessage iMessage = new SocketMessage();
+            iMessage.buildIMessage(cmd, bytes, playerId, serverId);
             list.add(iMessage);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

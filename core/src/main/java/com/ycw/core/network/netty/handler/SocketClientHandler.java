@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * @version <1.0>
  */
 @ChannelHandler.Sharable
-public class WebsocketClientHandler extends SimpleChannelInboundHandler<Object> {
-    private static final Logger log = LoggerFactory.getLogger(WebsocketClientHandler.class);
+public class SocketClientHandler extends SimpleChannelInboundHandler<Object> {
+    private static final Logger log = LoggerFactory.getLogger(SocketClientHandler.class);
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) throws Exception {

@@ -1,6 +1,5 @@
 package com.ycw.core.network.netty.message;
 
-import com.google.protobuf.Message;
 import com.ycw.core.cluster.property.PropertyConfig;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
 import com.ycw.core.network.netty.enums.OffLineCmd;
@@ -27,18 +26,18 @@ import java.util.stream.Collectors;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class PlayerChannelManage {
-    private static final Logger log = LoggerFactory.getLogger(PlayerChannelManage.class);
+public class SocketChannelManage {
+    private static final Logger log = LoggerFactory.getLogger(SocketChannelManage.class);
     public static final String PUBLIC_KEY = "publicKey";
     public static final String PRIVATE_KEY = "privateKey";
     public static final String PLAYER_ID = "playerId";
     public static final String SERVER_IP = "serverId";
     public static final String HEART_BEAT = "heartBeat";
     public static final String OFFLINE_CAUSE_OFF = "offlineCause";
-    private static PlayerChannelManage playerChannelManage = new PlayerChannelManage();
+    private static SocketChannelManage socketChannelManage = new SocketChannelManage();
 
-    public static PlayerChannelManage getInstance() {
-        return playerChannelManage;
+    public static SocketChannelManage getInstance() {
+        return socketChannelManage;
     }
 
     /**
@@ -51,11 +50,11 @@ public class PlayerChannelManage {
      *
      * @param channel 玩家的管道
      * @param cmd     报文号
-     * @param message 具体proto消息体
+     * @param bytes   字节数组
      */
-    public void sent(Channel channel, int cmd, Message message) {
-        IMessage iMessage = new ProtoMessage();
-        iMessage.buildIMessage(getAttr(channel, PlayerChannelManage.PLAYER_ID), cmd, message);
+    public void sent(Channel channel, int cmd, byte[] bytes) {
+        IMessage iMessage = new SocketMessage();
+        iMessage.buildIMessage(cmd, bytes, getAttr(channel, SocketChannelManage.PLAYER_ID));
         sent(channel, iMessage);
     }
 
@@ -64,13 +63,13 @@ public class PlayerChannelManage {
      *
      * @param playerId 玩家id
      * @param cmd      报文号
-     * @param message  具体proto消息体
+     * @param bytes    字节数组
      */
-    public void sent(long playerId, int cmd, Message message) {
+    public void sent(long playerId, int cmd, byte[] bytes) {
         Channel channel = channelMap.get(playerId);
         if (channel != null) {
-            IMessage iMessage = new ProtoMessage();
-            iMessage.buildIMessage(cmd, playerId, message);
+            IMessage iMessage = new SocketMessage();
+            iMessage.buildIMessage(cmd, bytes, playerId);
             sent(channel, iMessage);
         }
     }
@@ -137,14 +136,14 @@ public class PlayerChannelManage {
      * @param cause    下线原因
      * @param playerId 玩家id
      * @param cmd      报文号
-     * @param message  proto消息体
+     * @param bytes    字节数组
      */
-    public void kitOut(OfflineCause cause, long playerId, int cmd, Message message) {
+    public void kitOut(OfflineCause cause, long playerId, int cmd, byte[] bytes) {
         Channel channel = channelMap.get(playerId);
         if (channel != null) {
             // 设置离线原因
             setAttr(channel, OFFLINE_CAUSE_OFF, cause);
-            sent(channel, cmd, message);
+            sent(channel, cmd, bytes);
             channel.close();
         }
     }
@@ -194,16 +193,16 @@ public class PlayerChannelManage {
     public List<Long> getOnlineByServerId(String serverId) {
         return channelMap.entrySet()
                 .stream()
-                .filter(entry -> getAttr(entry.getValue(), PlayerChannelManage.SERVER_IP).equals(serverId))
+                .filter(entry -> getAttr(entry.getValue(), SocketChannelManage.SERVER_IP).equals(serverId))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 
     public void initChannelAttr(Channel channel, IMessage msg) {
         long playerId = msg.getPlayerId();
-        setAttr(channel, PlayerChannelManage.SERVER_IP, msg.getPlayerId());
-        setAttr(channel, PlayerChannelManage.PLAYER_ID, playerId);
-        setAttr(channel, PlayerChannelManage.HEART_BEAT, System.currentTimeMillis());
+        setAttr(channel, SocketChannelManage.SERVER_IP, msg.getPlayerId());
+        setAttr(channel, SocketChannelManage.PLAYER_ID, playerId);
+        setAttr(channel, SocketChannelManage.HEART_BEAT, System.currentTimeMillis());
         channelMap.putIfAbsent(playerId, channel);
     }
 
@@ -214,7 +213,7 @@ public class PlayerChannelManage {
      * @return boolean {@link Boolean}
      */
     public boolean checkChannel(Channel channel) {
-        return channel.hasAttr(AttributeKey.valueOf(PlayerChannelManage.SERVER_IP)) && channel.hasAttr(AttributeKey.valueOf(PlayerChannelManage.PLAYER_ID));
+        return channel.hasAttr(AttributeKey.valueOf(SocketChannelManage.SERVER_IP)) && channel.hasAttr(AttributeKey.valueOf(SocketChannelManage.PLAYER_ID));
     }
 
     /**
@@ -255,25 +254,25 @@ public class PlayerChannelManage {
      *
      * @param serverId 服务器id
      * @param cmd      报文号
-     * @param message  proto结构体
+     * @param bytes    字节数组
      */
-    public void broadcastByServer(String serverId, int cmd, Message message) {
+    public void broadcastByServer(String serverId, int cmd, byte[] bytes) {
         List<Long> allOnline = getOnlineByServerId(serverId);
         for (Long playerId : allOnline) {
-            sent(playerId, cmd, message);
+            sent(playerId, cmd, bytes);
         }
     }
 
     /**
      * 全服广播
      *
-     * @param cmd     报文号
-     * @param message proto结构体
+     * @param cmd   报文号
+     * @param bytes 字节数组
      */
-    public void broadcast(int cmd, Message message) {
+    public void broadcast(int cmd, byte[] bytes) {
         List<Long> allOnline = getAllOnline();
         for (Long playerId : allOnline) {
-            sent(playerId, cmd, message);
+            sent(playerId, cmd, bytes);
         }
     }
 

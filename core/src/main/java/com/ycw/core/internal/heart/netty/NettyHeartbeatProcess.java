@@ -5,8 +5,8 @@ import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
 import com.ycw.core.network.netty.enums.OfflineCause;
 import com.ycw.core.network.netty.message.IMessage;
-import com.ycw.core.network.netty.message.PlayerChannelManage;
-import com.ycw.core.network.netty.message.ProtoMessage;
+import com.ycw.core.network.netty.message.SocketChannelManage;
+import com.ycw.core.network.netty.message.SocketMessage;
 import io.netty.channel.Channel;
 import org.apache.commons.collections.MapUtils;
 
@@ -34,12 +34,12 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
     public void sent() {
         if (heartbeatTime > 0) {
             threadSender = new TimerActorThread("nettyHeartbeat-threadSender", heartbeatTime, () -> {
-                Map<Long, Channel> channelMap = PlayerChannelManage.getInstance().getChannelMap();
+                Map<Long, Channel> channelMap = SocketChannelManage.getInstance().getChannelMap();
                 if (MapUtils.isNotEmpty(channelMap)) {
                     for (Channel channel : channelMap.values()) {
-                        IMessage iMessage = new ProtoMessage();
+                        IMessage iMessage = new SocketMessage();
                         iMessage.buildIMessage(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE);
-                        PlayerChannelManage.getInstance().sent(channel, iMessage);
+                        SocketChannelManage.getInstance().sent(channel, iMessage);
                     }
                 }
             });
@@ -50,13 +50,13 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
     public void monitor() {
         if (heartbeatTimeout > 0) {
             threadMonitor = new TimerActorThread("nettyHeartbeat-threadMonitor", heartbeatTimeout, () -> {
-                PlayerChannelManage playerChannelManage = PlayerChannelManage.getInstance();
-                Map<Long, Channel> channelMap = playerChannelManage.getChannelMap();
+                SocketChannelManage socketChannelManage = SocketChannelManage.getInstance();
+                Map<Long, Channel> channelMap = socketChannelManage.getChannelMap();
                 if (MapUtils.isNotEmpty(channelMap)) {
                     for (Channel channel : channelMap.values()) {
-                        long lastHeartBeatTime = playerChannelManage.getAttr(channel, PlayerChannelManage.HEART_BEAT);
+                        long lastHeartBeatTime = socketChannelManage.getAttr(channel, SocketChannelManage.HEART_BEAT);
                         if (isTimeOut(lastHeartBeatTime)) {
-                            PlayerChannelManage.getInstance().kitOut(channel, OfflineCause.HEARTBEAT_TIMEOUT);
+                            SocketChannelManage.getInstance().kitOut(channel, OfflineCause.HEARTBEAT_TIMEOUT);
                         }
                     }
                 }

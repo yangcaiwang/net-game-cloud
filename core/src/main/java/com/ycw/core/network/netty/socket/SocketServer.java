@@ -1,8 +1,8 @@
-package com.ycw.core.network.netty;
+package com.ycw.core.network.netty.socket;
 
 import com.ycw.core.internal.heart.netty.NettyHeartbeatProcess;
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
-import com.ycw.core.network.netty.handler.WebsocketServerHandler;
+import com.ycw.core.network.netty.handler.SocketServerHandler;
 import com.ycw.core.network.netty.message.MessageDecoder;
 import com.ycw.core.network.netty.message.MessageEncoder;
 import io.netty.bootstrap.ServerBootstrap;
@@ -11,10 +11,6 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.slf4j.Logger;
@@ -27,19 +23,19 @@ import org.slf4j.LoggerFactory;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class WebsocketServer {
-    private static final Logger logger = LoggerFactory.getLogger(WebsocketServer.class);
+public class SocketServer {
+    private static final Logger logger = LoggerFactory.getLogger(SocketServer.class);
 
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
     private ActorThreadPoolExecutor executor = new ActorThreadPoolExecutor("netty-server-thread", Runtime.getRuntime().availableProcessors() * 2);
-    private WebsocketServerHandler websocketServerHandler = new WebsocketServerHandler(executor);
+    private SocketServerHandler socketServerHandler = new SocketServerHandler(executor);
     private NettyHeartbeatProcess nettyHeartbeatProcess;
     private ChannelFuture channelFuture;
-    private static WebsocketServer websocketServer = new WebsocketServer();
+    private static SocketServer socketServer = new SocketServer();
 
-    public static WebsocketServer getInstance() {
-        return websocketServer;
+    public static SocketServer getInstance() {
+        return socketServer;
     }
 
     public void start(String host, int port, long heartbeatTime, long heartbeatTimeout) throws Exception {
@@ -64,15 +60,15 @@ public class WebsocketServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new HttpServerCodec());
-                            pipeline.addLast("chunked-handler", new ChunkedWriteHandler());
-                            pipeline.addLast(new HttpObjectAggregator(65535));
-                            pipeline.addLast(new WebSocketServerProtocolHandler("/ycw", null, true));
+//                            pipeline.addLast(new HttpServerCodec());
+//                            pipeline.addLast("chunked-handler", new ChunkedWriteHandler());
+//                            pipeline.addLast(new HttpObjectAggregator(65535));
+//                            pipeline.addLast(new WebSocketServerProtocolHandler("/ycw", null, true));
                             pipeline.addLast(new IdleStateHandler(7200, -1, -1));
                             // handler
                             ch.pipeline().addLast("decoder", new MessageDecoder());
                             ch.pipeline().addLast("encoder", new MessageEncoder());
-                            ch.pipeline().addLast(websocketServerHandler);
+                            ch.pipeline().addLast(socketServerHandler);
                         }
                     });
 

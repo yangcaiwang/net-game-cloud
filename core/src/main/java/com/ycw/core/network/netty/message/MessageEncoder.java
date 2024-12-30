@@ -39,9 +39,9 @@ public class MessageEncoder extends MessageToByteEncoder<Object> {
                 bufferLength += serverIdArr.length;
             }
 
-            byte[] binaryData = null;
-            if (msg.getArray() != null) {
-                binaryData = msg.getArray();
+            byte[] binaryData = new byte[]{};
+            if (msg.getBytes() != null) {
+                binaryData = msg.getBytes();
                 bufferLength += binaryData.length;
             }
 

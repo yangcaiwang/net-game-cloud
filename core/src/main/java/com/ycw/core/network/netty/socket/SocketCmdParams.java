@@ -1,4 +1,4 @@
-package com.ycw.core.network.netty.method;
+package com.ycw.core.network.netty.socket;
 
 import com.google.protobuf.Message;
 
@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class WebsocketCmdParams {
+public class SocketCmdParams {
     private int reqCmd;
     private int resCmd;
     private String comment;

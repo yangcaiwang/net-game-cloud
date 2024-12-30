@@ -1,7 +1,7 @@
 
 package com.ycw.core.util;
 
-import com.ycw.core.network.netty.message.PlayerChannelManage;
+import com.ycw.core.network.netty.message.SocketChannelManage;
 
 import java.util.Scanner;
 
@@ -64,7 +64,7 @@ public class ConsoleUtil {
 				}
 				if (lowerCase.equalsIgnoreCase("online")) {
 					if (SystemUtils.isWindows()) {
-						int onlineSize = PlayerChannelManage.getInstance().onlineSize();
+						int onlineSize = SocketChannelManage.getInstance().onlineSize();
 						System.out.println("在线数:" + onlineSize);
 					}
 				}

@@ -9,8 +9,8 @@ import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
 import com.ycw.core.network.netty.handler.ControllerHandler;
 import com.ycw.core.network.netty.handler.RouterHandler;
 import com.ycw.core.network.netty.message.IMessage;
-import com.ycw.core.network.netty.message.PlayerChannelManage;
-import com.ycw.core.network.netty.message.ProtoMessage;
+import com.ycw.core.network.netty.message.SocketChannelManage;
+import com.ycw.core.network.netty.message.SocketMessage;
 import com.ycw.core.util.SerializationUtils;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
@@ -29,17 +29,17 @@ import java.util.concurrent.TimeUnit;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class GrpcManager {
-    public static final Logger logger = LoggerFactory.getLogger(GrpcManager.class);
+public class GrpcManage {
+    public static final Logger logger = LoggerFactory.getLogger(GrpcManage.class);
     private StreamObserver<CommonProto.RouteRequest> routeRequestStreamObserver;
     private Map<String, GrpcClient> grpcClientMap = new HashMap<>();
     private long heartbeatTime;
     private long heartbeatTimeout;
     private Server server;
-    private static GrpcManager grpcManager = new GrpcManager();
+    private static GrpcManage grpcManage = new GrpcManage();
 
-    public static GrpcManager getInstance() {
-        return grpcManager;
+    public static GrpcManage getInstance() {
+        return grpcManage;
     }
 
     /**
@@ -80,24 +80,24 @@ public class GrpcManager {
     /**
      * 发送到路由器
      *
-     * @param protoMessage proto消息
+     * @param socketMessage proto消息
      */
-    public void sentRouter(ProtoMessage protoMessage) {
+    public void sentRouter(SocketMessage socketMessage) {
         CommonProto.RouteResponse build = CommonProto.RouteResponse.newBuilder()
-                .setMsg(ByteString.copyFrom(SerializationUtils.toByteArrayByH2(protoMessage)))
+                .setMsg(ByteString.copyFrom(SerializationUtils.toByteArrayByH2(socketMessage)))
                 .build();
-        RouteServiceImpl.routeResponseObserver.onNext(build);
-        RouteServiceImpl.routeResponseObserver.onCompleted();
+        GrpcRouter.routeResponseObserver.onNext(build);
+        GrpcRouter.routeResponseObserver.onCompleted();
     }
 
     /**
      * 路由消息发送到控制器
      *
-     * @param protoMessage proto消息
+     * @param socketMessage proto消息
      */
-    public void sentController(ProtoMessage protoMessage) {
+    public void sentController(SocketMessage socketMessage) {
         CommonProto.RouteRequest build = CommonProto.RouteRequest.newBuilder()
-                .setMsg(ByteString.copyFrom(SerializationUtils.toByteArrayByH2(protoMessage)))
+                .setMsg(ByteString.copyFrom(SerializationUtils.toByteArrayByH2(socketMessage)))
                 .build();
         routeRequestStreamObserver.onNext(build);
         routeRequestStreamObserver.onCompleted();
@@ -118,7 +118,7 @@ public class GrpcManager {
             try {
 
                 server = ServerBuilder.forPort(port)
-                        .addService(new RouteServiceImpl())
+                        .addService(new GrpcRouter())
                         .permitKeepAliveWithoutCalls(true)
                         .keepAliveTime(heartbeatTime, TimeUnit.MILLISECONDS)
                         .keepAliveTimeout(heartbeatTimeout, TimeUnit.MILLISECONDS)
@@ -190,7 +190,7 @@ public class GrpcManager {
 
                                 @Override
                                 protected void exec() {
-                                    PlayerChannelManage.getInstance().sent(iMessage.getPlayerId(), iMessage.getCmd(), iMessage.getMessage());
+                                    SocketChannelManage.getInstance().sent(iMessage.getPlayerId(), iMessage.getCmd(), iMessage.getBytes());
                                 }
                             });
                         } catch (Exception e) {

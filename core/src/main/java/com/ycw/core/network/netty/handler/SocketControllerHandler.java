@@ -3,11 +3,11 @@ package com.ycw.core.network.netty.handler;
 import com.game.proto.ErrorProto;
 import com.google.protobuf.Message;
 import com.ycw.core.internal.loader.service.AbstractService;
-import com.ycw.core.network.netty.annotation.WebSocketCmd;
+import com.ycw.core.network.netty.annotation.SocketCmd;
 import com.ycw.core.network.netty.message.IMessage;
-import com.ycw.core.network.netty.message.ProtoMessage;
-import com.ycw.core.network.netty.method.WebsocketCmdContext;
-import com.ycw.core.network.netty.method.WebsocketCmdParams;
+import com.ycw.core.network.netty.message.SocketMessage;
+import com.ycw.core.network.netty.socket.SocketCmdContext;
+import com.ycw.core.network.netty.socket.SocketCmdParams;
 import com.ycw.core.util.LanguagesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,32 +23,32 @@ import java.lang.reflect.Method;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class WebsocketControllerHandler extends AbstractService {
-    public final Logger logger = LoggerFactory.getLogger(WebsocketControllerHandler.class);
+public class SocketControllerHandler extends AbstractService {
+    public final Logger logger = LoggerFactory.getLogger(SocketControllerHandler.class);
 
-    public WebsocketControllerHandler() {
-        WebsocketCmdContext.getInstance().addHandlerMethodClass(getClass().getSimpleName(), this);
+    public SocketControllerHandler() {
+        SocketCmdContext.getInstance().addHandlerMethodClass(getClass().getSimpleName(), this);
         Method[] declaredMethods = getClass().getDeclaredMethods();
         for (Method method : declaredMethods) {
             if (method.isAnnotationPresent(Deprecated.class)) {
                 continue;
             }
-            WebSocketCmd annotation = method.getAnnotation(WebSocketCmd.class);
+            SocketCmd annotation = method.getAnnotation(SocketCmd.class);
             if (annotation != null) {
                 method.setAccessible(true);
-                WebsocketCmdParams websocketCmdParams = new WebsocketCmdParams();
-                websocketCmdParams.setMethod(method);
-                websocketCmdParams.setComment(annotation.comment());
-                websocketCmdParams.setReqCmd(annotation.reqCmd());
-                websocketCmdParams.setResCmd(annotation.respCmd());
+                SocketCmdParams socketCmdParams = new SocketCmdParams();
+                socketCmdParams.setMethod(method);
+                socketCmdParams.setComment(annotation.comment());
+                socketCmdParams.setReqCmd(annotation.reqCmd());
+                socketCmdParams.setResCmd(annotation.respCmd());
                 for (Class<?> parameterType : method.getParameterTypes()) {
                     if (Message.class.isAssignableFrom(parameterType)) {
-                        websocketCmdParams.setReqMsgType((Class<? extends Message>) parameterType);
+                        socketCmdParams.setReqMsgType((Class<? extends Message>) parameterType);
                         break;
                     }
                 }
 
-                WebsocketCmdContext.getInstance().addMethodHandler(websocketCmdParams);
+                SocketCmdContext.getInstance().addMethodHandler(socketCmdParams);
             }
         }
     }
@@ -56,17 +56,17 @@ public class WebsocketControllerHandler extends AbstractService {
     /**
      * 控制器处理业务 并返回
      *
-     * @param websocketCmdParams 协议参数
+     * @param socketCmdParams 协议参数
      * @param msg                proto消息
      */
-    public IMessage process(WebsocketCmdParams websocketCmdParams, IMessage msg) {
+    public IMessage process(SocketCmdParams socketCmdParams, IMessage msg) {
         try {
-            Message message = handleProtoMessage(websocketCmdParams, msg);
+            Message message = handleProtoMessage(socketCmdParams, msg);
             if (message == null) {
                 return null;
             }
-            IMessage iMessage = new ProtoMessage();
-            iMessage.buildIMessage(websocketCmdParams.getResCmd(), msg.getPlayerId(), message);
+            IMessage iMessage = new SocketMessage();
+            iMessage.buildIMessage(socketCmdParams.getResCmd(), message.toByteArray(), msg.getPlayerId());
             return iMessage;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -75,10 +75,10 @@ public class WebsocketControllerHandler extends AbstractService {
         return null;
     }
 
-    protected Message handleProtoMessage(WebsocketCmdParams websocketCmdParams, IMessage msg) {
+    protected Message handleProtoMessage(SocketCmdParams socketCmdParams, IMessage msg) {
         Object[] objects = new Object[0];
         try {
-            Class<?>[] parameterTypes = websocketCmdParams.getMethod().getParameterTypes();
+            Class<?>[] parameterTypes = socketCmdParams.getMethod().getParameterTypes();
             int paramLen = parameterTypes.length;
             objects = new Object[paramLen];
             for (int i = 0; i < paramLen; i++) {
@@ -87,7 +87,7 @@ public class WebsocketControllerHandler extends AbstractService {
                     objects[i] = msg.getPlayerId();
                 }
                 if (Message.class.isAssignableFrom(parameterType)) {
-                    objects[i] = msg.getMessage();
+                    objects[i] = msg.getBytes();
                 }
             }
 
@@ -96,7 +96,7 @@ public class WebsocketControllerHandler extends AbstractService {
         }
 
         try {
-            return (Message) websocketCmdParams.getMethod().invoke(this, objects);
+            return (Message) socketCmdParams.getMethod().invoke(this, objects);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }

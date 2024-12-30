@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface WebSocketCmd {
+public @interface SocketCmd {
     int reqCmd();
     int respCmd();
     String comment();

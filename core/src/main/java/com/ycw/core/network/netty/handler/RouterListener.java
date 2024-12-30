@@ -3,7 +3,7 @@ package com.ycw.core.network.netty.handler;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
 import com.ycw.core.network.netty.enums.OfflineCause;
 import com.ycw.core.network.netty.message.IMessage;
-import com.ycw.core.network.netty.message.PlayerChannelManage;
+import com.ycw.core.network.netty.message.SocketChannelManage;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -53,6 +53,6 @@ public interface RouterListener {
     void exec(Channel channel, IMessage msg);
 
     default void onChannelClose(Channel channel, OfflineCause offlineCause) {
-        PlayerChannelManage.getInstance().kitOut(channel, offlineCause);
+        SocketChannelManage.getInstance().kitOut(channel, offlineCause);
     }
 }

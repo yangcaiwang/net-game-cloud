@@ -1,10 +1,10 @@
 package com.ycw.core.network.netty.handler;
 
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
-import com.ycw.core.network.grpc.GrpcManager;
+import com.ycw.core.network.grpc.GrpcManage;
 import com.ycw.core.network.netty.message.IMessage;
-import com.ycw.core.network.netty.message.PlayerChannelManage;
-import com.ycw.core.network.netty.message.ProtoMessage;
+import com.ycw.core.network.netty.message.SocketChannelManage;
+import com.ycw.core.network.netty.message.SocketMessage;
 import io.netty.channel.Channel;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,10 +24,10 @@ public class RouterHandler implements RouterListener {
 
     @Override
     public void exec(Channel channel, IMessage msg) {
-        String serverId = PlayerChannelManage.getInstance().getAttr(channel, PlayerChannelManage.SERVER_IP);
-        if (StringUtils.isNotEmpty(serverId) && GrpcManager.getInstance().getGrpcClient(serverId) != null) {
-            if (msg instanceof ProtoMessage) {
-                GrpcManager.getInstance().sentController((ProtoMessage) msg);
+        String serverId = SocketChannelManage.getInstance().getAttr(channel, SocketChannelManage.SERVER_IP);
+        if (StringUtils.isNotEmpty(serverId) && GrpcManage.getInstance().getGrpcClient(serverId) != null) {
+            if (msg instanceof SocketMessage) {
+                GrpcManage.getInstance().sentController((SocketMessage) msg);
             }
         } else {
             log.error("serverId 有误！");
