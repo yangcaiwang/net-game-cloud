@@ -19,6 +19,15 @@ message RouteResponse {
   optional bytes msg = 1;
 }
 
+// 首包请求
+message FIRST_REQ {
+  optional int64 playerId = 1;
+  optional string serverId = 2;
+}
+// 首包响应
+message FIRST_RESP {
+}
+
 // gm请求
 message GmReq {
   optional int64 player_id = 1; // 玩家id

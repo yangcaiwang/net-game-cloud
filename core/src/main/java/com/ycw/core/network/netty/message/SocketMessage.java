@@ -11,8 +11,6 @@ public class SocketMessage implements IMessage, Serializable {
     private int privateKey;
     // 玩家id
     private long playerId;
-    // 玩家所属服务器id
-    private String serverId;
 
     @Override
     public void buildIMessage(int cmd) {
@@ -30,14 +28,6 @@ public class SocketMessage implements IMessage, Serializable {
         this.cmd = cmd;
         this.bytes = bytes;
         this.playerId = playerId;
-    }
-
-    @Override
-    public void buildIMessage(int cmd, byte[] bytes, long playerId, String serverId) {
-        this.cmd = cmd;
-        this.bytes = bytes;
-        this.playerId = playerId;
-        this.serverId = serverId;
     }
 
     public int getPrivateKey() {
@@ -72,14 +62,5 @@ public class SocketMessage implements IMessage, Serializable {
 
     public void setPlayerId(long playerId) {
         this.playerId = playerId;
-    }
-
-    @Override
-    public String getServerId() {
-        return serverId;
-    }
-
-    public void setServerId(String serverId) {
-        this.serverId = serverId;
     }
 }

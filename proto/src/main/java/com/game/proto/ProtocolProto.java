@@ -25,7 +25,7 @@ public final class ProtocolProto {
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
-     * 站位
+     * 占位
      * </pre>
      *
      * <code>NONE = 0;</code>
@@ -36,23 +36,39 @@ public final class ProtocolProto {
      * 首包
      * </pre>
      *
-     * <code>FIRST_CMD = 1001001;</code>
+     * <code>FIRST_REQ = 1001001;</code>
      */
-    FIRST_CMD(1001001),
+    FIRST_REQ(1001001),
+    /**
+     * <pre>
+     * 首包
+     * </pre>
+     *
+     * <code>FIRST_RESP = 2001001;</code>
+     */
+    FIRST_RESP(2001001),
     /**
      * <pre>
      * 心跳
      * </pre>
      *
-     * <code>HEART_BEAT_CMD = 1002001;</code>
+     * <code>HEART_BEAT_REQ = 1002001;</code>
      */
-    HEART_BEAT_CMD(1002001),
+    HEART_BEAT_REQ(1002001),
+    /**
+     * <pre>
+     * 心跳
+     * </pre>
+     *
+     * <code>HEART_BEAT_RESP = 2002001;</code>
+     */
+    HEART_BEAT_RESP(2002001),
     UNRECOGNIZED(-1),
     ;
 
     /**
      * <pre>
-     * 站位
+     * 占位
      * </pre>
      *
      * <code>NONE = 0;</code>
@@ -63,17 +79,33 @@ public final class ProtocolProto {
      * 首包
      * </pre>
      *
-     * <code>FIRST_CMD = 1001001;</code>
+     * <code>FIRST_REQ = 1001001;</code>
      */
-    public static final int FIRST_CMD_VALUE = 1001001;
+    public static final int FIRST_REQ_VALUE = 1001001;
+    /**
+     * <pre>
+     * 首包
+     * </pre>
+     *
+     * <code>FIRST_RESP = 2001001;</code>
+     */
+    public static final int FIRST_RESP_VALUE = 2001001;
     /**
      * <pre>
      * 心跳
      * </pre>
      *
-     * <code>HEART_BEAT_CMD = 1002001;</code>
+     * <code>HEART_BEAT_REQ = 1002001;</code>
      */
-    public static final int HEART_BEAT_CMD_VALUE = 1002001;
+    public static final int HEART_BEAT_REQ_VALUE = 1002001;
+    /**
+     * <pre>
+     * 心跳
+     * </pre>
+     *
+     * <code>HEART_BEAT_RESP = 2002001;</code>
+     */
+    public static final int HEART_BEAT_RESP_VALUE = 2002001;
 
 
     public final int getNumber() {
@@ -101,8 +133,10 @@ public final class ProtocolProto {
     public static ProtocolCmd forNumber(int value) {
       switch (value) {
         case 0: return NONE;
-        case 1001001: return FIRST_CMD;
-        case 1002001: return HEART_BEAT_CMD;
+        case 1001001: return FIRST_REQ;
+        case 2001001: return FIRST_RESP;
+        case 1002001: return HEART_BEAT_REQ;
+        case 2002001: return HEART_BEAT_RESP;
         default: return null;
       }
     }
@@ -168,10 +202,11 @@ public final class ProtocolProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016protocol.proto\022\010protocol*>\n\013ProtocolCm" +
-      "d\022\010\n\004NONE\020\000\022\017\n\tFIRST_CMD\020\251\214=\022\024\n\016HEART_BE" +
-      "AT_CMD\020\221\224=B\037\n\016com.game.protoB\rProtocolPr" +
-      "otob\006proto3"
+      "\n\016protocol.proto\022\010protocol*g\n\013ProtocolCm" +
+      "d\022\010\n\004NONE\020\000\022\017\n\tFIRST_REQ\020\251\214=\022\020\n\nFIRST_RE" +
+      "SP\020\351\220z\022\024\n\016HEART_BEAT_REQ\020\221\224=\022\025\n\017HEART_BE" +
+      "AT_RESP\020\321\230zB\037\n\016com.game.protoB\rProtocolP" +
+      "rotob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

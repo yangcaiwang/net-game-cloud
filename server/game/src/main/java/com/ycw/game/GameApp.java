@@ -20,13 +20,13 @@ public class GameApp {
 
         // 首包
         IMessage iMessage = new SocketMessage();
-        iMessage.buildIMessage(ProtocolProto.ProtocolCmd.FIRST_CMD_VALUE, new byte[]{}, 1L, "game-1001");
+
+        iMessage.buildIMessage(ProtocolProto.ProtocolCmd.FIRST_REQ_VALUE, CommonProto.FIRST_REQ.newBuilder().setPlayerId(1L).setServerId("game-1001").build().toByteArray());
         SocketClient.getInstance().channelFuture.channel().writeAndFlush(iMessage);
 
         // 测试
         IMessage testMessage = new SocketMessage();
-        byte[] bytes = CommonProto.MiniItem.newBuilder().setResId(1).setNum(100).build().toByteArray();
-        testMessage.buildIMessage(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE, bytes, 1L, "game-1001");
+        testMessage.buildIMessage(ProtocolProto.ProtocolCmd.HEART_BEAT_REQ_VALUE, CommonProto.MiniItem.newBuilder().setResId(1).setNum(100).build().toByteArray());
 
 //        SocketClient.getInstance().channelFuture.channel().writeAndFlush(iMessage);
     }

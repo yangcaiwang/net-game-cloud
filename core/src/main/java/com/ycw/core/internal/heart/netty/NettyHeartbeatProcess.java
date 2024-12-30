@@ -38,7 +38,7 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
                 if (MapUtils.isNotEmpty(channelMap)) {
                     for (Channel channel : channelMap.values()) {
                         IMessage iMessage = new SocketMessage();
-                        iMessage.buildIMessage(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE);
+                        iMessage.buildIMessage(ProtocolProto.ProtocolCmd.HEART_BEAT_REQ_VALUE);
                         SocketChannelManage.getInstance().sent(channel, iMessage);
                     }
                 }

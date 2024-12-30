@@ -8,7 +8,6 @@ import com.ycw.core.network.netty.message.SocketChannelManage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,27 +36,33 @@ public class SocketServerHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) throws Exception {
-        log.info("receive [{}]'s message [{}]", ctx, msgPacket);
-        if (msgPacket instanceof IMessage) {
-            IMessage msg = (IMessage) msgPacket;
-            // 首包必须是cmd==1001001并且携带玩家id和服务器id 用于绑定玩家channel通道
-            if (msg.getCmd() == ProtocolProto.ProtocolCmd.FIRST_CMD_VALUE && msg.getPlayerId() != 0 && StringUtils.isNotEmpty(msg.getServerId())) {
-                SocketChannelManage.getInstance().bindChannelAttr(ctx.channel(), msg);
-                return;
-            }
+    protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) {
+        try {
 
-            if (!SocketChannelManage.getInstance().checkBindChannel(ctx.channel())) {
-                SocketChannelManage.getInstance().removeChannel(ctx.channel());
-                return;
-            }
+            log.info("receive [{}]'s message [{}]", ctx, msgPacket);
+            if (msgPacket instanceof IMessage) {
+                IMessage msg = (IMessage) msgPacket;
+                // 首包必须是cmd==1001001并且携带玩家id和服务器id 用于绑定玩家channel通道
+                if (msg.getCmd() == ProtocolProto.ProtocolCmd.FIRST_REQ_VALUE) {
+                    SocketChannelManage.getInstance().bindChannel(ctx.channel(), msg);
+                    return;
+                }
 
-            // 心跳机制
-            if (msg.getCmd() == ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE) {
-                SocketChannelManage.getInstance().setAttr(ctx.channel(), SocketChannelManage.HEART_BEAT, System.currentTimeMillis());
-            }
+                if (!SocketChannelManage.getInstance().checkBindChannel(ctx.channel())) {
+                    SocketChannelManage.getInstance().removeChannel(ctx.channel());
+                    return;
+                }
 
-            routerListener.process(ctx, handlerExecutor, msg);
+                // 心跳机制
+                if (msg.getCmd() == ProtocolProto.ProtocolCmd.HEART_BEAT_REQ_VALUE) {
+                    SocketChannelManage.getInstance().setAttr(ctx.channel(), SocketChannelManage.HEART_BEAT, System.currentTimeMillis());
+                    SocketChannelManage.getInstance().sent(ctx.channel(), ProtocolProto.ProtocolCmd.HEART_BEAT_RESP_VALUE, null);
+                }
+
+                routerListener.process(ctx, handlerExecutor, msg);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
     }
 

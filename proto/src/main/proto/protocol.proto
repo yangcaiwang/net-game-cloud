@@ -6,18 +6,20 @@ package protocol;
 
 //7位协议号 第一位1表示请求 2表示响应 3表示服务器通知 次三位表示模块id 后三位表示模块内协议号
 enum ProtocolCmd {
-  NONE = 0; // 站位
-  FIRST_CMD = 1001001;// 首包
-  HEART_BEAT_CMD = 1002001;// 心跳
+  NONE = 0; // 占位
+  FIRST_REQ = 1001001;// 首包
+  FIRST_RESP = 2001001;// 首包
+  HEART_BEAT_REQ = 1002001;// 心跳
+  HEART_BEAT_RESP = 2002001;// 心跳
 
   //================================Gm=======================================
-//  ADD_LEVEL_REQ = 110001;// 升级
-//  ADD_LEVEL_RESP = 210001;// 升级
+  //  ADD_LEVEL_REQ = 110001;// 升级
+  //  ADD_LEVEL_RESP = 210001;// 升级
   //=========================================================================
-//  ENTER_GAME_REQ = 100002;// 进入游戏
-//  ENTER_GAME_RESP = 200001;// 进入游戏
-//  PLAYER_UPDATE_NOTIFY = 300003;// 玩家属性更新
-//  PLAYER_NEXT_DAY_NOTIFY = 300004;// 玩家隔天刷新
-//  PLAYER_RECONNECT_REQ = 100015;// 断线重连
-//  PLAYER_RECONNECT_RESP = 200015;// 断线重连
+  //  ENTER_GAME_REQ = 100002;// 进入游戏
+  //  ENTER_GAME_RESP = 200001;// 进入游戏
+  //  PLAYER_UPDATE_NOTIFY = 300003;// 玩家属性更新
+  //  PLAYER_NEXT_DAY_NOTIFY = 300004;// 玩家隔天刷新
+  //  PLAYER_RECONNECT_REQ = 100015;// 断线重连
+  //  PLAYER_RECONNECT_RESP = 200015;// 断线重连
 }

@@ -1,5 +1,6 @@
 package com.ycw.core.network.netty.message;
 
+import com.game.proto.CommonProto;
 import com.ycw.core.cluster.property.PropertyConfig;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
 import com.ycw.core.network.netty.enums.OffLineCmd;
@@ -9,6 +10,7 @@ import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -198,12 +200,22 @@ public class SocketChannelManage {
                 .collect(Collectors.toList());
     }
 
-    public void bindChannelAttr(Channel channel, IMessage msg) {
-        long playerId = msg.getPlayerId();
-        setAttr(channel, SocketChannelManage.SERVER_IP, msg.getServerId());
-        setAttr(channel, SocketChannelManage.PLAYER_ID, playerId);
-        setAttr(channel, SocketChannelManage.HEART_BEAT, System.currentTimeMillis());
-        channelMap.putIfAbsent(playerId, channel);
+    public void bindChannel(Channel channel, IMessage msg) {
+        try {
+            CommonProto.FIRST_REQ firstReq = CommonProto.FIRST_REQ.parseFrom(msg.getBytes());
+            long playerId = firstReq.getPlayerId();
+            if (playerId > 0 && StringUtils.isNotEmpty(firstReq.getServerId())) {
+                setAttr(channel, SocketChannelManage.SERVER_IP, playerId);
+                setAttr(channel, SocketChannelManage.PLAYER_ID, playerId);
+                setAttr(channel, SocketChannelManage.HEART_BEAT, System.currentTimeMillis());
+                channelMap.putIfAbsent(playerId, channel);
+            } else {
+                channel.close();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            channel.close();
+        }
     }
 
     /**
