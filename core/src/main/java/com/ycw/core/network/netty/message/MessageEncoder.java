@@ -1,7 +1,6 @@
 package com.ycw.core.network.netty.message;
 
 import com.ycw.core.util.CollectionUtils;
-import com.ycw.proto.CommonProto;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -23,8 +22,8 @@ public class MessageEncoder extends MessageToByteEncoder<Object> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Object message, ByteBuf out) throws Exception {
-        if (message instanceof CommonProto.msg) {
-            CommonProto.msg msg = (CommonProto.msg) message;
+        if (message instanceof IMessage) {
+            IMessage msg = (IMessage) message;
 
             // 缓冲区长度根据字段动态创建 节省空间
             int bufferLength = 8; // cmd最多占用8个字节
@@ -41,8 +40,8 @@ public class MessageEncoder extends MessageToByteEncoder<Object> {
             }
 
             byte[] binaryData = null;
-            if (msg.getAny() != null) {
-                binaryData = msg.getAny().toByteArray();
+            if (msg.getArray() != null) {
+                binaryData = msg.getArray();
                 bufferLength += binaryData.length;
             }
 

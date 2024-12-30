@@ -5,63 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e3bcefa-e889-4fe0-8417-1e5fab277c04" name="Changes" comment="优化">
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/annotation/WebSocketCmd.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/enums/OffLineCmd.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/enums/OfflineCause.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketControllerHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/method/WebsocketCmdContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/IMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/ProtoMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNodeComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/ServerNodeComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/jetty/JettyHeartbeatProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/jetty/JettyHeartbeatProcess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/AbstractServerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/cluster/node/AbstractServerNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/netty/NettyHeartbeatProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/internal/heart/netty/NettyHeartbeatProcess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/GrpcManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/RouteServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/grpc/RouteServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/HttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/HttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/annotation/HttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/annotation/HttpCmd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/constant/HttpCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/constant/HttpConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/handler/JettyHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/handler/JettyHttpHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/httpCmd/BaseHttpCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/jetty/httpCmd/BaseHttpCmd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/annotation/NetHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/client/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/coder/NettyPacketDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/coder/NettyPacketEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/common/ExceptionLogEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/common/GameProtobufMethodHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/common/IClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/common/OfflineEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/common/PlayerProtobufMethodHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/AbstractBinaryHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/MethodHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/method/WebsocketCmdParams.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/MethodHandlerManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/listener/MessageListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/listener/MessageSuperListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/listener/RouteMessageListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageProcess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/server/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/server/NettyServerProtobufHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/util/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/util/FileUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/impl/ServerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/service/impl/ServerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/gm/src/main/java/com/ycw/gm/admin/web/controller/gameGm/GmServerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/HeaderSearch/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/HeaderSearch/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/IconSelect/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/IconSelect/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/ImagePreview/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/ImagePreview/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/ImageUpload/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/ImageUpload/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/Pagination/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/Pagination/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/RightPanel/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/RightPanel/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/components/Screenfull/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/components/Screenfull/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/Settings/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Settings/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Link.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Link.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Logo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/Logo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/SidebarItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/SidebarItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/Sidebar/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/components/TagsView/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/components/TagsView/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/src/devToolLayout/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue/src/devToolLayout/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/WebsocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/ControllerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/RouterListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketControllerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketControllerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/handler/WebsocketServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/MessageProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/network/netty/message/PlayerChannelManage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/util/ConsoleUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/ycw/core/util/ConsoleUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/CommonProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/ErrorProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/PlayerProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/ProtocolProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/game/proto/RouteServiceGrpc.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/CommonProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/ErrorProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/PlayerProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/ProtocolProto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/java/com/ycw/proto/RouteServiceGrpc.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/src/main/proto/common.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/src/main/proto/common.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,9 +66,9 @@
       <list>
         <option value="Kotlin Class" />
         <option value="AnnotationType" />
-        <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -183,11 +156,11 @@
       <recent name="com.gate.node" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ycw.core.network.netty.message" />
       <recent name="com.ycw.core.network.netty.server" />
       <recent name="com.ycw.core.cluster.enums" />
       <recent name="com.ycw.core.network.jetty.event" />
       <recent name="com.ycw.core.network.jetty.httpCmd" />
-      <recent name="com.ycw.core.network.grpc.event" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -392,7 +365,8 @@
       <workItem from="1735475105617" duration="21549000" />
       <workItem from="1735506262982" duration="7000" />
       <workItem from="1735506473958" duration="14000" />
-      <workItem from="1735506751152" duration="14095000" />
+      <workItem from="1735506751152" duration="14114000" />
+      <workItem from="1735552145409" duration="8378000" />
     </task>
     <task id="LOCAL-00001" summary="微服务游戏架构">
       <option name="closed" value="true" />
@@ -522,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735504732870</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="优化">
+      <option name="closed" value="true" />
+      <created>1735521414159</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1735521414159</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

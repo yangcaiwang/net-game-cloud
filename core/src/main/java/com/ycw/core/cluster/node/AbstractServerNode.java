@@ -13,7 +13,7 @@ import com.ycw.core.internal.loader.Scanner;
 import com.ycw.core.internal.loader.service.ServiceContext;
 import com.ycw.core.network.jetty.HttpClient;
 import com.ycw.core.network.jetty.http.HttpCode;
-import com.ycw.core.network.netty.message.MessageProcess;
+import com.ycw.core.network.netty.message.PlayerChannelManage;
 import com.ycw.core.util.PrintManager;
 import com.ycw.core.util.SystemUtils;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
@@ -119,7 +119,7 @@ public abstract class AbstractServerNode implements SuperServerNode {
             switch (this.serverType) {
                 case GATE_SERVER:
                     // 踢掉本网关所有玩家连接
-                    int players = MessageProcess.getInstance().kitOutAll();
+                    int players = PlayerChannelManage.getInstance().kitOutAll();
                     if (players != 0) {
                         log.info("======================= [{}] kit out [{}] player =======================", getServerId(), players);
                     }

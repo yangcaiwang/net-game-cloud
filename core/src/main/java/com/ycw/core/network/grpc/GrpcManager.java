@@ -1,12 +1,17 @@
 package com.ycw.core.network.grpc;
 
+import com.game.proto.CommonProto;
+import com.game.proto.RouteServiceGrpc;
+import com.google.protobuf.ByteString;
 import com.ycw.core.cluster.entity.AddressInfo;
 import com.ycw.core.cluster.entity.ServerEntity;
-import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
-import com.ycw.core.network.netty.message.MessageProcess;
-import com.ycw.proto.CommonProto;
-import com.ycw.proto.RouteServiceGrpc;
+import com.ycw.core.network.netty.handler.ControllerHandler;
+import com.ycw.core.network.netty.handler.RouterHandler;
+import com.ycw.core.network.netty.message.IMessage;
+import com.ycw.core.network.netty.message.PlayerChannelManage;
+import com.ycw.core.network.netty.message.ProtoMessage;
+import com.ycw.core.util.SerializationUtils;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
@@ -19,16 +24,18 @@ import java.util.concurrent.TimeUnit;
 /**
  * <Grpc管理器实现类>
  * <p>
+ * ps: Grpc双向流模式
  *
  * @author <yangcaiwang>
  * @version <1.0>
  */
 public class GrpcManager {
     public static final Logger logger = LoggerFactory.getLogger(GrpcManager.class);
-    public final ActorThreadPoolExecutor serverExecutor = new ActorThreadPoolExecutor("grpc-server-thread", Runtime.getRuntime().availableProcessors() * 2 + 1);
-    public final ActorThreadPoolExecutor clientExecutor = new ActorThreadPoolExecutor("grpc-client-thread", Runtime.getRuntime().availableProcessors() * 2 + 1);
+    private StreamObserver<CommonProto.RouteRequest> routeRequestStreamObserver;
     private Map<String, GrpcClient> grpcClientMap = new HashMap<>();
-
+    private long heartbeatTime;
+    private long heartbeatTimeout;
+    private Server server;
     private static GrpcManager grpcManager = new GrpcManager();
 
     public static GrpcManager getInstance() {
@@ -40,8 +47,10 @@ public class GrpcManager {
      *
      * @param port 端口号
      */
-    public void startGrpcServer(int port, long keepAliveTime, long keepAliveTimeout) {
-        GrpcServer grpcServer = new GrpcServer(keepAliveTime, keepAliveTimeout);
+    public void startGrpcServer(int port, long heartbeatTime, long heartbeatTimeout) {
+        GrpcServer grpcServer = new GrpcServer();
+        this.heartbeatTime = heartbeatTime;
+        this.heartbeatTimeout = heartbeatTimeout;
         grpcServer.start(port);
     }
 
@@ -69,20 +78,37 @@ public class GrpcManager {
     }
 
     /**
+     * 发送到路由器
+     *
+     * @param protoMessage proto消息
+     */
+    public void sentRouter(ProtoMessage protoMessage) {
+        CommonProto.RouteResponse build = CommonProto.RouteResponse.newBuilder()
+                .setMsg(ByteString.copyFrom(SerializationUtils.toByteArrayByH2(protoMessage)))
+                .build();
+        RouteServiceImpl.routeResponseObserver.onNext(build);
+        RouteServiceImpl.routeResponseObserver.onCompleted();
+    }
+
+    /**
+     * 路由消息发送到控制器
+     *
+     * @param protoMessage proto消息
+     */
+    public void sentController(ProtoMessage protoMessage) {
+        CommonProto.RouteRequest build = CommonProto.RouteRequest.newBuilder()
+                .setMsg(ByteString.copyFrom(SerializationUtils.toByteArrayByH2(protoMessage)))
+                .build();
+        routeRequestStreamObserver.onNext(build);
+        routeRequestStreamObserver.onCompleted();
+    }
+
+    /**
      * <p>grpc 服务端
      *
      * @author yangcaiwang
      */
     public class GrpcServer {
-        private long heartbeatTime;
-        private long heartbeatTimeout;
-        private Server server;
-
-        public GrpcServer(long heartbeatTime, long heartbeatTimeout) {
-            this.heartbeatTime = heartbeatTime;
-            this.heartbeatTimeout = heartbeatTimeout;
-        }
-
         /**
          * 启动服务端
          *
@@ -107,16 +133,6 @@ public class GrpcManager {
         }
 
         /**
-         * 发送路由消息
-         *
-         * @param routeResponse 路由信息
-         */
-        private void sentClient(CommonProto.RouteResponse routeResponse) {
-            RouteServiceImpl.routeResponseObserver.onNext(routeResponse);
-            RouteServiceImpl.routeResponseObserver.onCompleted();
-        }
-
-        /**
          * 停止服务
          */
         private void shutdown() {
@@ -124,7 +140,7 @@ public class GrpcManager {
                 if (null != server) {
                     // 等待5秒钟，不关闭也会强制退出
                     server.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-                    serverExecutor.shutdown();
+                    ControllerHandler.actorExecutor.shutdown();
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
@@ -139,11 +155,6 @@ public class GrpcManager {
      */
     public class GrpcClient {
         private ManagedChannel channel;
-
-        /**
-         * 双向流模式
-         */
-        private StreamObserver<CommonProto.RouteRequest> routeRequestStreamObserver;
 
         /**
          * 启动客户端
@@ -168,19 +179,23 @@ public class GrpcManager {
                     @Override
                     public void onNext(CommonProto.RouteResponse routeResponse) {
                         CommonProto.RouteResponse.newBuilder().build();
+                        IMessage iMessage = SerializationUtils.toObjectByH2(routeResponse.getMsg().toByteArray());
+                        try {
+                            // 处理接收到的消息
+                            RouterHandler.actorExecutor.execute(new AbstractLinkedTask() {
+                                @Override
+                                public Object getIdentity() {
+                                    return iMessage.getPlayerId();
+                                }
 
-                        // 处理接收到的消息
-                        clientExecutor.execute(new AbstractLinkedTask() {
-                            @Override
-                            public Object getIdentity() {
-                                return routeResponse.getMsg().getPlayerId();
-                            }
-
-                            @Override
-                            protected void exec() throws Exception {
-                                MessageProcess.getInstance().sent(routeResponse.getMsg().getPlayerId(), routeResponse.getMsg().getCmd(), MessageProcess.getInstance().messageToAny(routeResponse.getMsg()));
-                            }
-                        });
+                                @Override
+                                protected void exec() {
+                                    PlayerChannelManage.getInstance().sent(iMessage.getPlayerId(), iMessage.getCmd(), iMessage.getMessage());
+                                }
+                            });
+                        } catch (Exception e) {
+                            logger.error(e.getMessage(), e);
+                        }
                     }
 
                     @Override
@@ -202,16 +217,6 @@ public class GrpcManager {
         }
 
         /**
-         * 发送路由消息
-         *
-         * @param routeRequest 路由信息
-         */
-        public void sentServer(CommonProto.RouteRequest routeRequest) {
-            routeRequestStreamObserver.onNext(routeRequest);
-            routeRequestStreamObserver.onCompleted();
-        }
-
-        /**
          * 客户端关闭
          */
         private void shutdown() {
@@ -219,7 +224,7 @@ public class GrpcManager {
                 if (null != channel) {
                     // 等待5秒钟，不关闭也会强制退出
                     channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-                    clientExecutor.shutdown();
+                    RouterHandler.actorExecutor.shutdown();
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);

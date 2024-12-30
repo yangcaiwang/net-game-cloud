@@ -1,13 +1,11 @@
 package com.ycw.core.network.netty.message;
 
-import com.google.protobuf.Any;
-import com.google.protobuf.ByteString;
-import com.google.protobuf.DynamicMessage;
 import com.google.protobuf.Message;
 import com.ycw.core.cluster.property.PropertyConfig;
 import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
-import com.ycw.proto.CommonProto;
+import com.ycw.core.network.netty.enums.OffLineCmd;
+import com.ycw.core.network.netty.enums.OfflineCause;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
@@ -15,7 +13,6 @@ import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +28,8 @@ import java.util.stream.Collectors;
  * @author <yangcaiwang>
  * @version <1.0>
  */
-public class MessageProcess {
-    private static final Logger log = LoggerFactory.getLogger(MessageProcess.class);
+public class PlayerChannelManage {
+    private static final Logger log = LoggerFactory.getLogger(PlayerChannelManage.class);
     public static final String PUBLIC_KEY = "publicKey";
     public static final String PRIVATE_KEY = "privateKey";
     public static final String PLAYER_ID = "playerId";
@@ -41,124 +38,16 @@ public class MessageProcess {
     public static final String OFFLINE_CAUSE_OFF = "offlineCause";
     public static final Executor handlerExecutor = new ActorThreadPoolExecutor("io-sent", Runtime.getRuntime().availableProcessors() + 1);
 
-    private static MessageProcess messageProcess = new MessageProcess();
+    private static PlayerChannelManage playerChannelManage = new PlayerChannelManage();
 
-    public static MessageProcess getInstance() {
-        return messageProcess;
+    public static PlayerChannelManage getInstance() {
+        return playerChannelManage;
     }
 
     /**
-     * 玩家和所属服务器映射
+     * 玩家和所属通道映射
      */
     private Map<Long, Channel> channelMap = new ConcurrentHashMap<>();
-
-    /**
-     * 构建消息体
-     *
-     * @param cmd      报文号
-     * @param playerId 玩家id
-     * @param message  具体proto消息体
-     * @return msg {@link CommonProto.msg}
-     */
-    public CommonProto.msg buildMsg(int cmd, long playerId, Message message) {
-        CommonProto.msg.Builder builder = CommonProto.msg.newBuilder();
-        builder.setCmd(cmd);
-        builder.setPlayerId(playerId);
-        if (message != null) {
-            builder.setAny(messageToAny(message));
-            builder.setData(ByteString.copyFrom(message.toByteArray()));
-        }
-
-        return builder.build();
-    }
-
-    /**
-     * 构建消息体
-     *
-     * @param cmd     报文号
-     * @param message 具体proto消息体
-     * @return msg {@link CommonProto.msg}
-     */
-    public CommonProto.msg buildMsg(int cmd, Message message) {
-        CommonProto.msg.Builder builder = CommonProto.msg.newBuilder();
-        builder.setCmd(cmd);
-        if (message != null) {
-            builder.setAny(messageToAny(message));
-            builder.setData(ByteString.copyFrom(message.toByteArray()));
-        }
-        return builder.build();
-    }
-
-    /**
-     * 构建消息体
-     *
-     * @param cmd      报文号
-     * @param playerId 玩家id
-     * @param serverId 服务器id
-     * @param message  具体proto消息体
-     * @return msg {@link CommonProto.msg}
-     */
-    public CommonProto.msg buildMsg(int cmd, long playerId, String serverId, Message message) {
-        CommonProto.msg.Builder builder = CommonProto.msg.newBuilder();
-        builder.setCmd(cmd);
-        builder.setPlayerId(playerId);
-        builder.setServerId(serverId);
-        if (message != null) {
-            builder.setAny(messageToAny(message));
-            builder.setData(ByteString.copyFrom(message.toByteArray()));
-        }
-
-        return builder.build();
-    }
-
-    /**
-     * 构建消息体
-     *
-     * @param cmd      报文号
-     * @param playerId 玩家id
-     * @param serverId 服务器id
-     * @param bytes    字节数据
-     * @return msg {@link CommonProto.msg}
-     */
-    public CommonProto.msg buildMsg(int cmd, long playerId, String serverId, byte[] bytes) {
-        CommonProto.msg.Builder builder = CommonProto.msg.newBuilder();
-        builder.setCmd(cmd);
-        builder.setPlayerId(playerId);
-        builder.setPlayerId(playerId);
-        builder.setServerId(serverId);
-        builder.setData(ByteString.copyFrom(bytes));
-        return builder.build();
-    }
-
-    /**
-     * Message转为为Any
-     *
-     * @param message 具体proto消息体
-     * @return Any {@link Any}
-     */
-    public Any messageToAny(Message message) {
-        return Any.newBuilder()
-                .setTypeUrl("type.googleapis.com/" + message.getDescriptorForType().getFullName())
-                .setValue(ByteString.copyFrom(message.toByteArray()))
-                .build();
-    }
-
-    /**
-     * Any转化为Message
-     *
-     * @param any     Any 类型是一个通用的消息类型，可以用来包装任意类型的消息
-     * @param message 具体proto消息体
-     * @return Message {@link Message}
-     */
-    public Message anyToMessage(Any any, Message message) throws IOException {
-        // 检查类型 URL 是否匹配
-        if (any.getTypeUrl().equals("type.googleapis.com/" + message.getDescriptorForType().getFullName())) {
-            // 反序列化 Any 中的 ByteString 为 Message
-            return DynamicMessage.parseFrom(message.getDescriptorForType(), any.getValue().newInput());
-        }
-
-        return null;
-    }
 
     /**
      * 发送消息
@@ -168,8 +57,9 @@ public class MessageProcess {
      * @param message 具体proto消息体
      */
     public void sent(Channel channel, int cmd, Message message) {
-        CommonProto.msg msg = buildMsg(getAttr(channel, MessageProcess.PLAYER_ID), cmd, message);
-        sent(channel, msg);
+        IMessage iMessage = new ProtoMessage();
+        iMessage.buildIMessage(getAttr(channel, PlayerChannelManage.PLAYER_ID), cmd, message);
+        sent(channel, iMessage);
     }
 
     /**
@@ -182,8 +72,9 @@ public class MessageProcess {
     public void sent(long playerId, int cmd, Message message) {
         Channel channel = channelMap.get(playerId);
         if (channel != null) {
-            CommonProto.msg msg = buildMsg(cmd, playerId, message);
-            sent(channel, msg);
+            IMessage iMessage = new ProtoMessage();
+            iMessage.buildIMessage(cmd, playerId, message);
+            sent(channel, iMessage);
         }
     }
 
@@ -193,7 +84,7 @@ public class MessageProcess {
      * @param channel 玩家连接的管道
      * @param msg     玩家id
      */
-    public void sent(Channel channel, CommonProto.msg msg) {
+    public void sent(Channel channel, IMessage msg) {
         if (msg.getCmd() <= 1) {
             channel.writeAndFlush(msg);
             return;
@@ -248,7 +139,7 @@ public class MessageProcess {
      * @param cmd      报文号
      * @param message  proto消息体
      */
-    public void kitOut(NettyConstant.OfflineCause cause, long playerId, int cmd, Message message) {
+    public void kitOut(OfflineCause cause, long playerId, int cmd, Message message) {
         Channel channel = channelMap.get(playerId);
         if (channel != null) {
             // 设置离线原因
@@ -264,10 +155,10 @@ public class MessageProcess {
      * @param channel 玩家连接的管道
      * @param cause   下线原因
      */
-    public void kitOut(Channel channel, NettyConstant.OfflineCause cause) {
+    public void kitOut(Channel channel, OfflineCause cause) {
         // 返回离线原因
         setAttr(channel, OFFLINE_CAUSE_OFF, cause);
-        sent(channel, NettyConstant.OffLineCmd.NORMAL.value, null);
+        sent(channel, OffLineCmd.NORMAL.value, null);
         channel.close();
     }
 
@@ -278,7 +169,7 @@ public class MessageProcess {
         AtomicInteger players = new AtomicInteger();
         if (MapUtils.isNotEmpty(channelMap)) {
             for (Channel channel : channelMap.values()) {
-                kitOut(channel, NettyConstant.OfflineCause.STOP_SERVER);
+                kitOut(channel, OfflineCause.STOP_SERVER);
                 players.decrementAndGet();
             }
         }
@@ -303,16 +194,16 @@ public class MessageProcess {
     public List<Long> getOnlineByServerId(String serverId) {
         return channelMap.entrySet()
                 .stream()
-                .filter(entry -> getAttr(entry.getValue(), MessageProcess.SERVER_IP).equals(serverId))
+                .filter(entry -> getAttr(entry.getValue(), PlayerChannelManage.SERVER_IP).equals(serverId))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 
-    public void initChannelAttr(Channel channel, CommonProto.msg msg) {
+    public void initChannelAttr(Channel channel, IMessage msg) {
         long playerId = msg.getPlayerId();
-        setAttr(channel, MessageProcess.SERVER_IP, msg.getServerId());
-        setAttr(channel, MessageProcess.PLAYER_ID, playerId);
-        setAttr(channel, MessageProcess.HEART_BEAT, System.currentTimeMillis());
+        setAttr(channel, PlayerChannelManage.SERVER_IP, msg.getPlayerId());
+        setAttr(channel, PlayerChannelManage.PLAYER_ID, playerId);
+        setAttr(channel, PlayerChannelManage.HEART_BEAT, System.currentTimeMillis());
         channelMap.putIfAbsent(playerId, channel);
     }
 
@@ -323,7 +214,7 @@ public class MessageProcess {
      * @return boolean {@link Boolean}
      */
     public boolean checkChannel(Channel channel) {
-        return channel.hasAttr(AttributeKey.valueOf(MessageProcess.SERVER_IP)) && channel.hasAttr(AttributeKey.valueOf(MessageProcess.PLAYER_ID));
+        return channel.hasAttr(AttributeKey.valueOf(PlayerChannelManage.SERVER_IP)) && channel.hasAttr(AttributeKey.valueOf(PlayerChannelManage.PLAYER_ID));
     }
 
     /**

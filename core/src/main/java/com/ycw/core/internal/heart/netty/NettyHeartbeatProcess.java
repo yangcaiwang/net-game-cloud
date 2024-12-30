@@ -1,10 +1,12 @@
 package com.ycw.core.internal.heart.netty;
 
+import com.game.proto.ProtocolProto;
 import com.ycw.core.internal.heart.HeartbeatProcess;
 import com.ycw.core.internal.thread.pool.actor.TimerActorThread;
-import com.ycw.core.network.netty.message.MessageProcess;
-import com.ycw.proto.CommonProto;
-import com.ycw.proto.ProtocolProto;
+import com.ycw.core.network.netty.enums.OfflineCause;
+import com.ycw.core.network.netty.message.IMessage;
+import com.ycw.core.network.netty.message.PlayerChannelManage;
+import com.ycw.core.network.netty.message.ProtoMessage;
 import io.netty.channel.Channel;
 import org.apache.commons.collections.MapUtils;
 
@@ -32,10 +34,12 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
     public void sent() {
         if (heartbeatTime > 0) {
             threadSender = new TimerActorThread("nettyHeartbeat-threadSender", heartbeatTime, () -> {
-                Map<Long, Channel> channelMap = MessageProcess.getInstance().getChannelMap();
+                Map<Long, Channel> channelMap = PlayerChannelManage.getInstance().getChannelMap();
                 if (MapUtils.isNotEmpty(channelMap)) {
                     for (Channel channel : channelMap.values()) {
-                        MessageProcess.getInstance().sent(channel, CommonProto.msg.newBuilder().setCmd(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE).build());
+                        IMessage iMessage = new ProtoMessage();
+                        iMessage.buildIMessage(ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE);
+                        PlayerChannelManage.getInstance().sent(channel, iMessage);
                     }
                 }
             });
@@ -44,15 +48,15 @@ public class NettyHeartbeatProcess implements HeartbeatProcess {
 
     @Override
     public void monitor() {
-        if (heartbeatTimeout > 0){
+        if (heartbeatTimeout > 0) {
             threadMonitor = new TimerActorThread("nettyHeartbeat-threadMonitor", heartbeatTimeout, () -> {
-                MessageProcess messageProcess = MessageProcess.getInstance();
-                Map<Long, Channel> channelMap = messageProcess.getChannelMap();
+                PlayerChannelManage playerChannelManage = PlayerChannelManage.getInstance();
+                Map<Long, Channel> channelMap = playerChannelManage.getChannelMap();
                 if (MapUtils.isNotEmpty(channelMap)) {
                     for (Channel channel : channelMap.values()) {
-                        long lastHeartBeatTime = messageProcess.getAttr(channel, MessageProcess.HEART_BEAT);
+                        long lastHeartBeatTime = playerChannelManage.getAttr(channel, PlayerChannelManage.HEART_BEAT);
                         if (isTimeOut(lastHeartBeatTime)) {
-                            MessageProcess.getInstance().kitOut(channel, NettyConstant.OfflineCause.HEARTBEAT_TIMEOUT);
+                            PlayerChannelManage.getInstance().kitOut(channel, OfflineCause.HEARTBEAT_TIMEOUT);
                         }
                     }
                 }

@@ -1,9 +1,10 @@
 package com.ycw.core.network.netty.handler;
 
+import com.game.proto.ProtocolProto;
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.core.network.netty.message.MessageProcess;
-import com.ycw.proto.CommonProto;
-import com.ycw.proto.ProtocolProto;
+import com.ycw.core.network.netty.enums.OfflineCause;
+import com.ycw.core.network.netty.message.IMessage;
+import com.ycw.core.network.netty.message.PlayerChannelManage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -38,25 +39,25 @@ public class WebsocketServerHandler extends SimpleChannelInboundHandler<Object> 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) throws Exception {
         log.info("receive [{}]'s message [{}]", ctx, msgPacket);
-        if (msgPacket instanceof CommonProto.msg) {
-            CommonProto.msg msg = (CommonProto.msg) msgPacket;
+        if (msgPacket instanceof IMessage) {
+            IMessage msg = (IMessage) msgPacket;
             // 首包必须是cmd==0并且携带玩家id和服务器id 用于缓存attr
             if (msg.getCmd() == ProtocolProto.ProtocolCmd.FIRST_PACKET_CMD_VALUE && msg.getPlayerId() != 0 && StringUtils.isNotEmpty(msg.getServerId())) {
-                MessageProcess.getInstance().initChannelAttr(ctx.channel(), msg);
+                PlayerChannelManage.getInstance().initChannelAttr(ctx.channel(), msg);
                 return;
             }
 
-            if (!MessageProcess.getInstance().checkChannel(ctx.channel())) {
-                MessageProcess.getInstance().removeSession(ctx.channel());
+            if (!PlayerChannelManage.getInstance().checkChannel(ctx.channel())) {
+                PlayerChannelManage.getInstance().removeSession(ctx.channel());
                 return;
             }
 
             // 心跳机制
             if (msg.getCmd() == ProtocolProto.ProtocolCmd.HEART_BEAT_CMD_VALUE) {
-                MessageProcess.getInstance().setAttr(ctx.channel(), MessageProcess.HEART_BEAT, System.currentTimeMillis());
+                PlayerChannelManage.getInstance().setAttr(ctx.channel(), PlayerChannelManage.HEART_BEAT, System.currentTimeMillis());
             }
 
-            routerListener.handle(ctx, handlerExecutor, msg);
+            routerListener.process(ctx, handlerExecutor, msg);
         }
     }
 
@@ -68,7 +69,7 @@ public class WebsocketServerHandler extends SimpleChannelInboundHandler<Object> 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        MessageProcess.getInstance().removeSession(ctx.channel());
+        PlayerChannelManage.getInstance().removeSession(ctx.channel());
     }
 
     @Override
@@ -82,6 +83,6 @@ public class WebsocketServerHandler extends SimpleChannelInboundHandler<Object> 
             log.error(cause.getMessage(), cause);
         }
 
-        this.routerListener.onChannelClose(ctx.channel(), ioClose ? NettyConstant.OfflineCause.MANUAL : NettyConstant.OfflineCause.EXCEPTION);
+        this.routerListener.onChannelClose(ctx.channel(), ioClose ? OfflineCause.MANUAL : OfflineCause.EXCEPTION);
     }
 }

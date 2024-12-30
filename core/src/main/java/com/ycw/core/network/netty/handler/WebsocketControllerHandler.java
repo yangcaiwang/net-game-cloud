@@ -1,14 +1,14 @@
 package com.ycw.core.network.netty.handler;
 
+import com.game.proto.ErrorProto;
 import com.google.protobuf.Message;
 import com.ycw.core.internal.loader.service.AbstractService;
 import com.ycw.core.network.netty.annotation.WebSocketCmd;
-import com.ycw.core.network.netty.message.MessageProcess;
+import com.ycw.core.network.netty.message.IMessage;
+import com.ycw.core.network.netty.message.ProtoMessage;
 import com.ycw.core.network.netty.method.WebsocketCmdContext;
 import com.ycw.core.network.netty.method.WebsocketCmdParams;
 import com.ycw.core.util.LanguagesUtil;
-import com.ycw.proto.CommonProto;
-import com.ycw.proto.ErrorProto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,14 +53,21 @@ public class WebsocketControllerHandler extends AbstractService {
         }
     }
 
-    public CommonProto.msg process(WebsocketCmdParams handler, CommonProto.msg msg) {
+    /**
+     * 控制器处理业务 并返回
+     *
+     * @param websocketCmdParams 协议参数
+     * @param msg                proto消息
+     */
+    public IMessage process(WebsocketCmdParams websocketCmdParams, IMessage msg) {
         try {
-            Message message = handleProtoMessage(handler, msg);
+            Message message = handleProtoMessage(websocketCmdParams, msg);
             if (message == null) {
                 return null;
             }
-
-            return MessageProcess.getInstance().buildMsg(handler.getResCmd(), message);
+            IMessage iMessage = new ProtoMessage();
+            iMessage.buildIMessage(websocketCmdParams.getResCmd(), msg.getPlayerId(), message);
+            return iMessage;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -68,7 +75,7 @@ public class WebsocketControllerHandler extends AbstractService {
         return null;
     }
 
-    protected Message handleProtoMessage(WebsocketCmdParams websocketCmdParams, CommonProto.msg msg) {
+    protected Message handleProtoMessage(WebsocketCmdParams websocketCmdParams, IMessage msg) {
         Object[] objects = new Object[0];
         try {
             Class<?>[] parameterTypes = websocketCmdParams.getMethod().getParameterTypes();
@@ -80,7 +87,7 @@ public class WebsocketControllerHandler extends AbstractService {
                     objects[i] = msg.getPlayerId();
                 }
                 if (Message.class.isAssignableFrom(parameterType)) {
-                    objects[i] = msg.getAny();
+                    objects[i] = msg.getMessage();
                 }
             }
 

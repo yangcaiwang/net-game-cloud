@@ -1,7 +1,8 @@
 package com.ycw.core.network.netty.handler;
 
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
-import com.ycw.proto.CommonProto;
+import com.ycw.core.network.netty.message.IMessage;
+import com.ycw.core.util.SerializationUtils;
 
 import java.util.concurrent.Executor;
 
@@ -20,18 +21,19 @@ public interface ControllerListener {
      * @param executor 线程池
      * @param msg      消息
      */
-    default void handle(Executor executor, CommonProto.msg msg) {
+    default void process(Executor executor, byte[] msg) {
         ControllerListener listener = this;
         try {
+            IMessage iMessage = SerializationUtils.toObjectByH2(msg);
             executor.execute(new AbstractLinkedTask() {
                 @Override
-                protected void exec() throws Exception {
-                    listener.exec(msg);
+                protected void exec() {
+                    listener.exec(iMessage);
                 }
 
                 @Override
                 public Object getIdentity() {
-                    return msg.getPlayerId();
+                    return iMessage.getPlayerId();
                 }
             });
         } catch (Exception e) {
@@ -42,13 +44,5 @@ public interface ControllerListener {
     /**
      * 控制器异步链式处理
      */
-    void exec(CommonProto.msg msg);
-
-    /**
-     * 业务消息处理
-     *
-     * @param msg 消息对象
-     * @return CommonProto.msg {@link CommonProto.msg}
-     */
-    CommonProto.msg process(CommonProto.msg msg);
+    void exec(IMessage msg);
 }

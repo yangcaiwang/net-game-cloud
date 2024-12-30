@@ -52,7 +52,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
             byte[] dataArr = new byte[in.readableBytes() - b == 0 ? 0 : new byte[b].length];
             in.readBytes(dataArr);
 
-            list.add(MessageProcess.getInstance().buildMsg(cmd, playerId, serverId, dataArr));
+            IMessage iMessage = new ProtoMessage();
+            iMessage.buildIMessage(cmd, playerId, serverId, dataArr);
+            list.add(iMessage);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             in.clear();

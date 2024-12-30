@@ -1,6 +1,6 @@
 package com.ycw.core.network.netty.handler;
 
-import com.ycw.proto.CommonProto;
+import com.ycw.core.network.netty.message.IMessage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -21,8 +21,8 @@ public class WebsocketClientHandler extends SimpleChannelInboundHandler<Object> 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msgPacket) throws Exception {
         log.info("receive [{}]'s message [{}]", ctx, msgPacket);
-        if (msgPacket instanceof CommonProto.msg) {
-            CommonProto.msg msg = (CommonProto.msg) msgPacket;
+        if (msgPacket instanceof IMessage) {
+            IMessage msg = (IMessage) msgPacket;
             System.out.println(msg);
         }
     }

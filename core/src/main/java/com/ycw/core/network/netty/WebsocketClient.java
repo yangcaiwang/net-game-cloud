@@ -1,10 +1,7 @@
 package com.ycw.core.network.netty;
 
 import com.ycw.core.network.netty.handler.WebsocketClientHandler;
-import com.ycw.core.network.netty.message.MessageDecoder;
-import com.ycw.core.network.netty.message.MessageEncoder;
-import com.ycw.core.network.netty.message.MessageProcess;
-import com.ycw.proto.CommonProto;
+import com.ycw.core.network.netty.message.*;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -55,7 +52,9 @@ public class WebsocketClient {
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
             log.info("======================= [] websocket client started ip:{} port:{} =======================", host, port);
             // 首包
-            sent(MessageProcess.getInstance().buildMsg(0, 1, "game-1001", CommonProto.msg.newBuilder().build()));
+            IMessage iMessage = new ProtoMessage();
+            iMessage.buildIMessage(0, 1, "game-1001", new byte[]{});
+            sent(iMessage);
 
             // TODO 后端模仿客户端自测接口
 //            NettyClient.sent(MsgManager.buildMsg(1, CommonProto.msg.newBuilder().setAny(MsgManager.messageToAny(CommonProto.MiniItem.newBuilder().build())).build()));
@@ -78,7 +77,7 @@ public class WebsocketClient {
         }
     }
 
-    public void sent(CommonProto.msg msg) {
+    public void sent(IMessage msg) {
         channelFuture.channel().writeAndFlush(msg);
     }
 }

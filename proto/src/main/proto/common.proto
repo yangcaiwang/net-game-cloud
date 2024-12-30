@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/any.proto";
 option java_package = "com.game.proto";
 option java_outer_classname = "CommonProto";
 package common;
@@ -9,26 +8,15 @@ package common;
 service RouteService {
   rpc routeStream(stream RouteRequest) returns (stream RouteResponse) {};
 }
-message GenericRequest {
-
-}
-
-message msg{
-  optional int64 player_id = 1;
-  optional string server_id = 2;
-  optional int32 cmd = 3;
-  optional google.protobuf.Any any = 4; // Any 类型是一个通用的消息类型，可以用来包装任意类型的消息
-  bytes data = 5; // 使用 bytes 类型来存储字节数组
-}
 
 // 路由请求
 message RouteRequest {
-  optional msg msg = 1;
+  optional bytes msg = 1;
 }
 
 // 路由响应
 message RouteResponse {
-  optional msg msg = 1;
+  optional bytes msg = 1;
 }
 
 // gm请求

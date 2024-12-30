@@ -1,8 +1,8 @@
 package com.ycw.core.network.grpc;
 
+import com.game.proto.CommonProto;
+import com.game.proto.RouteServiceGrpc;
 import com.ycw.core.network.netty.handler.ControllerHandler;
-import com.ycw.proto.CommonProto;
-import com.ycw.proto.RouteServiceGrpc;
 import io.grpc.stub.StreamObserver;
 
 /**
@@ -22,7 +22,8 @@ public class RouteServiceImpl extends RouteServiceGrpc.RouteServiceImplBase {
         return new StreamObserver<CommonProto.RouteRequest>() {
             @Override
             public void onNext(CommonProto.RouteRequest routeRequest) {
-                routeProtobufMsgListener.handle(GrpcManager.getInstance().serverExecutor,routeRequest.getMsg());
+
+                routeProtobufMsgListener.process(ControllerHandler.actorExecutor, routeRequest.getMsg().toByteArray());
             }
 
             @Override
