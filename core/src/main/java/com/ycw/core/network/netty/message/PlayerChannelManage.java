@@ -2,10 +2,10 @@ package com.ycw.core.network.netty.message;
 
 import com.google.protobuf.Message;
 import com.ycw.core.cluster.property.PropertyConfig;
-import com.ycw.core.internal.thread.pool.actor.ActorThreadPoolExecutor;
 import com.ycw.core.internal.thread.task.linked.AbstractLinkedTask;
 import com.ycw.core.network.netty.enums.OffLineCmd;
 import com.ycw.core.network.netty.enums.OfflineCause;
+import com.ycw.core.network.netty.handler.RouterHandler;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -36,8 +35,6 @@ public class PlayerChannelManage {
     public static final String SERVER_IP = "serverId";
     public static final String HEART_BEAT = "heartBeat";
     public static final String OFFLINE_CAUSE_OFF = "offlineCause";
-    public static final Executor handlerExecutor = new ActorThreadPoolExecutor("io-sent", Runtime.getRuntime().availableProcessors() + 1);
-
     private static PlayerChannelManage playerChannelManage = new PlayerChannelManage();
 
     public static PlayerChannelManage getInstance() {
@@ -50,7 +47,7 @@ public class PlayerChannelManage {
     private Map<Long, Channel> channelMap = new ConcurrentHashMap<>();
 
     /**
-     * 发送消息
+     * 发送消息给客户端
      *
      * @param channel 玩家的管道
      * @param cmd     报文号
@@ -63,7 +60,7 @@ public class PlayerChannelManage {
     }
 
     /**
-     * 发送消息
+     * 发送消息给客户端
      *
      * @param playerId 玩家id
      * @param cmd      报文号
@@ -79,7 +76,7 @@ public class PlayerChannelManage {
     }
 
     /**
-     * 发送消息
+     * 发送消息给客户端
      *
      * @param channel 玩家连接的管道
      * @param msg     玩家id
@@ -93,18 +90,21 @@ public class PlayerChannelManage {
         if (debug) {
             log.info("SENT:{}", msg);
         }
+        try {
+            RouterHandler.actorExecutor.execute(new AbstractLinkedTask() {
+                @Override
+                protected void exec() {
+                    channel.writeAndFlush(msg);
+                }
 
-        handlerExecutor.execute(new AbstractLinkedTask() {
-            @Override
-            protected void exec() throws Exception {
-                channel.writeAndFlush(msg);
-            }
-
-            @Override
-            public Object getIdentity() {
-                return msg.getPlayerId();
-            }
-        });
+                @Override
+                public Object getIdentity() {
+                    return msg.getPlayerId();
+                }
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     /**
